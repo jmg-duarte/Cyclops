@@ -12,14 +12,16 @@ struct ItemView: View {
 
     var body: some View {
         Link(destination: item.url!) {
-            VStack(alignment: .leading) {
-                Text(item.title!).font(.headline).multilineTextAlignment(.leading)
-                HStack {
-                    if let timeAgo = item.timeAgoWithUnits {
-                        Text(timeAgo)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(item.title!).font(.headline).multilineTextAlignment(.leading)
+                    HStack {
+                        if let timeAgo = item.timeAgoWithUnits {
+                            Text(timeAgo).font(.caption)
+                        }
+                        Text("(\(item.url!.host()!))").font(.caption)
                     }
-                    Text("(\(item.url!.host()!))").font(.caption)
-                }
+                }.frame(maxWidth:.infinity, alignment: .leading)
             }
         }
     }
