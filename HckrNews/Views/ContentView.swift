@@ -16,8 +16,20 @@ struct ContentView: View {
                 ForEach(feed.stories) { item in
                     ItemView(item: item)
                 }
+                .onDelete { _ in }
+                .swipeActions(edge: .leading) {
+                    Button {} label: {
+                        Label("Bookmark", systemImage: "bookmark")
+                    }.tint(.blue)
+                }
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {} label: {
+                        Label("Hide", systemImage: "eye.slash")
+                    }
+                }
             }
-            .navigationTitle(Text("Today"))
+
+            .navigationTitle(Text("Top Stories"))
             .listStyle(.plain)
             .task {
                 do {

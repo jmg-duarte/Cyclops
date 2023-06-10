@@ -21,7 +21,7 @@ struct ItemView: View {
                         }
                         Text("(\(item.url!.host()!))").font(.caption)
                     }
-                }.frame(maxWidth:.infinity, alignment: .leading)
+                }.frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
