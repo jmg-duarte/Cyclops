@@ -9,9 +9,23 @@ import SwiftUI
 
 @main
 struct HckrNewsApp: App {
+    @StateObject public var topFeed: TopFeed = .init()
+    @StateObject public var newFeed: NewFeed = .init()
+    @StateObject public var bestFeed: BestFeed = .init()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                ContentView(title: "Top Stories", feed: topFeed).tabItem {
+                    Label("Top", systemImage: "chart.line.uptrend.xyaxis")
+                }
+                ContentView(title: "New Stories", feed: newFeed).tabItem {
+                    Label("New", systemImage: "newspaper.fill")
+                }
+                ContentView(title: "Best Stories", feed: bestFeed).tabItem {
+                    Label("Best", systemImage: "trophy.fill")
+                }
+            }
         }
     }
 }

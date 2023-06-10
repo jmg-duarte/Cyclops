@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @StateObject public var feed: TopFeed = .init()
+struct ContentView<T>: View where T: Feed {
+    let title: String
+    @ObservedObject public var feed: T
 
     var body: some View {
         NavigationStack {
@@ -28,8 +29,7 @@ struct ContentView: View {
                     }
                 }
             }
-
-            .navigationTitle(Text("Top Stories"))
+            .navigationTitle(Text(title))
             .listStyle(.plain)
             .task {
                 do {
@@ -44,6 +44,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(feed: MockFeed())
+        ContentView(title: "Test Stories", feed: MockFeed())
     }
 }

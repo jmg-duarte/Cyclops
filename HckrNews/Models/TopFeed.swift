@@ -7,8 +7,15 @@
 
 import Foundation
 
+protocol Feed: ObservableObject {
+    var stories: [Item] { get }
+
+    /// Get N items of the feed
+    func getItems() async throws
+}
+
 @MainActor
-class TopFeed: ObservableObject {
+class TopFeed: Feed {
     @Published public internal(set) var stories: [Item] = []
 
     func getItems() async throws {
@@ -16,8 +23,29 @@ class TopFeed: ObservableObject {
     }
 }
 
-class MockFeed: TopFeed {
-    override func getItems() async throws {
+@MainActor
+class NewFeed: Feed {
+    @Published public internal(set) var stories: [Item] = []
+
+    func getItems() async throws {
+        stories = try await HackerNewsClient().newStories(limit: 10)
+    }
+}
+
+@MainActor
+class BestFeed: Feed {
+    @Published public internal(set) var stories: [Item] = []
+
+    func getItems() async throws {
+        stories = try await HackerNewsClient().bestStories(limit: 10)
+    }
+}
+
+@MainActor
+class MockFeed: Feed {
+    @Published public internal(set) var stories: [Item] = []
+
+    func getItems() async throws {
         stories = Item.sampleData
     }
 }
