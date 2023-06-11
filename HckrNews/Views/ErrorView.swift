@@ -1,16 +1,13 @@
-//
-//  ErrorView.swift
-//  HckrNews
-//
-//  Created by José Duarte on 11/06/2023.
-//
+// ErrorView.swift
+// Created by José Duarte on 11/06/2023
+// Copyright (c) 2023
 
 import SwiftUI
 
 struct ErrorView: View {
     let errorWrapper: ErrorWrapper
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -42,10 +39,11 @@ struct ErrorView_Previews: PreviewProvider {
     enum SampleError: Error {
         case errorRequired
     }
-    
+
     static var wrapper: ErrorWrapper {
         ErrorWrapper(error: SampleError.errorRequired, guidance: "You can safely ignore this error")
     }
+
     static var previews: some View {
         ErrorView(errorWrapper: wrapper)
     }

@@ -1,4 +1,4 @@
-// TopFeed.swift
+// Feed.swift
 // Created by José Duarte on 08/06/2023
 // Copyright (c) 2023
 

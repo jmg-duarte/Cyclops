@@ -6,9 +6,7 @@ import Foundation
 
 typealias ItemID = Int
 
-extension ItemID {
-    
-}
+extension ItemID {}
 
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
@@ -33,13 +31,13 @@ struct Item: Identifiable {
     var text: String? = nil
     var time: Int? = nil
     var title: String? = nil
-    
+
     static func postURL(_ id: Int) -> URL {
-        return URL(string: "https://news.ycombinator.com/item?id=\(id)")!
+        URL(string: "https://news.ycombinator.com/item?id=\(id)")!
     }
-    
+
     func postURL() -> URL {
-        return Item.postURL(id)
+        Item.postURL(id)
     }
 }
 

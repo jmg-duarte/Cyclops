@@ -6,9 +6,9 @@ import SwiftUI
 
 @main
 struct HckrNewsApp: App {
-    @StateObject public var topFeed: Feed = Feed(kind:.top)
-    @StateObject public var newFeed: Feed = Feed(kind:.new)
-    @StateObject public var bestFeed: Feed = Feed(kind: .best)
+    @StateObject public var topFeed: Feed = .init(kind: .top)
+    @StateObject public var newFeed: Feed = .init(kind: .new)
+    @StateObject public var bestFeed: Feed = .init(kind: .best)
 
     var body: some Scene {
         WindowGroup {
