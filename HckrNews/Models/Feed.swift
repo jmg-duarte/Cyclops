@@ -17,20 +17,19 @@ class Feed: ObservableObject {
 
     @Published public internal(set) var stories: [Item] = []
 
-    private var numberOfStoriesPerPage: Int { Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage)) }
 
     init(kind: FeedKind) {
         self.kind = kind
     }
 
-    func getItems() async throws {
+    func getItems(page: Int, limit: Int) async throws {
         switch kind {
         case .top:
-            stories = try await HackerNewsClient().topStories(limit: numberOfStoriesPerPage)
+            stories = try await HackerNewsClient().topStories(page: page, limit: limit)
         case .new:
-            stories = try await HackerNewsClient().newStories(limit: numberOfStoriesPerPage)
+            stories = try await HackerNewsClient().newStories(page: page, limit: limit)
         case .best:
-            stories = try await HackerNewsClient().bestStories(limit: numberOfStoriesPerPage)
+            stories = try await HackerNewsClient().bestStories(page: page, limit: limit)
         case .test:
             stories = Item.sampleData
         }

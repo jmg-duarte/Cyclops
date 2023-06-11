@@ -53,34 +53,43 @@ class HackerNewsClient {
         return story
     }
 
-    // FIXME: variable names in the following functions
-    func topStories(limit: Int) async throws -> [Item] {
+    func topStories(page: Int, limit: Int) async throws -> [Item] {
+        let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
+        let endIndex = startIndex + limit
+        
         let topStoriesIDs = try await topStoriesIDs
         var topStories: [Item] = []
-        for id in topStoriesIDs[0 ... limit] {
+        
+        for id in topStoriesIDs[startIndex ... endIndex] {
             let story = try await story(id: id)
             topStories.append(story)
         }
         return topStories
     }
 
-    func newStories(limit: Int) async throws -> [Item] {
-        let topStoriesIDs = try await newStoriesIDs
-        var topStories: [Item] = []
-        for id in topStoriesIDs[0 ... limit] {
+    func newStories(page: Int, limit: Int) async throws -> [Item] {
+        let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
+        let endIndex = startIndex + limit
+        
+        let newStoriesIDs = try await newStoriesIDs
+        var newStories: [Item] = []
+        for id in newStoriesIDs[0 ... limit] {
             let story = try await story(id: id)
-            topStories.append(story)
+            newStories.append(story)
         }
-        return topStories
+        return newStories
     }
 
-    func bestStories(limit: Int) async throws -> [Item] {
-        let topStoriesIDs = try await bestStoriesIDs
-        var topStories: [Item] = []
-        for id in topStoriesIDs[0 ... limit] {
+    func bestStories(page: Int, limit: Int) async throws -> [Item] {
+        let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
+        let endIndex = startIndex + limit
+        
+        let bestStoriesIDs = try await bestStoriesIDs
+        var bestStories: [Item] = []
+        for id in bestStoriesIDs[0 ... limit] {
             let story = try await story(id: id)
-            topStories.append(story)
+            bestStories.append(story)
         }
-        return topStories
+        return bestStories
     }
 }

@@ -7,7 +7,34 @@ import SwiftUI
 struct FeedView: View {
     @ObservedObject public var feed: Feed
 
+    @State private var currentPage: Int = 0
     @State private var errorWrapper: ErrorWrapper?
+
+    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = 10
+
+    func loadFeed(page: Int) async {
+        do {
+            try await feed.getItems(page: page, limit: Int(numberOfStoriesPerPage))
+        } catch {
+            errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
+        }
+    }
+
+    func previousPage() {
+        if currentPage > 0 {
+            currentPage -= 1
+            Task { await loadFeed(page: currentPage) }
+        }
+    }
+
+    func nextPage() {
+        let postsPerPage = Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
+        // NOTE: for my future self, logic here should be "we don't want to move forward if we're supposed to have seen more than 500 posts (which is the API limit)
+        if (currentPage + 1) * postsPerPage < 500 {
+            currentPage += 1
+            Task { await loadFeed(page: currentPage) }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -30,31 +57,24 @@ struct FeedView: View {
             .navigationTitle(Text("\(feed.kind.rawValue.capitalized) Stories"))
             .listStyle(.plain)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {} label: { Image(systemName: "arrow.left") }.accessibilityHint(Text("Moves to the previous page"))
+                if currentPage > 0 {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: previousPage) {
+                            Image(systemName: "arrow.left")
+                        }.accessibilityHint(Text("Moves to the previous page"))
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {} label: { Image(systemName: "arrow.right") }.accessibilityHint(Text("Moves to the next page"))
+                    Button(action: nextPage) {
+                        Image(systemName: "arrow.right")
+                    }.accessibilityHint(Text("Moves to the next page"))
                 }
             }
-            .task {
-                do {
-                    try await feed.getItems()
-                } catch {
-                    errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
-                }
-            }
-            .refreshable {
-                do {
-                    try await feed.getItems()
-                } catch {
-                    errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
-                }
-            }
+            .task { await loadFeed(page: currentPage) }
+            .refreshable { await loadFeed(page: currentPage) }
             .sheet(item: $errorWrapper) {
                 feed.stories = []
-            } content: {
-                wrapper in
+            } content: { wrapper in
                 ErrorView(errorWrapper: wrapper)
             }
         }
