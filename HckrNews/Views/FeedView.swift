@@ -36,6 +36,13 @@ struct FeedView: View {
                 errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
             }
         }
+        .refreshable {
+            do {
+                try await feed.getItems()
+            } catch {
+                errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
+            }
+        }
         // }
     }
 }
