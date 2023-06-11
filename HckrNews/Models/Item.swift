@@ -1,11 +1,14 @@
-//
-//  NewsItem.swift
-//  HckrNews
-//
-//  Created by José Duarte on 08/06/2023.
-//
+// Item.swift
+// Created by José Duarte on 08/06/2023
+// Copyright (c) 2023
 
 import Foundation
+
+typealias ItemID = Int
+
+extension ItemID {
+    
+}
 
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
@@ -13,8 +16,10 @@ struct Item: Identifiable {
     // NOTE: For now, item is good enough to retrieve everything, but in the future,
     // a decoder based on the ItemType could be a nice improvement
 
-    let id: Int
+    let id: ItemID
     let type: ItemType
+    // The API may not return an URL, in which case, we default to the actual HN webpage
+    let url: URL
 
     var by: String? = nil
     var dead: Bool? = nil
@@ -28,7 +33,14 @@ struct Item: Identifiable {
     var text: String? = nil
     var time: Int? = nil
     var title: String? = nil
-    var url: URL? = nil
+    
+    static func postURL(_ id: Int) -> URL {
+        return URL(string: "https://news.ycombinator.com/item?id=\(id)")!
+    }
+    
+    func postURL() -> URL {
+        return Item.postURL(id)
+    }
 }
 
 extension Item: Decodable {
@@ -52,7 +64,7 @@ extension Item: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
+        id = try values.decode(ItemID.self, forKey: .id)
         type = try values.decode(ItemType.self, forKey: .type)
 
         by = try? values.decode(String.self, forKey: .by)
@@ -67,11 +79,7 @@ extension Item: Decodable {
         text = try? values.decode(String.self, forKey: .text)
         time = try? values.decode(Int.self, forKey: .time)
         title = try? values.decode(String.self, forKey: .title)
-        url = try? values.decode(URL.self, forKey: .url)
-
-        if url == nil {
-            url = URL(string: "https://news.ycombinator.com/item?id=\(id)")
-        }
+        url = (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id)
     }
 }
 
@@ -87,7 +95,7 @@ extension Item {
     }
 
     var timeAgoWithUnits: String? {
-        if let timeAgo = timeAgo {
+        if let timeAgo {
             if timeAgo < 60 {
                 let plural = timeAgo != 1 ? "s" : ""
                 return "\(timeAgo) second\(plural) ago"
@@ -115,35 +123,35 @@ extension Item {
         Item(
             id: 36_257_963,
             type: .story,
+            url: URL(string: "https://gitlab.com/OpenMW/openmw")!,
             by: "agluszak",
             descendants: 30,
             kids: [36_259_227, 36_258_965, 36_259_124, 36_258_940, 36_259_245, 36_259_006, 36_259_291, 36_258_787, 36_259_125, 36_259_209, 36_258_967, 36_258_958, 36_258_937],
             score: 74,
             time: 1_686_319_411,
-            title: "OpenMW: Open-source TES3: Morrowind reimplementation",
-            url: URL(string: "https://gitlab.com/OpenMW/openmw")!
+            title: "OpenMW: Open-source TES3: Morrowind reimplementation"
         ),
         Item(
             id: 36_257_255,
             type: .story,
+            url: URL(string: "https://arxiv.org/abs/2305.10470")!,
             by: "sohkamyung",
             descendants: 30,
             kids: [36_257_754, 36_257_977, 36_258_988, 36_258_451, 36_259_350, 36_258_334, 36_258_289, 36_257_904, 36_257_721],
             score: 75,
             time: 1_686_315_980,
-            title: "Gravitational Machines",
-            url: URL(string: "https://arxiv.org/abs/2305.10470")!
+            title: "Gravitational Machines"
         ),
         Item(
             id: 36_246_547,
             type: .story,
+            url: URL(string: "https://nskyc.com/")!,
             by: "sethbannon",
             descendants: 53,
             kids: [36_257_006, 36_259_384, 36_257_444, 36_259_215, 36_257_765, 36_257_802, 36_257_087, 36_257_058, 36_258_987, 36_256_911, 36_259_137, 36_258_422, 36_257_256, 36_257_229, 36_257_227, 36_256_895, 36_257_318],
             score: 258,
             time: 1_686_249_407,
-            title: "Average color of the NYC sky every 5 minutes",
-            url: URL(string: "https://nskyc.com/")!
+            title: "Average color of the NYC sky every 5 minutes"
         ),
     ]
 }

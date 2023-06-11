@@ -10,13 +10,15 @@
 		11120AB82A30E53A0084E612 /* HckrNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11120AB72A30E53A0084E612 /* HckrNewsApp.swift */; };
 		11120ABC2A30E53B0084E612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABB2A30E53B0084E612 /* Assets.xcassets */; };
 		11120ABF2A30E53B0084E612 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */; };
+		11B40DD92A35E10A00CA8539 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */; };
+		11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DDA2A35E18000CA8539 /* ErrorView.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
 		11FE08F42A322B5E0034829A /* HckrNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08F32A322B5E0034829A /* HckrNewsTests.swift */; };
 		11FE08FC2A322B830034829A /* NewsItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FB2A322B830034829A /* NewsItemData.swift */; };
 		11FE08FE2A322DC10034829A /* HTTPDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FD2A322DC10034829A /* HTTPDataDownloader.swift */; };
 		11FE09002A322E810034829A /* HackerNewsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FF2A322E810034829A /* HackerNewsClient.swift */; };
-		11FE09022A3235200034829A /* TopFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE09012A3235200034829A /* TopFeed.swift */; };
-		11FE09062A332D680034829A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE09052A332D680034829A /* ContentView.swift */; };
+		11FE09022A3235200034829A /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE09012A3235200034829A /* Feed.swift */; };
+		11FE09062A332D680034829A /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE09052A332D680034829A /* FeedView.swift */; };
 		11FE09082A3334C50034829A /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE09072A3334C50034829A /* ItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,14 +37,16 @@
 		11120AB72A30E53A0084E612 /* HckrNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HckrNewsApp.swift; sourceTree = "<group>"; };
 		11120ABB2A30E53B0084E612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
+		11B40DDA2A35E18000CA8539 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		11FE08F12A322B5E0034829A /* HckrNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HckrNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11FE08F32A322B5E0034829A /* HckrNewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HckrNewsTests.swift; sourceTree = "<group>"; };
 		11FE08FB2A322B830034829A /* NewsItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemData.swift; sourceTree = "<group>"; };
 		11FE08FD2A322DC10034829A /* HTTPDataDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDataDownloader.swift; sourceTree = "<group>"; };
 		11FE08FF2A322E810034829A /* HackerNewsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsClient.swift; sourceTree = "<group>"; };
-		11FE09012A3235200034829A /* TopFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopFeed.swift; sourceTree = "<group>"; };
-		11FE09052A332D680034829A /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		11FE09012A3235200034829A /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		11FE09052A332D680034829A /* FeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		11FE09072A3334C50034829A /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,8 +111,9 @@
 		11120AC52A30E76A0084E612 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				11FE09052A332D680034829A /* ContentView.swift */,
+				11FE09052A332D680034829A /* FeedView.swift */,
 				11FE09072A3334C50034829A /* ItemView.swift */,
+				11B40DDA2A35E18000CA8539 /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -117,7 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				11FE08E92A31E22D0034829A /* Item.swift */,
-				11FE09012A3235200034829A /* TopFeed.swift */,
+				11FE09012A3235200034829A /* Feed.swift */,
+				11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -231,12 +237,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11B40DD92A35E10A00CA8539 /* ErrorWrapper.swift in Sources */,
 				11FE09002A322E810034829A /* HackerNewsClient.swift in Sources */,
-				11FE09022A3235200034829A /* TopFeed.swift in Sources */,
-				11FE09062A332D680034829A /* ContentView.swift in Sources */,
+				11FE09022A3235200034829A /* Feed.swift in Sources */,
+				11FE09062A332D680034829A /* FeedView.swift in Sources */,
 				11FE08FE2A322DC10034829A /* HTTPDataDownloader.swift in Sources */,
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
 				11FE08EA2A31E22D0034829A /* Item.swift in Sources */,
+				11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */,
 				11120AB82A30E53A0084E612 /* HckrNewsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

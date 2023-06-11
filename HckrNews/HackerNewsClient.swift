@@ -1,9 +1,6 @@
-//
-//  HackerNewsClient.swift
-//  HckrNews
-//
-//  Created by José Duarte on 08/06/2023.
-//
+// HackerNewsClient.swift
+// Created by José Duarte on 08/06/2023
+// Copyright (c) 2023
 
 import Foundation
 
@@ -28,24 +25,24 @@ class HackerNewsClient {
     }
 
     private func itemURL(id: Int) -> URL {
-        return URL(string: "item/\(id).json", relativeTo: HackerNewsClient.hackerNewsAPIv0)!
+        URL(string: "item/\(id).json", relativeTo: HackerNewsClient.hackerNewsAPIv0)!
     }
 
     var topStoriesIDs: [Int] {
         get async throws {
-            return try await getStoriesIDs(from: HackerNewsClient.topStoriesURL)
+            try await getStoriesIDs(from: HackerNewsClient.topStoriesURL)
         }
     }
 
     var newStoriesIDs: [Int] {
         get async throws {
-            return try await getStoriesIDs(from: HackerNewsClient.newStoriesURL)
+            try await getStoriesIDs(from: HackerNewsClient.newStoriesURL)
         }
     }
 
     var bestStoriesIDs: [Int] {
         get async throws {
-            return try await getStoriesIDs(from: HackerNewsClient.bestStoriesURL)
+            try await getStoriesIDs(from: HackerNewsClient.bestStoriesURL)
         }
     }
 

@@ -1,9 +1,6 @@
-//
-//  HTTPDataDownloader.swift
-//  HckrNews
-//
-//  Created by José Duarte on 08/06/2023.
-//
+// HTTPDataDownloader.swift
+// Created by José Duarte on 08/06/2023
+// Copyright (c) 2023
 
 import Foundation
 
