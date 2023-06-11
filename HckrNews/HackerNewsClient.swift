@@ -3,6 +3,7 @@
 // Copyright (c) 2023
 
 import Foundation
+import os
 
 class HackerNewsClient {
     private static let hackerNewsAPIv0 = URL(string: "https://hacker-news.firebaseio.com/v0/")!
@@ -10,6 +11,11 @@ class HackerNewsClient {
     private static let newStoriesURL = URL(string: "newstories.json", relativeTo: hackerNewsAPIv0)!
     private static let bestStoriesURL = URL(string: "beststories.json", relativeTo: hackerNewsAPIv0)!
 
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: HackerNewsClient.self)
+    )
+    
     private let downloader: any HTTPDataDownloader
 
     init(downloader: any HTTPDataDownloader = URLSession.shared) {
@@ -53,7 +59,9 @@ class HackerNewsClient {
         return story
     }
 
+    // FIXME: We can probably make this simpler
     func topStories(page: Int, limit: Int) async throws -> [Item] {
+        Self.logger.info("Loading top stories [page: \(page), limit: \(limit)]")
         let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
         let endIndex = startIndex + limit
         
@@ -68,12 +76,13 @@ class HackerNewsClient {
     }
 
     func newStories(page: Int, limit: Int) async throws -> [Item] {
+        Self.logger.info("Loading new stories [page: \(page), limit: \(limit)]")
         let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
         let endIndex = startIndex + limit
         
         let newStoriesIDs = try await newStoriesIDs
         var newStories: [Item] = []
-        for id in newStoriesIDs[0 ... limit] {
+        for id in newStoriesIDs[startIndex ... endIndex] {
             let story = try await story(id: id)
             newStories.append(story)
         }
@@ -81,12 +90,13 @@ class HackerNewsClient {
     }
 
     func bestStories(page: Int, limit: Int) async throws -> [Item] {
+        Self.logger.info("Loading best stories [page: \(page), limit: \(limit)]")
         let startIndex = page * Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
         let endIndex = startIndex + limit
         
         let bestStoriesIDs = try await bestStoriesIDs
         var bestStories: [Item] = []
-        for id in bestStoriesIDs[0 ... limit] {
+        for id in bestStoriesIDs[startIndex ... endIndex] {
             let story = try await story(id: id)
             bestStories.append(story)
         }

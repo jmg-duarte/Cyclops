@@ -3,6 +3,7 @@
 // Copyright (c) 2023
 
 import Foundation
+import os
 
 let validStatus = 200 ... 299
 
