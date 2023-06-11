@@ -71,7 +71,10 @@ struct FeedView: View {
                 }
             }
             .task { await loadFeed(page: currentPage) }
-            .refreshable { await loadFeed(page: currentPage) }
+            .refreshable {
+                currentPage = 0
+                await loadFeed(page: currentPage)
+            }
             .sheet(item: $errorWrapper) {
                 feed.stories = []
             } content: { wrapper in
