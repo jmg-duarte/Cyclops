@@ -14,26 +14,25 @@ enum FeedKind: String {
 @MainActor
 class Feed: ObservableObject {
     let kind: FeedKind
-    let fetchStories: () async throws -> [Item]
 
     @Published public internal(set) var stories: [Item] = []
 
+    private var numberOfStoriesPerPage: Int { Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage)) }
+
     init(kind: FeedKind) {
-        let limit = 10
         self.kind = kind
-        switch self.kind {
-        case .top:
-            fetchStories = { try await HackerNewsClient().topStories(limit: limit) }
-        case .new:
-            fetchStories = { try await HackerNewsClient().newStories(limit: limit) }
-        case .best:
-            fetchStories = { try await HackerNewsClient().bestStories(limit: limit) }
-        case .test:
-            fetchStories = { Item.sampleData }
-        }
     }
 
     func getItems() async throws {
-        stories = try await fetchStories()
+        switch kind {
+        case .top:
+            stories = try await HackerNewsClient().topStories(limit: numberOfStoriesPerPage)
+        case .new:
+            stories = try await HackerNewsClient().newStories(limit: numberOfStoriesPerPage)
+        case .best:
+            stories = try await HackerNewsClient().bestStories(limit: numberOfStoriesPerPage)
+        case .test:
+            stories = Item.sampleData
+        }
     }
 }
