@@ -9,7 +9,7 @@ import Foundation
 
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
-struct Item: Identifiable, Codable {
+struct Item: Identifiable {
     // NOTE: For now, item is good enough to retrieve everything, but in the future,
     // a decoder based on the ItemType could be a nice improvement
 
@@ -29,7 +29,53 @@ struct Item: Identifiable, Codable {
     var time: Int? = nil
     var title: String? = nil
     var url: URL? = nil
+}
 
+extension Item: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case type
+        case by
+        case dead
+        case deleted
+        case descendants
+        case kids
+        case parent
+        case parts
+        case poll
+        case score
+        case text
+        case time
+        case title
+        case url
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decode(Int.self, forKey: .id)
+        type = try values.decode(ItemType.self, forKey: .type)
+
+        by = try? values.decode(String.self, forKey: .by)
+        dead = try? values.decode(Bool.self, forKey: .dead)
+        deleted = try? values.decode(Bool.self, forKey: .deleted)
+        descendants = try? values.decode(Int.self, forKey: .descendants)
+        kids = try? values.decode([Int].self, forKey: .kids)
+        parent = try? values.decode(Int.self, forKey: .parent)
+        parts = try? values.decode([Int].self, forKey: .parts)
+        poll = try? values.decode(Int.self, forKey: .poll)
+        score = try? values.decode(Int.self, forKey: .score)
+        text = try? values.decode(String.self, forKey: .text)
+        time = try? values.decode(Int.self, forKey: .time)
+        title = try? values.decode(String.self, forKey: .title)
+        url = try? values.decode(URL.self, forKey: .url)
+
+        if url == nil {
+            url = URL(string: "https://news.ycombinator.com/item?id=\(id)")
+        }
+    }
+}
+
+extension Item {
     var timeAgo: Int? {
         guard time != nil else { return nil }
 
