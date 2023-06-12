@@ -10,7 +10,7 @@ struct FeedView: View {
     @State private var currentPage: Int = 0
     @State private var errorWrapper: ErrorWrapper?
 
-    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = 10
+    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private(set) var numberOfStoriesPerPage: Double = 10
 
     func loadFeed(page: Int) async {
         do {

@@ -2,7 +2,7 @@
 // Created by José Duarte on 08/06/2023
 // Copyright (c) 2023
 
-@testable import HckrNews
+@testable import Cyclops
 import XCTest
 
 final class ItemDecodeTests: XCTestCase {

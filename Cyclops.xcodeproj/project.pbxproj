@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11120AB82A30E53A0084E612 /* HckrNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11120AB72A30E53A0084E612 /* HckrNewsApp.swift */; };
+		11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11120AB72A30E53A0084E612 /* CyclopsApp.swift */; };
 		11120ABC2A30E53B0084E612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABB2A30E53B0084E612 /* Assets.xcassets */; };
 		11120ABF2A30E53B0084E612 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */; };
 		11B40DD92A35E10A00CA8539 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */; };
@@ -15,7 +15,7 @@
 		11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */; };
 		11B40DDF2A35F8DA00CA8539 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DDE2A35F8DA00CA8539 /* UserDefaultsExtension.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
-		11FE08F42A322B5E0034829A /* HckrNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08F32A322B5E0034829A /* HckrNewsTests.swift */; };
+		11FE08F42A322B5E0034829A /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08F32A322B5E0034829A /* ItemTests.swift */; };
 		11FE08FC2A322B830034829A /* NewsItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FB2A322B830034829A /* NewsItemData.swift */; };
 		11FE08FE2A322DC10034829A /* HTTPDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FD2A322DC10034829A /* HTTPDataDownloader.swift */; };
 		11FE09002A322E810034829A /* HackerNewsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FF2A322E810034829A /* HackerNewsClient.swift */; };
@@ -35,8 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		11120AB42A30E53A0084E612 /* HckrNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HckrNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		11120AB72A30E53A0084E612 /* HckrNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HckrNewsApp.swift; sourceTree = "<group>"; };
+		11120AB42A30E53A0084E612 /* Cyclops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cyclops.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11120AB72A30E53A0084E612 /* CyclopsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclopsApp.swift; sourceTree = "<group>"; };
 		11120ABB2A30E53B0084E612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
@@ -44,8 +44,8 @@
 		11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		11B40DDE2A35F8DA00CA8539 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		11FE08F12A322B5E0034829A /* HckrNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HckrNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		11FE08F32A322B5E0034829A /* HckrNewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HckrNewsTests.swift; sourceTree = "<group>"; };
+		11FE08F12A322B5E0034829A /* CyclopsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyclopsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11FE08F32A322B5E0034829A /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
 		11FE08FB2A322B830034829A /* NewsItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemData.swift; sourceTree = "<group>"; };
 		11FE08FD2A322DC10034829A /* HTTPDataDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDataDownloader.swift; sourceTree = "<group>"; };
 		11FE08FF2A322E810034829A /* HackerNewsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackerNewsClient.swift; sourceTree = "<group>"; };
@@ -75,8 +75,8 @@
 		11120AAB2A30E53A0084E612 = {
 			isa = PBXGroup;
 			children = (
-				11120AB62A30E53A0084E612 /* HckrNews */,
-				11FE08F22A322B5E0034829A /* HckrNewsTests */,
+				11120AB62A30E53A0084E612 /* Cyclops */,
+				11FE08F22A322B5E0034829A /* CyclopsTests */,
 				11120AB52A30E53A0084E612 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,25 +84,25 @@
 		11120AB52A30E53A0084E612 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				11120AB42A30E53A0084E612 /* HckrNews.app */,
-				11FE08F12A322B5E0034829A /* HckrNewsTests.xctest */,
+				11120AB42A30E53A0084E612 /* Cyclops.app */,
+				11FE08F12A322B5E0034829A /* CyclopsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		11120AB62A30E53A0084E612 /* HckrNews */ = {
+		11120AB62A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXGroup;
 			children = (
+				11120ABB2A30E53B0084E612 /* Assets.xcassets */,
 				11FE08E82A31E21F0034829A /* Models */,
 				11120AC52A30E76A0084E612 /* Views */,
-				11120AB72A30E53A0084E612 /* HckrNewsApp.swift */,
-				11120ABB2A30E53B0084E612 /* Assets.xcassets */,
+				11120AB72A30E53A0084E612 /* CyclopsApp.swift */,
 				11120ABD2A30E53B0084E612 /* Preview Content */,
 				11FE08FD2A322DC10034829A /* HTTPDataDownloader.swift */,
 				11FE08FF2A322E810034829A /* HackerNewsClient.swift */,
 				11B40DDE2A35F8DA00CA8539 /* UserDefaultsExtension.swift */,
 			);
-			path = HckrNews;
+			path = Cyclops;
 			sourceTree = "<group>";
 		};
 		11120ABD2A30E53B0084E612 /* Preview Content */ = {
@@ -134,21 +134,21 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		11FE08F22A322B5E0034829A /* HckrNewsTests */ = {
+		11FE08F22A322B5E0034829A /* CyclopsTests */ = {
 			isa = PBXGroup;
 			children = (
-				11FE08F32A322B5E0034829A /* HckrNewsTests.swift */,
+				11FE08F32A322B5E0034829A /* ItemTests.swift */,
 				11FE08FB2A322B830034829A /* NewsItemData.swift */,
 			);
-			path = HckrNewsTests;
+			path = CyclopsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		11120AB32A30E53A0084E612 /* HckrNews */ = {
+		11120AB32A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11120AC22A30E53B0084E612 /* Build configuration list for PBXNativeTarget "HckrNews" */;
+			buildConfigurationList = 11120AC22A30E53B0084E612 /* Build configuration list for PBXNativeTarget "Cyclops" */;
 			buildPhases = (
 				11120AB02A30E53A0084E612 /* Sources */,
 				11120AB12A30E53A0084E612 /* Frameworks */,
@@ -158,14 +158,14 @@
 			);
 			dependencies = (
 			);
-			name = HckrNews;
+			name = Cyclops;
 			productName = HckrNews;
-			productReference = 11120AB42A30E53A0084E612 /* HckrNews.app */;
+			productReference = 11120AB42A30E53A0084E612 /* Cyclops.app */;
 			productType = "com.apple.product-type.application";
 		};
-		11FE08F02A322B5E0034829A /* HckrNewsTests */ = {
+		11FE08F02A322B5E0034829A /* CyclopsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11FE08F72A322B5E0034829A /* Build configuration list for PBXNativeTarget "HckrNewsTests" */;
+			buildConfigurationList = 11FE08F72A322B5E0034829A /* Build configuration list for PBXNativeTarget "CyclopsTests" */;
 			buildPhases = (
 				11FE08ED2A322B5E0034829A /* Sources */,
 				11FE08EE2A322B5E0034829A /* Frameworks */,
@@ -176,9 +176,9 @@
 			dependencies = (
 				11FE08F62A322B5E0034829A /* PBXTargetDependency */,
 			);
-			name = HckrNewsTests;
+			name = CyclopsTests;
 			productName = HckrNewsTests;
-			productReference = 11FE08F12A322B5E0034829A /* HckrNewsTests.xctest */;
+			productReference = 11FE08F12A322B5E0034829A /* CyclopsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -200,7 +200,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 11120AAF2A30E53A0084E612 /* Build configuration list for PBXProject "HckrNews" */;
+			buildConfigurationList = 11120AAF2A30E53A0084E612 /* Build configuration list for PBXProject "Cyclops" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -213,8 +213,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				11120AB32A30E53A0084E612 /* HckrNews */,
-				11FE08F02A322B5E0034829A /* HckrNewsTests */,
+				11120AB32A30E53A0084E612 /* Cyclops */,
+				11FE08F02A322B5E0034829A /* CyclopsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,7 +252,7 @@
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
 				11FE08EA2A31E22D0034829A /* Item.swift in Sources */,
 				11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */,
-				11120AB82A30E53A0084E612 /* HckrNewsApp.swift in Sources */,
+				11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */,
 				11B40DDF2A35F8DA00CA8539 /* UserDefaultsExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,7 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11FE08F42A322B5E0034829A /* HckrNewsTests.swift in Sources */,
+				11FE08F42A322B5E0034829A /* ItemTests.swift in Sources */,
 				11FE08FC2A322B830034829A /* NewsItemData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,7 +271,7 @@
 /* Begin PBXTargetDependency section */
 		11FE08F62A322B5E0034829A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 11120AB32A30E53A0084E612 /* HckrNews */;
+			target = 11120AB32A30E53A0084E612 /* Cyclops */;
 			targetProxy = 11FE08F52A322B5E0034829A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -399,15 +399,15 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HckrNews/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Cyclops/Preview Content\"";
 				DEVELOPMENT_TEAM = 387A3F6PA6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = HckrNews;
+				INFOPLIST_FILE = Cyclops/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cyclops;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -416,7 +416,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.HckrNews";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.Cyclops";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -435,15 +435,15 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HckrNews/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Cyclops/Preview Content\"";
 				DEVELOPMENT_TEAM = 387A3F6PA6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = HckrNews;
+				INFOPLIST_FILE = Cyclops/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cyclops;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -452,7 +452,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.HckrNews";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.Cyclops";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -476,7 +476,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HckrNews.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HckrNews";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cyclops.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cyclops";
 			};
 			name = Debug;
 		};
@@ -493,14 +493,14 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HckrNews.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HckrNews";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cyclops.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cyclops";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		11120AAF2A30E53A0084E612 /* Build configuration list for PBXProject "HckrNews" */ = {
+		11120AAF2A30E53A0084E612 /* Build configuration list for PBXProject "Cyclops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11120AC02A30E53B0084E612 /* Debug */,
@@ -509,7 +509,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11120AC22A30E53B0084E612 /* Build configuration list for PBXNativeTarget "HckrNews" */ = {
+		11120AC22A30E53B0084E612 /* Build configuration list for PBXNativeTarget "Cyclops" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11120AC32A30E53B0084E612 /* Debug */,
@@ -518,7 +518,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11FE08F72A322B5E0034829A /* Build configuration list for PBXNativeTarget "HckrNewsTests" */ = {
+		11FE08F72A322B5E0034829A /* Build configuration list for PBXNativeTarget "CyclopsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11FE08F82A322B5E0034829A /* Debug */,

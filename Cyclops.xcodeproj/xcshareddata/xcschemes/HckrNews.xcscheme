@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "11120AB32A30E53A0084E612"
-               BuildableName = "HckrNews.app"
-               BlueprintName = "HckrNews"
-               ReferencedContainer = "container:HckrNews.xcodeproj">
+               BuildableName = "Cyclops.app"
+               BlueprintName = "Cyclops"
+               ReferencedContainer = "container:Cyclops.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "11FE08F02A322B5E0034829A"
-               BuildableName = "HckrNewsTests.xctest"
-               BlueprintName = "HckrNewsTests"
-               ReferencedContainer = "container:HckrNews.xcodeproj">
+               BuildableName = "CyclopsTests.xctest"
+               BlueprintName = "CyclopsTests"
+               ReferencedContainer = "container:Cyclops.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "11120AB32A30E53A0084E612"
-            BuildableName = "HckrNews.app"
-            BlueprintName = "HckrNews"
-            ReferencedContainer = "container:HckrNews.xcodeproj">
+            BuildableName = "Cyclops.app"
+            BlueprintName = "Cyclops"
+            ReferencedContainer = "container:Cyclops.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -74,9 +74,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "11120AB32A30E53A0084E612"
-            BuildableName = "HckrNews.app"
-            BlueprintName = "HckrNews"
-            ReferencedContainer = "container:HckrNews.xcodeproj">
+            BuildableName = "Cyclops.app"
+            BlueprintName = "Cyclops"
+            ReferencedContainer = "container:Cyclops.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
