@@ -3,45 +3,66 @@
 // Copyright (c) 2023
 
 import SwiftUI
+import os
 
 struct FeedView: View {
-    @ObservedObject public var feed: Feed
-
-    @State private var currentPage: Int = 0
+    
+    
+    let kind: StoryKind
+    
+    private let storyLimit = 500
+    
+    @State private var currentPage: Int = 1
     @State private var errorWrapper: ErrorWrapper?
-
-    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private(set) var numberOfStoriesPerPage: Double = 10
-
-    func loadFeed(page: Int) async {
+    @EnvironmentObject var provider: HNProvider
+    
+    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage)
+    private(set) var numberOfStoriesPerPage: Double = 10
+    
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: FeedView.self)
+    )
+    
+    func loadFeed() async {
         do {
-            try await feed.getItems(page: page, limit: Int(numberOfStoriesPerPage))
-        // } catch {
-            
+            try await provider.fetchFeed(kind: kind, from: currentPage, limit: Int(numberOfStoriesPerPage))
         } catch {
             errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
         }
     }
+    
+    func isFirstPage() -> Bool {
+        return currentPage <= 1
+    }
+    
+    func isLastPage() -> Bool {
+        return currentPage * Int(numberOfStoriesPerPage) > storyLimit
+    }
 
     func previousPage() {
-        if currentPage > 0 {
+        if !isFirstPage() {
             currentPage -= 1
-            Task { await loadFeed(page: currentPage) }
+            Task { await loadFeed() }
         }
     }
 
     func nextPage() {
-        let postsPerPage = Int(UserDefaults.standard.double(forKey: UserDefaults.Keys.NumberOfStoriesPerPage))
         // NOTE: for my future self, logic here should be "we don't want to move forward if we're supposed to have seen more than 500 posts (which is the API limit)
-        if (currentPage + 1) * postsPerPage < 500 {
+        if !isLastPage() {
             currentPage += 1
-            Task { await loadFeed(page: currentPage) }
+            Task { await loadFeed() }
         }
+    }
+    
+    func resetPage() {
+        currentPage = 1
     }
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(feed.stories) { item in
+                ForEach(provider.items) { item in
                     ItemView(item: item)
                 }
                 .onDelete { _ in }
@@ -56,29 +77,35 @@ struct FeedView: View {
                     }
                 }
             }
-            .navigationTitle(Text("\(feed.kind.rawValue.capitalized) Stories"))
+            .navigationTitle(Text("\(kind.rawValue.capitalized) Stories"))
             .listStyle(.plain)
             .toolbar {
-                if currentPage > 0 {
+                if !isFirstPage() {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: previousPage) {
                             Image(systemName: "arrow.left")
-                        }.accessibilityHint(Text("Moves to the previous page"))
+                            Text("Page \(currentPage-1)")
+                        }
+                        .accessibilityHint(Text("Moves to the previous page"))
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: nextPage) {
-                        Image(systemName: "arrow.right")
-                    }.accessibilityHint(Text("Moves to the next page"))
+                if !isLastPage() {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: nextPage) {
+                            Text("Page \(currentPage+1)")
+                            Image(systemName: "arrow.right")
+                        }
+                        .accessibilityHint(Text("Moves to the next page"))
+                    }
                 }
             }
-            .task { await loadFeed(page: currentPage) }
+            .task { await loadFeed() }
             .refreshable {
-                currentPage = 0
-                await loadFeed(page: currentPage)
+                resetPage()
+                await loadFeed()
             }
             .sheet(item: $errorWrapper) {
-                feed.stories = []
+                provider.items = []
             } content: { wrapper in
                 ErrorView(errorWrapper: wrapper)
             }
@@ -88,6 +115,8 @@ struct FeedView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView(feed: Feed(kind: .test))
+        // FIXME: add test http client
+        var provider = HNProvider()
+        FeedView(kind: .top).environmentObject(provider)
     }
 }

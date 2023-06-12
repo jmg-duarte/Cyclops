@@ -4,17 +4,13 @@
 
 import Foundation
 
-typealias ItemID = Int
-
-extension ItemID {}
-
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
 struct Item: Identifiable {
     // NOTE: For now, item is good enough to retrieve everything, but in the future,
     // a decoder based on the ItemType could be a nice improvement
 
-    let id: ItemID
+    let id: Int
     let type: ItemType
     // The API may not return an URL, in which case, we default to the actual HN webpage
     let url: URL
@@ -62,7 +58,7 @@ extension Item: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(ItemID.self, forKey: .id)
+        id = try values.decode(Int.self, forKey: .id)
         type = try values.decode(ItemType.self, forKey: .type)
 
         by = try? values.decode(String.self, forKey: .by)

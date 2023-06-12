@@ -18,23 +18,24 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct HckrNewsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
-    @StateObject public var topFeed: Feed = .init(kind: .top)
-    @StateObject public var newFeed: Feed = .init(kind: .new)
-    @StateObject public var bestFeed: Feed = .init(kind: .best)
+    
+    @StateObject var hackerNewsProvider: HNProvider = HNProvider()
 
     var body: some Scene {
         WindowGroup {
             TabView {
-                FeedView(feed: topFeed).tabItem {
+                FeedView(kind:.top).tabItem {
                     Label("Top", systemImage: "chart.line.uptrend.xyaxis")
                 }
-                FeedView(feed: newFeed).tabItem {
+                .environmentObject(hackerNewsProvider)
+                FeedView(kind:.new).tabItem {
                     Label("New", systemImage: "newspaper.fill")
                 }
-                FeedView(feed: bestFeed).tabItem {
+                .environmentObject(hackerNewsProvider)
+                FeedView(kind:.best).tabItem {
                     Label("Best", systemImage: "trophy.fill")
                 }
+                .environmentObject(hackerNewsProvider)
                 SettingsView().tabItem {
                     Label("Settings", systemImage: "gear")
                 }
