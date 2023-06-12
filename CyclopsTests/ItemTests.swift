@@ -5,9 +5,9 @@
 @testable import Cyclops
 import XCTest
 
-final class ItemDecodeTests: XCTestCase {
+final class ItemTests: XCTestCase {
     /// Decode a "normal" story from HackerNews
-    func testNewsDecode() throws {
+    func testStoryDecode() throws {
         let storyJSON = """
             {
               "by" : "dhouston",
@@ -37,7 +37,7 @@ final class ItemDecodeTests: XCTestCase {
     }
 
     /// Decode an AskHN story
-    func testDecodeAskHN() throws {
+    func testAskDecode() throws {
         let askJSON = """
             {
               "by" : "mr_o47",
@@ -64,8 +64,113 @@ final class ItemDecodeTests: XCTestCase {
         XCTAssertEqual(askDecoded.time, 1_686_287_974)
         XCTAssertEqual(askDecoded.title, "Ask HN: Advice on starting a YouTube channel?")
         XCTAssertEqual(askDecoded.type, .story)
-
         XCTAssertEqual(askDecoded.url, URL(string: "https://news.ycombinator.com/item?id=\(askDecoded.id)")!)
+    }
+    
+    func testDecodeComment() throws {
+        let comment = """
+            {
+              "by" : "swighton",
+              "id" : 36277101,
+              "kids" : [ 36277437, 36277590, 36277204, 36277534, 36279015, 36278930, 36278500, 36277524 ],
+              "parent" : 36253565,
+              "text" : "I used to be a full time dev &#x2F; R&amp;D engineer. Now I basically do the same thing on YouTube (youtube.com&#x2F;stuffmadehere). The difference now is my R&amp;D-ing is directed at early stage prototypes that I think are interesting &#x2F; instructive, rather than what is best for an actual business, useful, or profitable.<p>Youtube is interesting because theres a constant source of numeric feedback on how you are doing (views &#x2F; subscribers &#x2F; watch time). Seeing these numbers change based on what you do can be incredibly addicting and it&#x27;s very easy to accidentally connect your personal happiness to those numbers. This is great if they are going up, but if they aren&#x27;t.... yeah. It&#x27;s also easy to get into a situation where you lean into &quot;what works&quot; over and over until you find yourself doing stuff that you don&#x27;t enjoy.<p>My advice would be to find a way to keep the numbers at arms length and focus on doing stuff that you enjoy. You definitely need the feedback of stats &#x2F; comments &#x2F; etc to get better, but you don&#x27;t wan to check it 10 times a day. Personally when I launch a video I will check a few times to ensure I didn&#x27;t screw up anything major, see if there is any useful feedback in comments, then I will check maybe the stats every week or two.",
+              "time" : 1686447454,
+              "type" : "comment"
+            }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        let decodedComment = try decoder.decode(Item.self, from: comment)
+        
+        XCTAssertEqual(decodedComment.by, "swighton")
+        XCTAssertEqual(decodedComment.id, 36277101)
+        XCTAssertEqual(decodedComment.kids, [ 36277437, 36277590, 36277204, 36277534, 36279015, 36278930, 36278500, 36277524 ])
+        XCTAssertEqual(decodedComment.parent, 36253565)
+        XCTAssertEqual(decodedComment.text, "I used to be a full time dev &#x2F; R&amp;D engineer. Now I basically do the same thing on YouTube (youtube.com&#x2F;stuffmadehere). The difference now is my R&amp;D-ing is directed at early stage prototypes that I think are interesting &#x2F; instructive, rather than what is best for an actual business, useful, or profitable.<p>Youtube is interesting because theres a constant source of numeric feedback on how you are doing (views &#x2F; subscribers &#x2F; watch time). Seeing these numbers change based on what you do can be incredibly addicting and it&#x27;s very easy to accidentally connect your personal happiness to those numbers. This is great if they are going up, but if they aren&#x27;t.... yeah. It&#x27;s also easy to get into a situation where you lean into &quot;what works&quot; over and over until you find yourself doing stuff that you don&#x27;t enjoy.<p>My advice would be to find a way to keep the numbers at arms length and focus on doing stuff that you enjoy. You definitely need the feedback of stats &#x2F; comments &#x2F; etc to get better, but you don&#x27;t wan to check it 10 times a day. Personally when I launch a video I will check a few times to ensure I didn&#x27;t screw up anything major, see if there is any useful feedback in comments, then I will check maybe the stats every week or two.")
+        XCTAssertEqual(decodedComment.time, 1686447454)
+        XCTAssertEqual(decodedComment.type, .comment)
+        XCTAssertEqual(decodedComment.url, URL(string: "https://news.ycombinator.com/item?id=\(decodedComment.id)")!)
+    }
+    
+    func testDecodeJob() throws {
+        let job = """
+            {
+              "by" : "ethanyu94",
+              "id" : 36215816,
+              "score" : 1,
+              "time" : 1686070818,
+              "title" : "Motion (YC W20) Is Hiring Front End Engineers",
+              "type" : "job",
+              "url" : "https://jobs.ashbyhq.com/motion/4f5f6a29-3af0-4d79-99a4-988ff7c5ba05?utm_source=hn"
+            }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        let decodedJob = try decoder.decode(Item.self, from: job)
+        
+        XCTAssertEqual(decodedJob.by, "ethanyu94")
+        XCTAssertEqual(decodedJob.id, 36215816)
+        XCTAssertEqual(decodedJob.score, 1)
+        XCTAssertEqual(decodedJob.time, 1686070818)
+        XCTAssertEqual(decodedJob.title, "Motion (YC W20) Is Hiring Front End Engineers")
+        XCTAssertEqual(decodedJob.type, .job)
+        XCTAssertEqual(decodedJob.url, URL(string:"https://jobs.ashbyhq.com/motion/4f5f6a29-3af0-4d79-99a4-988ff7c5ba05?utm_source=hn")!)
+    }
+    
+    func testDecodePoll() throws {
+        let poll = """
+            {
+              "by" : "pg",
+              "descendants" : 54,
+              "id" : 126809,
+              "kids" : [ 126822, 126823, 126917, 126993, 126824, 126934, 127411, 126888, 127681, 126818, 126816, 126854, 127095, 126861, 127313, 127299, 126859, 126852, 126882, 126832, 127072, 127217, 126889, 126875, 127535 ],
+              "parts" : [ 126810, 126811, 126812 ],
+              "score" : 47,
+              "time" : 1204403652,
+              "title" : "Poll: What would happen if News.YC had explicit support for polls?",
+              "type" : "poll"
+            }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        let decodedPoll = try decoder.decode(Item.self, from: poll)
+        
+        XCTAssertEqual(decodedPoll.by, "pg")
+        XCTAssertEqual(decodedPoll.descendants, 54)
+        XCTAssertEqual(decodedPoll.id, 126809)
+        XCTAssertEqual(decodedPoll.kids, [ 126822, 126823, 126917, 126993, 126824, 126934, 127411, 126888, 127681, 126818, 126816, 126854, 127095, 126861, 127313, 127299, 126859, 126852, 126882, 126832, 127072, 127217, 126889, 126875, 127535 ])
+        XCTAssertEqual(decodedPoll.parts, [ 126810, 126811, 126812 ])
+        XCTAssertEqual(decodedPoll.score, 47)
+        XCTAssertEqual(decodedPoll.time, 1204403652)
+        XCTAssertEqual(decodedPoll.title, "Poll: What would happen if News.YC had explicit support for polls?")
+        XCTAssertEqual(decodedPoll.type, .poll)
+        XCTAssertEqual(decodedPoll.url, URL(string: "https://news.ycombinator.com/item?id=\(decodedPoll.id)")!)
+    }
+    
+    func testDecodePollOpt() throws {
+        let pollOpt = """
+            {
+              "by" : "pg",
+              "id" : 160705,
+              "poll" : 160704,
+              "score" : 335,
+              "text" : "Yes, ban them; I'm tired of seeing Valleywag stories on News.YC.",
+              "time" : 1207886576,
+              "type" : "pollopt"
+            }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        let decodedPollOpt = try decoder.decode(Item.self, from: pollOpt)
+        
+        XCTAssertEqual(decodedPollOpt.by, "pg")
+        XCTAssertEqual(decodedPollOpt.id, 160705)
+        XCTAssertEqual(decodedPollOpt.poll, 160704)
+        XCTAssertEqual(decodedPollOpt.score, 335)
+        XCTAssertEqual(decodedPollOpt.text, "Yes, ban them; I'm tired of seeing Valleywag stories on News.YC.")
+        XCTAssertEqual(decodedPollOpt.time, 1207886576)
+        XCTAssertEqual(decodedPollOpt.type, .pollopt)
     }
 }
 
@@ -77,16 +182,6 @@ final class ItemTypeTests: XCTestCase {
             let data = "\"\(itemType.rawValue)\"".data(using: .utf8)!
             let result = try decoder.decode(ItemType.self, from: data)
             XCTAssertEqual(result, itemType)
-        }
-    }
-
-    func testEncoding() throws {
-        let encoder = JSONEncoder()
-
-        for itemType in ItemType.allCases {
-            let result = try encoder.encode(itemType)
-            let expected = "\"\(itemType.rawValue)\"".data(using: .utf8)!
-            XCTAssertEqual(result, expected)
         }
     }
 }

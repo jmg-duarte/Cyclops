@@ -15,6 +15,8 @@ struct FeedView: View {
     func loadFeed(page: Int) async {
         do {
             try await feed.getItems(page: page, limit: Int(numberOfStoriesPerPage))
+        // } catch {
+            
         } catch {
             errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
         }
