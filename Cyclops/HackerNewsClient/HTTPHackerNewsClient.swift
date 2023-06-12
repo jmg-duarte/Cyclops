@@ -64,11 +64,21 @@ class HTTPHNClient: HackerNewsClient {
         let endIndex = min(startIndex + limit, maxIndex)
         
         Self.logger.info("Loading stories [from: \(startIndex), to: \(endIndex)]")
-        var stories: [Item] = []
-        for id in ids[startIndex...endIndex] {
-            let story = try await fetchStory(id: id)
-            stories.append(story)
+        var stories: [(Int, Item)] = try await withThrowingTaskGroup(of: (Int, Item).self) { group in
+            var stories: [(Int, Item)] = []
+            for (idx, id) in ids[startIndex...endIndex].enumerated() {
+                group.addTask {
+                    return try await (idx, self.fetchStory(id: id))
+                }
+            }
+            while let (idx, story) = try await group.next() {
+                stories.append((idx, story))
+            }
+            return stories
         }
-        return stories
+        stories.sort {
+            $0.0 < $1.0
+        }
+        return stories.map { $1 }
     }
 }
