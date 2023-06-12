@@ -4,6 +4,7 @@
 
 import SwiftUI
 import os
+import Foundation
 
 struct FeedView: View {
     
@@ -27,6 +28,8 @@ struct FeedView: View {
     func loadFeed() async {
         do {
             try await provider.fetchFeed(kind: kind, from: currentPage, limit: Int(numberOfStoriesPerPage))
+        } catch URLError.cancelled {
+            Self.logger.info("Feed loading was cancelled, ignoring...")
         } catch {
             errorWrapper = ErrorWrapper(error: error, guidance: "Try to reload the app...")
         }
