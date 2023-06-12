@@ -11,9 +11,9 @@ import Foundation
 class HNProvider: ObservableObject {
     @Published var items : [Item] = []
     
-    let client: HNClient
+    let client: HackerNewsClient
     
-    init (client: HNClient = HTTPHNClient()) {
+    init (client: HackerNewsClient = HTTPHNClient()) {
         self.client = client
     }
     

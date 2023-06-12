@@ -115,8 +115,8 @@ struct FeedView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // FIXME: add test http client
-        var provider = HNProvider()
+        let client = TestHackerNewsClient()
+        let provider = HNProvider(client: client)
         FeedView(kind: .top).environmentObject(provider)
     }
 }

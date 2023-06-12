@@ -14,33 +14,7 @@ enum StoryKind: String {
     // case job
 }
 
-extension URLSession {
-    func httpData(from url: URL) async throws -> Data {
-        guard let (data, response) = try await self.data(from: url, delegate: nil) as? (Data, HTTPURLResponse),
-              (200...299).contains(response.statusCode)
-        else {
-            fatalError("Unimplemented")
-        }
-        return data
-    }
-}
-
-protocol HNClient {
-    /// Fetch story IDs off of the provided kind.
-    /// - Parameters
-    ///     - kind: The kind of feed to fetch stories off of.
-    func fetchStoryIDs(kind: StoryKind) async throws -> [Int]
-
-    /// Fetch an item from the given ID
-    /// - Parameters:
-    ///     - id: The item ID
-    func fetchStory(id: Int) async throws -> Item
-
-    /// Fetch a set of stories based on the given story kind.
-    func fetchFeed(kind: StoryKind, from: Int, limit: Int) async throws -> [Item]
-}
-
-class HTTPHNClient: HNClient {
+class HTTPHNClient: HackerNewsClient {
     private static let hackerNewsAPIv0 = URL(string: "https://hacker-news.firebaseio.com/v0/")!
     private static let topStoriesURL = URL(string: "topstories.json", relativeTo: hackerNewsAPIv0)!
     private static let newStoriesURL = URL(string: "newstories.json", relativeTo: hackerNewsAPIv0)!
