@@ -2,19 +2,19 @@
 // Created by José Duarte on 07/06/2023
 // Copyright (c) 2023
 
-import SwiftUI
-import os
 import Foundation
+import os
+import SwiftUI
 
 struct FeedView: View {
-    
-    
     let kind: StoryKind
     
     private let storyLimit = 500
     
     @State private var currentPage: Int = 1
     @State private var errorWrapper: ErrorWrapper?
+    
+    @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var provider: HNProvider
     
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage)
@@ -64,53 +64,57 @@ struct FeedView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(provider.items) { item in
-                    ItemView(item: item)
-                }
-                .onDelete { _ in }
-                .swipeActions(edge: .leading) {
-                    Button {} label: {
-                        Label("Bookmark", systemImage: "bookmark")
-                    }.tint(.blue)
-                }
-                .swipeActions(edge: .trailing) {
-                    Button(role: .destructive) {} label: {
-                        Label("Hide", systemImage: "eye.slash")
+            if networkMonitor.isConnected {
+                List {
+                    ForEach(provider.items) { item in
+                        ItemView(item: item)
                     }
-                }
-            }
-            .navigationTitle(Text("\(kind.rawValue.capitalized) Stories"))
-            .listStyle(.plain)
-            .toolbar {
-                if !isFirstPage() {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: previousPage) {
-                            Image(systemName: "arrow.left")
-                            Text("Page \(currentPage-1)")
+                    .onDelete { _ in }
+                    .swipeActions(edge: .leading) {
+                        Button {} label: {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }.tint(.blue)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {} label: {
+                            Label("Hide", systemImage: "eye.slash")
                         }
-                        .accessibilityHint(Text("Moves to the previous page"))
                     }
                 }
-                if !isLastPage() {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: nextPage) {
-                            Text("Page \(currentPage+1)")
-                            Image(systemName: "arrow.right")
+                .navigationTitle(Text("\(kind.rawValue.capitalized) Stories"))
+                .listStyle(.plain)
+                .toolbar {
+                    if !isFirstPage() {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: previousPage) {
+                                Image(systemName: "arrow.left")
+                                Text("Page \(currentPage - 1)")
+                            }
+                            .accessibilityHint(Text("Moves to the previous page"))
                         }
-                        .accessibilityHint(Text("Moves to the next page"))
+                    }
+                    if !isLastPage() {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: nextPage) {
+                                Text("Page \(currentPage + 1)")
+                                Image(systemName: "arrow.right")
+                            }
+                            .accessibilityHint(Text("Moves to the next page"))
+                        }
                     }
                 }
-            }
-            .task { await loadFeed() }
-            .refreshable {
-                resetPage()
-                await loadFeed()
-            }
-            .sheet(item: $errorWrapper) {
-                provider.items = []
-            } content: { wrapper in
-                ErrorView(errorWrapper: wrapper)
+                .task { await loadFeed() }
+                .refreshable {
+                    resetPage()
+                    await loadFeed()
+                }
+                .sheet(item: $errorWrapper) {
+                    provider.items = []
+                } content: { wrapper in
+                    ErrorView(errorWrapper: wrapper)
+                }
+            } else {
+                OfflineView()
             }
         }
     }
@@ -118,8 +122,11 @@ struct FeedView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+        let networkMonitor = NetworkMonitor()
         let client = TestHackerNewsClient()
         let provider = HNProvider(client: client)
-        FeedView(kind: .top).environmentObject(provider)
+        FeedView(kind: .top)
+            .environmentObject(provider)
+            .environmentObject(networkMonitor)
     }
 }

@@ -19,7 +19,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HckrNewsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @StateObject var hackerNewsProvider: HNProvider = HNProvider()
+    @StateObject var hackerNewsProvider = HNProvider()
+    @StateObject var networkMonitor = NetworkMonitor()
 
     var body: some Scene {
         WindowGroup {
@@ -28,14 +29,17 @@ struct HckrNewsApp: App {
                     Label("Top", systemImage: "chart.line.uptrend.xyaxis")
                 }
                 .environmentObject(hackerNewsProvider)
+                .environmentObject(networkMonitor)
                 FeedView(kind:.new).tabItem {
                     Label("New", systemImage: "newspaper.fill")
                 }
                 .environmentObject(hackerNewsProvider)
+                .environmentObject(networkMonitor)
                 FeedView(kind:.best).tabItem {
                     Label("Best", systemImage: "trophy.fill")
                 }
                 .environmentObject(hackerNewsProvider)
+                .environmentObject(networkMonitor)
                 SettingsView().tabItem {
                     Label("Settings", systemImage: "gear")
                 }
