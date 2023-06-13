@@ -10,7 +10,6 @@ import Network
 
 
 // Stolen from: https://morioh.com/p/68816b37881c
-@MainActor
 class NetworkMonitor: ObservableObject {
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "Monitor")
@@ -18,7 +17,9 @@ class NetworkMonitor: ObservableObject {
     
     init() {
         monitor.pathUpdateHandler = {  path in
+            DispatchQueue.main.async {
                 self.isConnected = path.status == .satisfied
+            }
         }
         monitor.start(queue: queue)
     }
