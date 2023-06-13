@@ -81,7 +81,7 @@ struct FeedView: View {
                         }
                     }
                 }
-                .navigationTitle(Text("\(kind.rawValue.capitalized) Stories"))
+                .navigationBarTitle(Text("\(kind.rawValue.capitalized) Stories"), displayMode:.inline)
                 .listStyle(.plain)
                 .toolbar {
                     if !isFirstPage() {
