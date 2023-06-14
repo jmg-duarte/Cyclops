@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Convert this into a generic view that takes a "network monitor" and shows the failed connection over other views
 struct OfflineView: View {
     var body: some View {
         VStack {
