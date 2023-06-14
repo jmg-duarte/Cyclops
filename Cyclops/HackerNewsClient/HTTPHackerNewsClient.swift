@@ -40,6 +40,7 @@ class HTTPHNClient: HackerNewsClient {
 
     private let downloader: URLSession
     private let storyIDsCache: NSCache<NSString, CacheEntryObject<[Int]>> = NSCache()
+    private let storyCache: NSCache<NSString, CacheEntryObject<Item>> = NSCache()
     private lazy var decoder: JSONDecoder = .init()
 
     init(downloader: URLSession = URLSession.shared) {
@@ -75,25 +76,45 @@ class HTTPHNClient: HackerNewsClient {
 
     func fetchStory(id: Int) async throws -> Item {
         let url = URL(string: "item/\(id).json", relativeTo: HTTPHNClient.hackerNewsAPIv0)!
-        let data = try await downloader.httpData(from: url)
-        let story = try decoder.decode(Item.self, from: data)
-        return story
+        if let cached = storyCache.object(forKey: url.absoluteString as NSString) {
+            Self.logger.debug("Found cache entry [key: \(url.absoluteString)]")
+            switch cached.entry {
+            case .inProgress(let task):
+                return try await task.value
+            case .ready(let story):
+                return story
+            }
+        }
+        let task = Task <Item, Error> {
+            let data = try await downloader.httpData(from: url)
+            return try decoder.decode(Item.self, from: data)
+        }
+        storyCache.setObject(CacheEntryObject(entry: .inProgress(task)), forKey: url.absoluteString as NSString)
+        do {
+            let story = try await task.value
+            storyCache.setObject(CacheEntryObject(entry: .ready(story)), forKey: url.absoluteString as NSString)
+            return story
+        } catch {
+            storyCache.removeObject(forKey: url.absoluteString as NSString)
+            throw error
+        }
     }
 
     func fetchFeed(kind: StoryKind, from: Int, limit: Int) async throws -> [Item] {
-        Self.logger.info("Loading top stories [page: \(from), limit: \(limit)]")
+        Self.logger.info("Loading top stories [from: \(from), limit: \(limit)]")
         let ids = try await fetchStoryIDs(kind: kind)
 
         let maxIndex = ids.count - 1
         let startIndex = min(from, maxIndex)
-        let endIndex = min(startIndex + limit, maxIndex)
+        let endIndex = min(startIndex + (limit-1), maxIndex)
 
         Self.logger.info("Loading stories [from: \(startIndex), to: \(endIndex)]")
         var stories: [(Int, Item)] = try await withThrowingTaskGroup(of: (Int, Item).self) { group in
             var stories: [(Int, Item)] = []
             for (idx, id) in ids[startIndex ... endIndex].enumerated() {
                 group.addTask {
-                    try await (idx, self.fetchStory(id: id))
+                    Self.logger.debug("Fetching story [id: \(id)]")
+                    return try await (idx, self.fetchStory(id: id))
                 }
             }
             while let (idx, story) = try await group.next() {
