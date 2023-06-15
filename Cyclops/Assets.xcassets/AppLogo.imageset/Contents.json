@@ -2,8 +2,7 @@
   "images" : [
     {
       "filename" : "reader_logo_1x.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "idiom" : "universal"
     },
     {
       "appearances" : [
@@ -13,45 +12,11 @@
         }
       ],
       "filename" : "reader_logo_white_1x.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "reader_logo_2x-04.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "reader_logo_white_2x-04.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "reader_logo_2x-05.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "reader_logo_white_2x-05.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "idiom" : "universal"
     },
     {
       "filename" : "reader_logo_1x 1.svg",
-      "idiom" : "iphone",
-      "scale" : "1x"
+      "idiom" : "iphone"
     },
     {
       "appearances" : [
@@ -61,40 +26,7 @@
         }
       ],
       "filename" : "reader_logo_white_1x 1.svg",
-      "idiom" : "iphone",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "reader_logo_2x-04 1.svg",
-      "idiom" : "iphone",
-      "scale" : "2x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "reader_logo_white_2x-04 1.svg",
-      "idiom" : "iphone",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "reader_logo_2x-05 1.svg",
-      "idiom" : "iphone",
-      "scale" : "3x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "reader_logo_white_2x-05 1.svg",
-      "idiom" : "iphone",
-      "scale" : "3x"
+      "idiom" : "iphone"
     }
   ],
   "info" : {
