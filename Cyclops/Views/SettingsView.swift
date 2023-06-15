@@ -7,17 +7,33 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = 10
 
+    let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
+    let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    let buildNumber = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+
     var body: some View {
-        Form {
-            List {
-                Section("Stories") {
-                    HStack {
-                        Text("Stories per page")
-                        Slider(value: $numberOfStoriesPerPage, in: 10 ... 50, step: 1) {
-                            Text("Number of stories to fetch")
+        NavigationView {
+            Form {
+                List {
+                    Section("Stories") {
+                        HStack {
+                            Text("Stories per page")
+                            Slider(value: $numberOfStoriesPerPage, in: 10 ... 50, step: 1) {
+                                Text("Number of stories to fetch")
+                            }
+                            Text("\(Int(numberOfStoriesPerPage))")
                         }
-                        Text("\(Int(numberOfStoriesPerPage))")
                     }
+                }
+            }.navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Text("\(appName) \(appVersion) (\(buildNumber))")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity)
+                        .textSelection(.enabled)
                 }
             }
         }
