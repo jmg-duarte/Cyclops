@@ -40,7 +40,7 @@ struct ItemView: View {
                  }.tint(.blue)
                   */
             } label: {
-                notBookmarked ? Image(systemName: "bookmark") : Image(systemName: "bookmark.slash")
+                notBookmarked ? Image(systemName: "bookmark") : Image(systemName: "bookmark.fill")
             }
         }
     }
