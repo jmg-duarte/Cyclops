@@ -25,8 +25,8 @@ struct Item: Identifiable {
     var poll: Int? = nil
     var score: Int? = nil
     var text: String? = nil
-    var time: Int? = nil
-    var title: String? = nil
+    var time: Int? = nil // This is (probably) only nil for pollopts
+    var title: String? = nil // This is only nil for comments and friends
 
     static func postURL(_ id: Int) -> URL {
         URL(string: "https://news.ycombinator.com/item?id=\(id)")!
@@ -35,6 +35,7 @@ struct Item: Identifiable {
     func postURL() -> URL {
         Item.postURL(id)
     }
+
 }
 
 extension Item: Decodable {
@@ -74,41 +75,6 @@ extension Item: Decodable {
         time = try? values.decode(Int.self, forKey: .time)
         title = try? values.decode(String.self, forKey: .title)
         url = (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id)
-    }
-}
-
-extension Item {
-    var timeAgo: Int? {
-        guard time != nil else { return nil }
-
-        let itemPublishUnixTime = Double(time!)
-        let currentUnixTime = NSDate().timeIntervalSince1970
-        let delta = currentUnixTime - itemPublishUnixTime
-
-        return Int(delta)
-    }
-
-    var timeAgoWithUnits: String? {
-        if let timeAgo {
-            if timeAgo < 60 {
-                let plural = timeAgo != 1 ? "s" : ""
-                return "\(timeAgo) second\(plural) ago"
-            }
-            if timeAgo < 3600 {
-                let minutes = timeAgo / 60
-                let plural = minutes != 1 ? "s" : ""
-                return "\(timeAgo / 60) minute\(plural) ago"
-            }
-            if timeAgo < 86400 {
-                let hours = timeAgo / 60 / 60
-                let plural = hours != 1 ? "s" : ""
-                return "\(hours) hour\(plural) ago"
-            }
-            let days = timeAgo / 60 / 60 / 24
-            let plural = days != 1 ? "s" : ""
-            return "\(days) day\(plural) ago"
-        }
-        return nil
     }
 }
 

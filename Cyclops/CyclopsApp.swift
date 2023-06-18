@@ -8,7 +8,8 @@ import SwiftUI
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
 
-    @StateObject var networkMonitor = NetworkMonitor()
+    @StateObject private var dataController = DataController()
+    @StateObject private var networkMonitor = NetworkMonitor()
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme: AppTheme = UserDefaults.Defaults.AppTheme
 
     private var selectedAppTheme: ColorScheme? {
@@ -39,7 +40,9 @@ struct HckrNewsApp: App {
                 SettingsView().tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-            }.preferredColorScheme(selectedAppTheme)
+            }
+            .preferredColorScheme(selectedAppTheme)
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }

@@ -5,20 +5,42 @@
 import SwiftUI
 
 struct ItemView: View {
-    let item: Item
+    @State private var notBookmarked = true
+
+    let url: URL
+    let title: String
+    let time: UnixEpoch
+
+    // This needs a view model to interact with the persistence layer,
+    // otherwise the code will become a mess
 
     var body: some View {
-        Link(destination: item.url) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(item.title!).font(.headline).multilineTextAlignment(.leading)
-                    HStack {
-                        if let timeAgo = item.timeAgoWithUnits {
-                            Text(timeAgo).font(.caption)
-                        }
-                        Text("(\(item.url.host()!))").font(.caption)
-                    }
-                }.frame(maxWidth: .infinity, alignment: .leading)
+        HStack {
+            Button {
+                notBookmarked.toggle()
+                // TODO: figure out the crossing animation
+                /*
+                 Button {
+                     let bookmark = Bookmark(context: managedObjectContext)
+                     bookmark.id = Int64(item.id)
+                     bookmark.url = item.url
+                     bookmark.title = item.title
+                     try? managedObjectContext.save()
+                 } label: {
+                     Label("Bookmark", systemImage: "bookmark")
+                 }.tint(.blue)
+                  */
+            } label: {
+                notBookmarked ? Image(systemName: "bookmark") : Image(systemName: "bookmark.slash")
+            }
+            Link(destination: url) { VStack(alignment: .leading) {
+                Text(title).font(.headline).multilineTextAlignment(.leading)
+                HStack {
+                    Text(time.formattedTimeAgo).font(.caption)
+                    Text("(\(url.host()!))").font(.caption)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
@@ -26,6 +48,10 @@ struct ItemView: View {
 
 struct ItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemView(item: Item.sampleData[0])
+        ItemView(
+            url: Item.sampleData[0].url,
+            title: Item.sampleData[0].title!,
+            time: Item.sampleData[0].time!
+        )
     }
 }

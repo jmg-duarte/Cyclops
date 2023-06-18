@@ -8,7 +8,8 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
-
+    
+    @Environment(\.managedObjectContext) var managedObjectContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
 
@@ -29,17 +30,12 @@ struct FeedView: View {
                 case let .loaded(feed):
                     List {
                         ForEach(feed) { item in
-                            ItemView(item: item)
-                        }
-                        .onDelete { _ in }
-                        .swipeActions(edge: .leading) {
-                            Button {} label: {
-                                Label("Bookmark", systemImage: "bookmark")
-                            }.tint(.blue)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {} label: {
-                                Label("Hide", systemImage: "eye.slash")
+                            // Force unwrap should be safe because news always have titles and time
+                            ItemView(url: item.url, title:item.title!, time:item.time!)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {} label: {
+                                    Label("Hide", systemImage: "eye.slash")
+                                }
                             }
                         }
                     }
