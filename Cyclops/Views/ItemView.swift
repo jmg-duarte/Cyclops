@@ -16,6 +16,15 @@ struct ItemView: View {
 
     var body: some View {
         HStack {
+            Link(destination: url) { VStack(alignment: .leading) {
+                Text(title).font(.headline).multilineTextAlignment(.leading)
+                HStack {
+                    Text(time.formattedTimeAgo).font(.caption)
+                    Text("(\(url.host()!))").font(.caption)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            }
             Button {
                 notBookmarked.toggle()
                 // TODO: figure out the crossing animation
@@ -32,15 +41,6 @@ struct ItemView: View {
                   */
             } label: {
                 notBookmarked ? Image(systemName: "bookmark") : Image(systemName: "bookmark.slash")
-            }
-            Link(destination: url) { VStack(alignment: .leading) {
-                Text(title).font(.headline).multilineTextAlignment(.leading)
-                HStack {
-                    Text(time.formattedTimeAgo).font(.caption)
-                    Text("(\(url.host()!))").font(.caption)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
