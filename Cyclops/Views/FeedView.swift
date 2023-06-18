@@ -1,5 +1,5 @@
 // FeedView.swift
-// Created by José Duarte on 07/06/2023
+// Created by José Duarte on 14/06/2023
 // Copyright (c) 2023
 
 import Foundation
@@ -8,10 +8,10 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
-    
+
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
-    
+
     private static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: FeedView.self)
@@ -23,10 +23,10 @@ struct FeedView: View {
                 switch vm.state {
                 case .loading:
                     ProgressView()
-                    .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
+                        .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
                 case .failed:
                     Text("ups")
-                case .loaded(let feed):
+                case let .loaded(feed):
                     List {
                         ForEach(feed) { item in
                             ItemView(item: item)
@@ -45,34 +45,34 @@ struct FeedView: View {
                     }
                     .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
                     .listStyle(.plain)
-                     .toolbar {
-                         if !vm.isFirstPage {
-                             ToolbarItem(placement: .navigationBarLeading) {
-                                 Button {
-                                     Task {
-                                         await vm.previousPage()
-                                     }
-                                 } label: {
-                                     Image(systemName: "arrow.left")
-                                     Text("Page \(vm.currentPage - 1)")
-                                 }
-                                 .accessibilityHint(Text("Moves to the previous page"))
-                             }
-                         }
-                         if !vm.isLastPage {
-                             ToolbarItem(placement: .navigationBarTrailing) {
-                                 Button {
-                                     Task {
-                                         await vm.nextPage()
-                                     }
-                                 } label: {
-                                     Text("Page \(vm.currentPage + 1)")
-                                     Image(systemName: "arrow.right")
-                                 }
-                                 .accessibilityHint(Text("Moves to the next page"))
-                             }
-                         }
-                     }
+                    .toolbar {
+                        if !vm.isFirstPage {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button {
+                                    Task {
+                                        await vm.previousPage()
+                                    }
+                                } label: {
+                                    Image(systemName: "arrow.left")
+                                    Text("Page \(vm.currentPage - 1)")
+                                }
+                                .accessibilityHint(Text("Moves to the previous page"))
+                            }
+                        }
+                        if !vm.isLastPage {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button {
+                                    Task {
+                                        await vm.nextPage()
+                                    }
+                                } label: {
+                                    Text("Page \(vm.currentPage + 1)")
+                                    Image(systemName: "arrow.right")
+                                }
+                                .accessibilityHint(Text("Moves to the next page"))
+                            }
+                        }
+                    }
                 }
             }
             .task { await vm.loadPage() }
@@ -83,13 +83,22 @@ struct FeedView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static let networkMonitor = NetworkMonitor()
+    static let client = TestHackerNewsClient()
+    static let vm = FeedViewModel(feed: .top, loader: client)
     static var previews: some View {
-        let networkMonitor = NetworkMonitor()
-        let client = TestHackerNewsClient()
-        // let provider = HNProvider(client: client)
-        let vm = FeedViewModel(feed: .top, loader: client)
-        FeedView(vm: vm)
-            // .environmentObject(provider)
-            .environmentObject(networkMonitor)
+        Group {
+            FeedView(vm: vm)
+                .environmentObject(networkMonitor)
+                .previewDisplayName("Inherited")
+            FeedView(vm: vm)
+                .environmentObject(networkMonitor)
+                .previewDisplayName("Light Mode")
+                .preferredColorScheme(.light)
+            FeedView(vm: vm)
+                .environmentObject(networkMonitor)
+                .previewDisplayName("Dark Mode")
+                .preferredColorScheme(.dark)
+        }
     }
 }

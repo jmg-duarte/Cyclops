@@ -5,7 +5,8 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = 10
+    @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = AppTheme.system.rawValue
+    @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = UserDefaults.Defaults.NumberOfStoriesPerPage
 
     let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
     let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -24,8 +25,18 @@ struct SettingsView: View {
                             Text("\(Int(numberOfStoriesPerPage))")
                         }
                     }
+                    Section("Theme") {
+                        Picker(selection: $appTheme) {
+                            ForEach(AppTheme.allCases) { item in
+                                Text(item.name).tag(item.rawValue)
+                            }
+                        } label: {
+                            Text("Color Theme")
+                        }
+                    }
                 }
-            }.navigationTitle("Settings")
+            }
+            .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {

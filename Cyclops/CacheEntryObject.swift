@@ -1,9 +1,6 @@
-//
-//  CacheEntryObject.swift
-//  Cyclops
-//
-//  Created by José Duarte on 13/06/2023.
-//
+// CacheEntryObject.swift
+// Created by José Duarte on 13/06/2023
+// Copyright (c) 2023
 
 import Foundation
 

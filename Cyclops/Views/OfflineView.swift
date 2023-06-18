@@ -1,9 +1,6 @@
-//
-//  OfflineView.swift
-//  Cyclops
-//
-//  Created by José Duarte on 13/06/2023.
-//
+// OfflineView.swift
+// Created by José Duarte on 14/06/2023
+// Copyright (c) 2023
 
 import SwiftUI
 

@@ -21,6 +21,7 @@
 		11BF204E2A387050008A54B9 /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF204D2A387050008A54B9 /* OfflineView.swift */; };
 		11BF20522A387A1F008A54B9 /* CacheEntryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20512A387A1F008A54B9 /* CacheEntryObject.swift */; };
 		11BF20572A3A3656008A54B9 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20562A3A3656008A54B9 /* FeedViewModel.swift */; };
+		11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20592A3F1723008A54B9 /* AppTheme.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
 		11FE08F42A322B5E0034829A /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08F32A322B5E0034829A /* ItemTests.swift */; };
 		11FE08FC2A322B830034829A /* NewsItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FB2A322B830034829A /* NewsItemData.swift */; };
@@ -56,6 +57,7 @@
 		11BF20512A387A1F008A54B9 /* CacheEntryObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheEntryObject.swift; sourceTree = "<group>"; };
 		11BF20562A3A3656008A54B9 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		11BF20582A3F0D85008A54B9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		11BF20592A3F1723008A54B9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		11FE08F12A322B5E0034829A /* CyclopsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyclopsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11FE08F32A322B5E0034829A /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
@@ -105,16 +107,16 @@
 		11120AB62A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXGroup;
 			children = (
-				11120ABB2A30E53B0084E612 /* Assets.xcassets */,
+				11BF205D2A3F29C0008A54B9 /* ViewModels */,
 				11BF20422A37698B008A54B9 /* Extensions */,
 				11BF20412A37696E008A54B9 /* HackerNewsClient */,
 				11FE08E82A31E21F0034829A /* Models */,
 				11120AC52A30E76A0084E612 /* Views */,
 				11120AB72A30E53A0084E612 /* CyclopsApp.swift */,
-				11120ABD2A30E53B0084E612 /* Preview Content */,
 				11BF204B2A386EF7008A54B9 /* NetworkMonitor.swift */,
 				11BF20512A387A1F008A54B9 /* CacheEntryObject.swift */,
-				11BF20562A3A3656008A54B9 /* FeedViewModel.swift */,
+				11120ABB2A30E53B0084E612 /* Assets.xcassets */,
+				11120ABD2A30E53B0084E612 /* Preview Content */,
 			);
 			path = Cyclops;
 			sourceTree = "<group>";
@@ -158,11 +160,20 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		11BF205D2A3F29C0008A54B9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				11BF20562A3A3656008A54B9 /* FeedViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		11FE08E82A31E21F0034829A /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				11FE08E92A31E22D0034829A /* Item.swift */,
 				11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */,
+				11BF20592A3F1723008A54B9 /* AppTheme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +293,7 @@
 				11BF20462A3769D9008A54B9 /* HackerNewsClient.swift in Sources */,
 				11BF20442A3769A9008A54B9 /* URLSession+HTTPData.swift in Sources */,
 				11BF204E2A387050008A54B9 /* OfflineView.swift in Sources */,
+				11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */,
 				11FE09062A332D680034829A /* FeedView.swift in Sources */,
 				11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */,
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,

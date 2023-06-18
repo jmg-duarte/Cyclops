@@ -1,4 +1,4 @@
-// HackerNewsClient.swift
+// HTTPHackerNewsClient.swift
 // Created by José Duarte on 08/06/2023
 // Copyright (c) 2023
 
@@ -12,7 +12,7 @@ enum StoryKind: String {
     // case ask
     // case show
     // case job
-    
+
     var feedURL: URL {
         switch self {
         case .new:
@@ -24,8 +24,6 @@ enum StoryKind: String {
         }
     }
 }
-
-
 
 class HTTPHNClient: HackerNewsClient {
     private static let hackerNewsAPIv0 = URL(string: "https://hacker-news.firebaseio.com/v0/")!
@@ -53,13 +51,13 @@ class HTTPHNClient: HackerNewsClient {
         if let cached = storyIDsCache.object(forKey: storiesURL.absoluteString as NSString) {
             Self.logger.debug("Found cache entry [key: \(storiesURL.absoluteString)]")
             switch cached.entry {
-            case .inProgress(let task):
+            case let .inProgress(task):
                 return try await task.value
-            case .ready(let storyIDs):
+            case let .ready(storyIDs):
                 return storyIDs
             }
         }
-        let task = Task <[Int], Error> {
+        let task = Task<[Int], Error> {
             let data = try await downloader.httpData(from: storiesURL)
             return try decoder.decode([Int].self, from: data)
         }
@@ -79,13 +77,13 @@ class HTTPHNClient: HackerNewsClient {
         if let cached = storyCache.object(forKey: url.absoluteString as NSString) {
             Self.logger.debug("Found cache entry [key: \(url.absoluteString)]")
             switch cached.entry {
-            case .inProgress(let task):
+            case let .inProgress(task):
                 return try await task.value
-            case .ready(let story):
+            case let .ready(story):
                 return story
             }
         }
-        let task = Task <Item, Error> {
+        let task = Task<Item, Error> {
             let data = try await downloader.httpData(from: url)
             return try decoder.decode(Item.self, from: data)
         }
@@ -106,7 +104,7 @@ class HTTPHNClient: HackerNewsClient {
 
         let maxIndex = ids.count - 1
         let startIndex = min(from, maxIndex)
-        let endIndex = min(startIndex + (limit-1), maxIndex)
+        let endIndex = min(startIndex + (limit - 1), maxIndex)
 
         Self.logger.info("Loading stories [from: \(startIndex), to: \(endIndex)]")
         var stories: [(Int, Item)] = try await withThrowingTaskGroup(of: (Int, Item).self) { group in

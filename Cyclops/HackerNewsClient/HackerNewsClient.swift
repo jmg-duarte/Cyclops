@@ -1,9 +1,6 @@
-//
-//  Client.swift
-//  Cyclops
-//
-//  Created by José Duarte on 12/06/2023.
-//
+// HackerNewsClient.swift
+// Created by José Duarte on 12/06/2023
+// Copyright (c) 2023
 
 import Foundation
 
