@@ -9,12 +9,12 @@ import CoreData
 import Foundation
 import os
 
-class DataController: ObservableObject {
+class PersistenceController: ObservableObject {
     
     static let containerName = "Model"
     
-    static var preview: DataController {
-        let controller = DataController(inMemory: true)
+    static var preview: PersistenceController {
+        let controller = PersistenceController(inMemory: true)
         let context = controller.container.viewContext
         for item in Item.sampleData {
             let bookmark = Bookmark(context:context)
@@ -29,13 +29,13 @@ class DataController: ObservableObject {
 
     private static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: DataController.self)
+        category: String(describing: PersistenceController.self)
     )
     
     let container: NSPersistentContainer
     
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: DataController.self.containerName)
+        container = NSPersistentContainer(name: PersistenceController.self.containerName)
         
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
@@ -52,7 +52,7 @@ class DataController: ObservableObject {
                 for: .applicationSupportDirectory,
                 in: .userDomainMask).debugDescription
             .replacingOccurrences(of: "%20", with: " ")
-        DataController.logger.debug("\(path)")
+        PersistenceController.logger.debug("\(path)")
         #endif
     }
 }
