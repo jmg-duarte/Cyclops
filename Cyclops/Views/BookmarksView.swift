@@ -14,24 +14,30 @@ struct BookmarksView: View {
     // I should probably add an "added" field to the bookmarks for sorting for now, fuck it
     @FetchRequest(sortDescriptors: [SortDescriptor(\.time, order: .reverse)]) var bookmarks: FetchedResults<Bookmark>
     var body: some View {
-        List {
-            ForEach(bookmarks) { bookmark in
-                ItemView(
-                    id: Int(bookmark.id),
-                    url: bookmark.url!,
-                    title: bookmark.title!,
-                    time: Int(bookmark.time)
-                )
+        NavigationStack {
+            List {
+                ForEach(bookmarks) { bookmark in
+                    ItemView(
+                        id: Int(bookmark.id),
+                        url: bookmark.url!,
+                        title: bookmark.title!,
+                        time: Int(bookmark.time)
+                    )
+                }
+                // I wanted the slide to show a trash icon but this is the only way I could make it work
+                // The .slideActions seems to delete the item, reload the view but not update the request
+                // so when it takes out the bookmark again, it's been deleted and the unwrap fails
+                // The explanation may be incorrect but for now, it's the best I know of
+                .onDelete(perform: deleteBookmark)
             }
-            .onDelete(perform: deleteBookmark)
+            .navigationBarTitle(Text("Bookmarks"), displayMode: .inline)
+            .listStyle(.plain)
         }
-        .listStyle(.plain)
     }
 
     func deleteBookmark(at offsets: IndexSet) {
         for index in offsets {
-            let language = bookmarks[index]
-            viewContext.delete(language)
+            viewContext.delete(bookmarks[index])
         }
     }
 }

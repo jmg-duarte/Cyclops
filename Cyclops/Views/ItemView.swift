@@ -26,7 +26,9 @@ struct ItemView: View {
         // Without this, the HStack will trigger all the "tappable" actions
         // See the following link for more information:
         // - https://stackoverflow.com/a/59402642
-        .buttonStyle(.plain)
+        // Right now I need the whole HStack to be tappable but I'm leaving this
+        // for whenever I want to add new buttons
+        // .buttonStyle(.plain)
     }
 }
 
