@@ -56,3 +56,13 @@ class PersistenceController: ObservableObject {
         #endif
     }
 }
+
+extension PersistenceController {
+    func saveBookmark(id: Int, title: String, url: URL, time: Int) {
+        let viewContext = self.container.viewContext
+        let bookmark = Bookmark(context: viewContext)
+        
+        try? viewContext.save()
+    }
+}
+
