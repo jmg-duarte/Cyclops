@@ -8,7 +8,7 @@ import SwiftUI
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
 
-    @StateObject private var dataController = DataController()
+    @StateObject private var dataController = PersistenceController()
     @StateObject private var networkMonitor = NetworkMonitor()
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme: AppTheme = UserDefaults.Defaults.AppTheme
 
@@ -26,17 +26,24 @@ struct HckrNewsApp: App {
         WindowGroup {
             TabView {
                 FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
-                    Label("Top", systemImage: "chart.line.uptrend.xyaxis")
+                    Label("Top", systemImage: "newspaper")
                 }
                 .environmentObject(networkMonitor)
+                /*
                 FeedView(vm: FeedViewModel(feed: .new, loader: hnClient)).tabItem {
-                    Label("New", systemImage: "newspaper.fill")
+                    Label("New", systemImage: "newspaper")
                 }
                 .environmentObject(networkMonitor)
                 FeedView(vm: FeedViewModel(feed: .best, loader: hnClient)).tabItem {
-                    Label("Best", systemImage: "trophy.fill")
+                    Label("Best", systemImage: "trophy")
                 }
+                 */
                 .environmentObject(networkMonitor)
+                BookmarksView()
+                    .tabItem {
+                        Label("Bookmarks", systemImage: "bookmark")
+                    }
+                    .environment(\.managedObjectContext, dataController.container.viewContext)
                 SettingsView().tabItem {
                     Label("Settings", systemImage: "gear")
                 }

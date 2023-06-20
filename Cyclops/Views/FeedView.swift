@@ -8,8 +8,8 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
-    
-    @Environment(\.managedObjectContext) var managedObjectContext
+
+    @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
 
@@ -26,17 +26,26 @@ struct FeedView: View {
                     ProgressView()
                         .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
                 case .failed:
+                    // TODO: handle this
                     Text("ups")
                 case let .loaded(feed):
                     List {
                         ForEach(feed) { item in
                             // Force unwrap should be safe because news always have titles and time
-                            ItemView(url: item.url, title:item.title!, time:item.time!)
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {} label: {
-                                    Label("Hide", systemImage: "eye.slash")
+                            ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        let bookmark = Bookmark(context: viewContext)
+                                        bookmark.id = Int64(item.id)
+                                        bookmark.time = Int64(item.time!)
+                                        bookmark.title = item.title
+                                        bookmark.url = item.url
+                                        try? viewContext.save()
+                                    } label: {
+                                        Label("Bookmark", systemImage: "bookmark.fill")
+                                    }
+                                    .tint(.blue)
                                 }
-                            }
                         }
                     }
                     .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
@@ -86,15 +95,14 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             FeedView(vm: vm)
                 .environmentObject(networkMonitor)
-                .previewDisplayName("Inherited")
-            FeedView(vm: vm)
-                .environmentObject(networkMonitor)
                 .previewDisplayName("Light Mode")
                 .preferredColorScheme(.light)
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             FeedView(vm: vm)
                 .environmentObject(networkMonitor)
                 .previewDisplayName("Dark Mode")
                 .preferredColorScheme(.dark)
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }
 }
