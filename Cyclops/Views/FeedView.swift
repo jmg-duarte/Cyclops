@@ -5,6 +5,7 @@
 import Foundation
 import os
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
@@ -18,6 +19,15 @@ struct FeedView: View {
         category: String(describing: FeedView.self)
     )
 
+    private func saveBookmark(item: Item) {
+        let bookmark = Bookmark(context: viewContext)
+        bookmark.id = Int64(item.id)
+        bookmark.time = Int64(item.time!)
+        bookmark.title = item.title
+        bookmark.url = item.url
+        try? viewContext.save()
+    }
+    
     var body: some View {
         if networkMonitor.isConnected {
             NavigationStack {
@@ -35,16 +45,23 @@ struct FeedView: View {
                             ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
                                 .swipeActions(edge: .leading) {
                                     Button {
-                                        let bookmark = Bookmark(context: viewContext)
-                                        bookmark.id = Int64(item.id)
-                                        bookmark.time = Int64(item.time!)
-                                        bookmark.title = item.title
-                                        bookmark.url = item.url
-                                        try? viewContext.save()
+                                        saveBookmark(item: item)
                                     } label: {
                                         Label("Bookmark", systemImage: "bookmark.fill")
                                     }
                                     .tint(.blue)
+                                }
+                                .contextMenu {
+                                    Button {
+                                        UIPasteboard.general.setValue(item.url.absoluteString, forPasteboardType: UTType.plainText.identifier)
+                                    } label: {
+                                        Label("Copy", systemImage: "doc.on.doc")
+                                    }
+                                    Button {
+                                        saveBookmark(item: item)
+                                    } label: {
+                                        Label("Bookmark", systemImage: "bookmark")
+                                    }
                                 }
                         }
                     }
@@ -58,7 +75,7 @@ struct FeedView: View {
                                         await vm.previousPage()
                                     }
                                 } label: {
-                                    Image(systemName: "arrow.left")
+                                    Image(systemName: "chevron.left")
                                     Text("Page \(vm.currentPage - 1)")
                                 }
                                 .accessibilityHint(Text("Moves to the previous page"))
@@ -72,7 +89,7 @@ struct FeedView: View {
                                     }
                                 } label: {
                                     Text("Page \(vm.currentPage + 1)")
-                                    Image(systemName: "arrow.right")
+                                    Image(systemName: "chevron.right")
                                 }
                                 .accessibilityHint(Text("Moves to the next page"))
                             }
