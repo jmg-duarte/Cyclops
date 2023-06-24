@@ -6,10 +6,13 @@ import Foundation
 import os
 import SwiftUI
 import UniformTypeIdentifiers
+import UIKit
+
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isShowingNavigationSheet: Bool = false
+    @State private var isShowingShareLink: Bool = false
 
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -37,16 +40,16 @@ struct FeedView: View {
                     ProgressView()
                         .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
                         .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            Button {
-                                isShowingNavigationSheet = true
-                            } label: {
-                                Text("\(vm.feed.rawValue.capitalized) Stories").bold()
-                                Image(systemName: "chevron.down")
-                                    .imageScale(.small)
+                            ToolbarItem(placement: .principal) {
+                                Button {
+                                    isShowingNavigationSheet = true
+                                } label: {
+                                    Text("\(vm.feed.rawValue.capitalized) Stories").bold()
+                                    Image(systemName: "chevron.down")
+                                        .imageScale(.small)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
-                        }
                         }
                 case .failed:
                     // TODO: handle this
@@ -66,14 +69,12 @@ struct FeedView: View {
                                 }
                                 .contextMenu {
                                     Button {
-                                        UIPasteboard.general.setValue(item.url.absoluteString, forPasteboardType: UTType.plainText.identifier)
-                                    } label: {
-                                        Label("Copy", systemImage: "doc.on.doc")
-                                    }
-                                    Button {
                                         saveBookmark(item: item)
                                     } label: {
                                         Label("Bookmark", systemImage: "bookmark")
+                                    }
+                                    ShareLink(item: item.url) {
+                                        Label("Share", systemImage:"square.and.arrow.up")
                                     }
                                 }
                         }
@@ -119,8 +120,8 @@ struct FeedView: View {
                     .navigationBarTitle(Text(""), displayMode: .inline)
                     .listStyle(.plain)
                     .sheet(isPresented: $isShowingNavigationSheet, onDismiss: { isShowingNavigationSheet = false }) {
-                        FeedSelectionSheet(feedViewModel:vm, isShowing: $isShowingNavigationSheet)
-                        .presentationDetents([.medium])
+                        FeedSelectionSheet(feedViewModel: vm, isShowing: $isShowingNavigationSheet)
+                            .presentationDetents([.medium])
                     }
                 }
             }
@@ -139,13 +140,6 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             FeedView(vm: vm)
                 .environmentObject(networkMonitor)
-                .previewDisplayName("Light Mode")
-                .preferredColorScheme(.light)
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            FeedView(vm: vm)
-                .environmentObject(networkMonitor)
-                .previewDisplayName("Dark Mode")
-                .preferredColorScheme(.dark)
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }
