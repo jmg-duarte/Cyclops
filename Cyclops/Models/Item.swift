@@ -35,7 +35,6 @@ struct Item: Identifiable {
     func postURL() -> URL {
         Item.postURL(id)
     }
-
 }
 
 extension Item: Decodable {

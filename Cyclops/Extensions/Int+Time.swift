@@ -1,9 +1,6 @@
-//
-//  Int+Time.swift
-//  Cyclops
-//
-//  Created by José Duarte on 18/06/2023.
-//
+// Int+Time.swift
+// Created by José Duarte on 18/06/2023
+// Copyright (c) 2023
 
 import Foundation
 

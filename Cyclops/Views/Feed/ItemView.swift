@@ -2,8 +2,8 @@
 // Created by José Duarte on 09/06/2023
 // Copyright (c) 2023
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct ItemView: View {
     let id: Int
@@ -14,12 +14,12 @@ struct ItemView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Link(destination: self.url) {
-                    Text(self.title).font(.headline).multilineTextAlignment(.leading)
+                Link(destination: url) {
+                    Text(title).font(.headline).multilineTextAlignment(.leading)
                 }
                 HStack {
-                    Text(self.time.formattedTimeAgo).font(.caption)
-                    Text("(\(self.url.host()!))").font(.caption)
+                    Text(time.formattedTimeAgo).font(.caption)
+                    Text("(\(url.host()!))").font(.caption)
                 }
             }
         }

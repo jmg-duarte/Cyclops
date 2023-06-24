@@ -26,17 +26,17 @@ class FeedViewModel: ObservableObject {
     private var maxPages: Int = 0
 
     private(set) var feed: StoryKind
-    
+
     @Published
     private var feedPages: [StoryKind: Int] = [
         .top: 1,
         .new: 1,
-        .best: 1
+        .best: 1,
     ]
-    
+
     @Published
     private(set) var currentPage: Int = 1
-    
+
     private let loader: HackerNewsClient
 
     var isLastPage: Bool {
@@ -54,7 +54,7 @@ class FeedViewModel: ObservableObject {
 
     func loadPage() async {
         state = .loading
-        let pageSize = Int(self.pageSize)
+        let pageSize = Int(pageSize)
         do {
             Self.logger.debug("Loading page")
             let feed = try await loader.fetchFeed(kind: feed, from: (currentPage - 1) * pageSize, limit: pageSize)
@@ -65,11 +65,11 @@ class FeedViewModel: ObservableObject {
             Self.logger.debug("Error loading page")
         }
     }
-    
+
     func switchFeed(feed: StoryKind) async {
         self.feed = feed
         updateCurrentPage()
-        await self.loadPage()
+        await loadPage()
     }
 
     func nextPage() async {
@@ -87,7 +87,7 @@ class FeedViewModel: ObservableObject {
             await loadPage()
         }
     }
-    
+
     func updateCurrentPage() {
         currentPage = feedPages[feed]!
     }

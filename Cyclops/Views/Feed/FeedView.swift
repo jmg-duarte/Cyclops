@@ -1,13 +1,12 @@
 // FeedView.swift
-// Created by José Duarte on 14/06/2023
+// Created by José Duarte on 20/06/2023
 // Copyright (c) 2023
 
 import Foundation
 import os
 import SwiftUI
-import UniformTypeIdentifiers
 import UIKit
-
+import UniformTypeIdentifiers
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
@@ -74,7 +73,7 @@ struct FeedView: View {
                                         Label("Bookmark", systemImage: "bookmark")
                                     }
                                     ShareLink(item: item.url) {
-                                        Label("Share", systemImage:"square.and.arrow.up")
+                                        Label("Share", systemImage: "square.and.arrow.up")
                                     }
                                 }
                         }

@@ -1,16 +1,13 @@
-//
-//  BookmarkView.swift
-//  Cyclops
-//
-//  Created by José Duarte on 18/06/2023.
-//
+// BookmarksView.swift
+// Created by José Duarte on 18/06/2023
+// Copyright (c) 2023
 
 import CoreData
 import SwiftUI
 
 struct BookmarksView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     // I should probably add an "added" field to the bookmarks for sorting for now, fuck it
     @FetchRequest(sortDescriptors: [SortDescriptor(\.time, order: .reverse)]) var bookmarks: FetchedResults<Bookmark>
     var body: some View {

@@ -1,9 +1,6 @@
-//
-//  FeedSelectionSheet.swift
-//  Cyclops
-//
-//  Created by José Duarte on 24/06/2023.
-//
+// FeedSelectionSheet.swift
+// Created by José Duarte on 24/06/2023
+// Copyright (c) 2023
 
 import SwiftUI
 

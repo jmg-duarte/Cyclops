@@ -19,7 +19,7 @@ extension UserDefaults {
         static let AppTheme = "AppTheme"
         static let NumberOfStoriesPerPage = "NumberOfStoriesPerPage"
     }
-    
+
     enum Defaults {
         static let AppTheme: AppTheme = .system
         static let NumberOfStoriesPerPage: Double = 25

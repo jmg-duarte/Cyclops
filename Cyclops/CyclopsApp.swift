@@ -1,5 +1,5 @@
 // CyclopsApp.swift
-// Created by José Duarte on 14/06/2023
+// Created by José Duarte on 20/06/2023
 // Copyright (c) 2023
 
 import SwiftUI
@@ -7,7 +7,7 @@ import SwiftUI
 @main
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     @State var appFinishedLoading: Bool = false
 
     @StateObject private var dataController = PersistenceController()
@@ -26,23 +26,22 @@ struct HckrNewsApp: App {
 
     var body: some Scene {
         WindowGroup {
-
-                TabView {
-                    FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
-                        Label("Feed", systemImage: "newspaper")
-                    }
-                    .environmentObject(networkMonitor)
-                    BookmarksView()
-                        .tabItem {
-                            Label("Bookmarks", systemImage: "bookmark")
-                        }
-                        .environment(\.managedObjectContext, dataController.container.viewContext)
-                    SettingsView().tabItem {
-                        Label("Settings", systemImage: "gear")
-                    }
+            TabView {
+                FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
+                    Label("Feed", systemImage: "newspaper")
                 }
-                .preferredColorScheme(selectedAppTheme)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
+                .environmentObject(networkMonitor)
+                BookmarksView()
+                    .tabItem {
+                        Label("Bookmarks", systemImage: "bookmark")
+                    }
+                    .environment(\.managedObjectContext, dataController.container.viewContext)
+                SettingsView().tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+            }
+            .preferredColorScheme(selectedAppTheme)
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }
