@@ -5,6 +5,10 @@
 import Foundation
 
 class TestHackerNewsClient: HackerNewsClient {
+    func refreshStoryIDs(kind: StoryKind) {
+        // No-op
+    }
+    
     func fetchStoryIDs(kind _: StoryKind) async throws -> [Int] {
         Item.sampleData.map { item in item.id }
     }

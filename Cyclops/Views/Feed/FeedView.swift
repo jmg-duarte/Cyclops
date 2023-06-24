@@ -78,6 +78,10 @@ struct FeedView: View {
                                 }
                         }
                     }
+                    .refreshable {
+                        // invalidate cache
+                        await vm.loadPage(refresh: true)
+                    }
                     .toolbar {
                         if !vm.isFirstPage {
                             ToolbarItem(placement: .navigationBarLeading) {

@@ -5,6 +5,11 @@
 import Foundation
 
 protocol HackerNewsClient {
+    // The cache detail might be too much for the protocol,
+    // maybe a better API would be to provide cacheable and non-cacheable fetches
+    ///  Clean the story IDs cache.
+    func refreshStoryIDs(kind: StoryKind)
+    
     /// Fetch story IDs off of the provided kind.
     /// - Parameters
     ///     - kind: The kind of feed to fetch stories off of.

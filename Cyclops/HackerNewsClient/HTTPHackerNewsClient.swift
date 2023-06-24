@@ -57,6 +57,10 @@ class HTTPHNClient: HackerNewsClient {
     init(downloader: URLSession = URLSession.shared) {
         self.downloader = downloader
     }
+    
+    func refreshStoryIDs(kind: StoryKind) {
+        storyIDsCache.removeObject(forKey: kind.feedURL.absoluteString as NSString)
+    }
 
     func fetchStoryIDs(kind: StoryKind) async throws -> [Int] {
         Self.logger.debug("Loading story IDs [kind: \(kind.rawValue)]")

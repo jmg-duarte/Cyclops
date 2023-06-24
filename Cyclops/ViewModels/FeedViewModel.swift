@@ -44,9 +44,12 @@ class FeedViewModel: ObservableObject {
         self.loader = loader
     }
 
-    func loadPage() async {
+    func loadPage(refresh: Bool = false) async {
         state = .loading
         let pageSize = Int(pageSize)
+        if refresh {
+            loader.refreshStoryIDs(kind: currentFeed)
+        }
         do {
             Self.logger.debug("Loading page")
             let feed = try await loader.fetchFeed(kind: currentFeed, from: (currentPage - 1) * pageSize, limit: pageSize)
