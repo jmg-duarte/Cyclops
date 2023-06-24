@@ -9,6 +9,7 @@ import UniformTypeIdentifiers
 
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
+    @State private var isShowingNavigationSheet: Bool = false
 
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -27,7 +28,7 @@ struct FeedView: View {
         bookmark.url = item.url
         try? viewContext.save()
     }
-    
+
     var body: some View {
         if networkMonitor.isConnected {
             NavigationStack {
@@ -35,6 +36,18 @@ struct FeedView: View {
                 case .loading:
                     ProgressView()
                         .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
+                        .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Button {
+                                isShowingNavigationSheet = true
+                            } label: {
+                                Text("\(vm.feed.rawValue.capitalized) Stories").bold()
+                                Image(systemName: "chevron.down")
+                                    .imageScale(.small)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        }
                 case .failed:
                     // TODO: handle this
                     Text("ups")
@@ -65,8 +78,6 @@ struct FeedView: View {
                                 }
                         }
                     }
-                    .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
-                    .listStyle(.plain)
                     .toolbar {
                         if !vm.isFirstPage {
                             ToolbarItem(placement: .navigationBarLeading) {
@@ -81,6 +92,16 @@ struct FeedView: View {
                                 .accessibilityHint(Text("Moves to the previous page"))
                             }
                         }
+                        ToolbarItem(placement: .principal) {
+                            Button {
+                                isShowingNavigationSheet = true
+                            } label: {
+                                Text("\(vm.feed.rawValue.capitalized) Stories").bold()
+                                Image(systemName: "chevron.down")
+                                    .imageScale(.small)
+                            }
+                            .buttonStyle(.plain)
+                        }
                         if !vm.isLastPage {
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 Button {
@@ -94,6 +115,12 @@ struct FeedView: View {
                                 .accessibilityHint(Text("Moves to the next page"))
                             }
                         }
+                    }
+                    .navigationBarTitle(Text(""), displayMode: .inline)
+                    .listStyle(.plain)
+                    .sheet(isPresented: $isShowingNavigationSheet, onDismiss: { isShowingNavigationSheet = false }) {
+                        FeedSelectionSheet(feedViewModel:vm, isShowing: $isShowingNavigationSheet)
+                        .presentationDetents([.medium])
                     }
                 }
             }

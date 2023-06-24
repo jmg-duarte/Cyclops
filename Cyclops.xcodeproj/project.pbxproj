@@ -10,6 +10,7 @@
 		11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11120AB72A30E53A0084E612 /* CyclopsApp.swift */; };
 		11120ABC2A30E53B0084E612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABB2A30E53B0084E612 /* Assets.xcassets */; };
 		11120ABF2A30E53B0084E612 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */; };
+		1143B5612A47296800931E34 /* FeedSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1143B5602A47296800931E34 /* FeedSelectionSheet.swift */; };
 		11B40DD92A35E10A00CA8539 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */; };
 		11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DDA2A35E18000CA8539 /* ErrorView.swift */; };
 		11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */; };
@@ -49,6 +50,7 @@
 		11120AB72A30E53A0084E612 /* CyclopsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclopsApp.swift; sourceTree = "<group>"; };
 		11120ABB2A30E53B0084E612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1143B5602A47296800931E34 /* FeedSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectionSheet.swift; sourceTree = "<group>"; };
 		11B40DD82A35E10A00CA8539 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
 		11B40DDA2A35E18000CA8539 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -142,14 +144,23 @@
 		11120AC52A30E76A0084E612 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				11FE09052A332D680034829A /* FeedView.swift */,
-				11FE09072A3334C50034829A /* ItemView.swift */,
+				1143B5622A472A8100931E34 /* Feed */,
 				11B40DDA2A35E18000CA8539 /* ErrorView.swift */,
 				11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */,
 				11BF204D2A387050008A54B9 /* OfflineView.swift */,
 				11BF20632A3F67DC008A54B9 /* BookmarksView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1143B5622A472A8100931E34 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				11FE09052A332D680034829A /* FeedView.swift */,
+				11FE09072A3334C50034829A /* ItemView.swift */,
+				1143B5602A47296800931E34 /* FeedSelectionSheet.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		11BF20412A37696E008A54B9 /* HackerNewsClient */ = {
@@ -322,6 +333,7 @@
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
 				11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */,
 				11BF20482A376A19008A54B9 /* TestHackerNewsClient.swift in Sources */,
+				1143B5612A47296800931E34 /* FeedSelectionSheet.swift in Sources */,
 				11FE08EA2A31E22D0034829A /* Item.swift in Sources */,
 				11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */,
 				11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */,
@@ -482,6 +494,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -517,6 +530,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.news";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

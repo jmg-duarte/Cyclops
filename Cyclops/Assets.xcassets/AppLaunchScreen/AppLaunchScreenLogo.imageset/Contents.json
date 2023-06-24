@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "monocle_small_black_2x-08.svg",
+      "filename" : "monocle_black_2x-08 1.svg",
       "idiom" : "universal"
     },
     {
@@ -11,11 +11,11 @@
           "value" : "dark"
         }
       ],
-      "filename" : "monocle_small_white_2x-08.svg",
+      "filename" : "monocle_white_2x-08 1.svg",
       "idiom" : "universal"
     },
     {
-      "filename" : "monocle_small_black_2x-08 1.svg",
+      "filename" : "monocle_black_2x-08.svg",
       "idiom" : "iphone"
     },
     {
@@ -25,7 +25,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "monocle_small_white_2x-08 1.svg",
+      "filename" : "monocle_white_2x-08.svg",
       "idiom" : "iphone"
     }
   ],
@@ -34,6 +34,7 @@
     "version" : 1
   },
   "properties" : {
-    "preserves-vector-representation" : true
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
   }
 }

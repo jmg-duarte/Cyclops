@@ -7,6 +7,8 @@ import SwiftUI
 @main
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
+    
+    @State var appFinishedLoading: Bool = false
 
     @StateObject private var dataController = PersistenceController()
     @StateObject private var networkMonitor = NetworkMonitor()
@@ -24,32 +26,23 @@ struct HckrNewsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabView {
-                FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
-                    Label("Top", systemImage: "newspaper")
-                }
-                .environmentObject(networkMonitor)
-                /*
-                FeedView(vm: FeedViewModel(feed: .new, loader: hnClient)).tabItem {
-                    Label("New", systemImage: "newspaper")
-                }
-                .environmentObject(networkMonitor)
-                FeedView(vm: FeedViewModel(feed: .best, loader: hnClient)).tabItem {
-                    Label("Best", systemImage: "trophy")
-                }
-                 */
-                .environmentObject(networkMonitor)
-                BookmarksView()
-                    .tabItem {
-                        Label("Bookmarks", systemImage: "bookmark")
+
+                TabView {
+                    FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
+                        Label("Feed", systemImage: "newspaper")
                     }
-                    .environment(\.managedObjectContext, dataController.container.viewContext)
-                SettingsView().tabItem {
-                    Label("Settings", systemImage: "gear")
+                    .environmentObject(networkMonitor)
+                    BookmarksView()
+                        .tabItem {
+                            Label("Bookmarks", systemImage: "bookmark")
+                        }
+                        .environment(\.managedObjectContext, dataController.container.viewContext)
+                    SettingsView().tabItem {
+                        Label("Settings", systemImage: "gear")
+                    }
                 }
-            }
-            .preferredColorScheme(selectedAppTheme)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
+                .preferredColorScheme(selectedAppTheme)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }
