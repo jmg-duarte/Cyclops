@@ -9,9 +9,9 @@ enum StoryKind: String {
     case new
     case top
     case best
-    // case ask
-    // case show
-    // case job
+    case ask
+    case show
+    case job
 
     var feedURL: URL {
         switch self {
@@ -21,7 +21,17 @@ enum StoryKind: String {
             return HTTPHNClient.topStoriesURL
         case .best:
             return HTTPHNClient.bestStoriesURL
+        case .ask:
+            return HTTPHNClient.askStoriesURL
+        case .show:
+            return HTTPHNClient.showStoriesURL
+        case .job:
+            return HTTPHNClient.jobStoriesURL
         }
+    }
+    
+    static func getPageMappings() -> [Self: Int]{
+        return [ .top: 1, .new: 1, .best: 1, .ask: 1, .show: 1, .job: 1 ]
     }
 }
 
@@ -30,6 +40,9 @@ class HTTPHNClient: HackerNewsClient {
     static let topStoriesURL = URL(string: "topstories.json", relativeTo: hackerNewsAPIv0)!
     static let newStoriesURL = URL(string: "newstories.json", relativeTo: hackerNewsAPIv0)!
     static let bestStoriesURL = URL(string: "beststories.json", relativeTo: hackerNewsAPIv0)!
+    static let askStoriesURL = URL(string: "askstories.json", relativeTo: hackerNewsAPIv0)!
+    static let showStoriesURL = URL(string: "showstories.json", relativeTo: hackerNewsAPIv0)!
+    static let jobStoriesURL = URL(string: "jobstories.json", relativeTo: hackerNewsAPIv0)!
 
     private static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,

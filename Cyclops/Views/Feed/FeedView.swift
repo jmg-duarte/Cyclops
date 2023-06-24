@@ -37,13 +37,13 @@ struct FeedView: View {
                 switch vm.state {
                 case .loading:
                     ProgressView()
-                        .navigationBarTitle(Text("\(vm.feed.rawValue.capitalized) Stories"), displayMode: .inline)
+                        .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
                         .toolbar {
                             ToolbarItem(placement: .principal) {
                                 Button {
                                     isShowingNavigationSheet = true
                                 } label: {
-                                    Text("\(vm.feed.rawValue.capitalized) Stories").bold()
+                                    Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
                                     Image(systemName: "chevron.down")
                                         .imageScale(.small)
                                 }
@@ -96,7 +96,7 @@ struct FeedView: View {
                             Button {
                                 isShowingNavigationSheet = true
                             } label: {
-                                Text("\(vm.feed.rawValue.capitalized) Stories").bold()
+                                Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
                                 Image(systemName: "chevron.down")
                                     .imageScale(.small)
                             }

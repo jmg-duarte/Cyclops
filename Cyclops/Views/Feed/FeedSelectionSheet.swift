@@ -9,7 +9,7 @@ struct FeedSelectionSheet: View {
     @Binding var isShowing: Bool
     var body: some View {
         List {
-            Section {
+            Section("Main") {
                 Button {
                     Task { await feedViewModel.switchFeed(feed: .top) }
                     isShowing = false
@@ -27,6 +27,23 @@ struct FeedSelectionSheet: View {
                     isShowing = false
                 } label: {
                     Label("Best", systemImage: "trophy.fill")
+                }
+            }
+            Section("Others") {
+                Button {
+                    Task {await feedViewModel.switchFeed(feed:.ask)}
+                } label: {
+                    Label("Ask", systemImage: "person.fill.questionmark")
+                }
+                Button {
+                    Task {await feedViewModel.switchFeed(feed:.job)}
+                } label: {
+                    Label("Job", systemImage: "briefcase.fill")
+                }
+                Button {
+                    Task {await feedViewModel.switchFeed(feed:.show)}
+                } label: {
+                    Label("Show", systemImage: "person.crop.rectangle.fill")
                 }
             }
             /*

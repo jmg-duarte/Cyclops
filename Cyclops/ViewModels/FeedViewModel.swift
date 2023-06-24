@@ -25,17 +25,9 @@ class FeedViewModel: ObservableObject {
 
     private var maxPages: Int = 0
 
-    private(set) var feed: StoryKind
-
-    @Published
-    private var feedPages: [StoryKind: Int] = [
-        .top: 1,
-        .new: 1,
-        .best: 1,
-    ]
-
-    @Published
-    private(set) var currentPage: Int = 1
+    private(set) var feedPages: [StoryKind: Int] = StoryKind.getPageMappings()
+    @Published private(set) var currentFeed: StoryKind
+    @Published private(set) var currentPage: Int = 1
 
     private let loader: HackerNewsClient
 
@@ -48,7 +40,7 @@ class FeedViewModel: ObservableObject {
     }
 
     init(feed: StoryKind, loader: HackerNewsClient) {
-        self.feed = feed
+        self.currentFeed = feed
         self.loader = loader
     }
 
@@ -57,7 +49,7 @@ class FeedViewModel: ObservableObject {
         let pageSize = Int(pageSize)
         do {
             Self.logger.debug("Loading page")
-            let feed = try await loader.fetchFeed(kind: feed, from: (currentPage - 1) * pageSize, limit: pageSize)
+            let feed = try await loader.fetchFeed(kind: currentFeed, from: (currentPage - 1) * pageSize, limit: pageSize)
             state = .loaded(feed)
             Self.logger.debug("Loaded page")
         } catch {
@@ -67,14 +59,14 @@ class FeedViewModel: ObservableObject {
     }
 
     func switchFeed(feed: StoryKind) async {
-        self.feed = feed
+        self.currentFeed = feed
         updateCurrentPage()
         await loadPage()
     }
 
     func nextPage() async {
         if !isLastPage {
-            feedPages[feed]! += 1
+            feedPages[currentFeed]! += 1
             updateCurrentPage()
             await loadPage()
         }
@@ -82,13 +74,13 @@ class FeedViewModel: ObservableObject {
 
     func previousPage() async {
         if !isFirstPage {
-            feedPages[feed]! -= 1
+            feedPages[currentFeed]! -= 1
             updateCurrentPage()
             await loadPage()
         }
     }
 
     func updateCurrentPage() {
-        currentPage = feedPages[feed]!
+        currentPage = feedPages[currentFeed]!
     }
 }
