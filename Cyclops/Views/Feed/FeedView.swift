@@ -30,102 +30,109 @@ struct FeedView: View {
         bookmark.url = item.url
         try? viewContext.save()
     }
+    
+    var progress: some View {
+        ProgressView()
+            .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Button {
+                        isShowingNavigationSheet = true
+                    } label: {
+                        Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
+                        Image(systemName: "chevron.down")
+                            .imageScale(.small)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+    }
+    
+    func loaded(feed: [Item]) -> some View {
+        return List {
+            ForEach(feed) { item in
+                // Force unwrap should be safe because news always have titles and time
+                ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            saveBookmark(item: item)
+                        } label: {
+                            Label("Bookmark", systemImage: "bookmark.fill")
+                        }
+                        .tint(.blue)
+                    }
+                    .contextMenu {
+                        Button {
+                            saveBookmark(item: item)
+                        } label: {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }
+                        ShareLink(item: item.url) {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                    }
+            }
+        }
+        .refreshable {
+            await vm.loadPage(refresh: true)
+        }
+        .toolbar {
+            if !vm.isFirstPage {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        Task {
+                            await vm.previousPage()
+                        }
+                    } label: {
+                        Image(systemName: "chevron.left")
+                        Text("Page \(vm.currentPage - 1)")
+                    }
+                    .accessibilityHint(Text("Moves to the previous page"))
+                }
+            }
+            ToolbarItem(placement: .principal) {
+                Button {
+                    isShowingNavigationSheet = true
+                } label: {
+                    Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
+                    Image(systemName: "chevron.down")
+                        .imageScale(.small)
+                }
+                .buttonStyle(.plain)
+            }
+            if !vm.isLastPage {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        Task {
+                            await vm.nextPage()
+                        }
+                    } label: {
+                        Text("Page \(vm.currentPage + 1)")
+                        Image(systemName: "chevron.right")
+                    }
+                    .accessibilityHint(Text("Moves to the next page"))
+                }
+            }
+        }
+        .navigationBarTitle(Text(""), displayMode: .inline)
+        .listStyle(.plain)
+        .sheet(isPresented: $isShowingNavigationSheet, onDismiss: { isShowingNavigationSheet = false }) {
+            FeedSelectionSheet(feedViewModel: vm, isShowing: $isShowingNavigationSheet)
+                .presentationDetents([.medium])
+        }
+    }
+    
 
     var body: some View {
         if networkMonitor.isConnected {
             NavigationStack {
                 switch vm.state {
-                case .loading:
-                    ProgressView()
-                        .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
-                        .toolbar {
-                            ToolbarItem(placement: .principal) {
-                                Button {
-                                    isShowingNavigationSheet = true
-                                } label: {
-                                    Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
-                                    Image(systemName: "chevron.down")
-                                        .imageScale(.small)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
+                case .loading: progress
                 case .failed:
                     // TODO: handle this
                     Text("ups")
                 case let .loaded(feed):
-                    List {
-                        ForEach(feed) { item in
-                            // Force unwrap should be safe because news always have titles and time
-                            ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        saveBookmark(item: item)
-                                    } label: {
-                                        Label("Bookmark", systemImage: "bookmark.fill")
-                                    }
-                                    .tint(.blue)
-                                }
-                                .contextMenu {
-                                    Button {
-                                        saveBookmark(item: item)
-                                    } label: {
-                                        Label("Bookmark", systemImage: "bookmark")
-                                    }
-                                    ShareLink(item: item.url) {
-                                        Label("Share", systemImage: "square.and.arrow.up")
-                                    }
-                                }
-                        }
-                    }
-                    .refreshable {
-                        // invalidate cache
-                        await vm.loadPage(refresh: true)
-                    }
-                    .toolbar {
-                        if !vm.isFirstPage {
-                            ToolbarItem(placement: .navigationBarLeading) {
-                                Button {
-                                    Task {
-                                        await vm.previousPage()
-                                    }
-                                } label: {
-                                    Image(systemName: "chevron.left")
-                                    Text("Page \(vm.currentPage - 1)")
-                                }
-                                .accessibilityHint(Text("Moves to the previous page"))
-                            }
-                        }
-                        ToolbarItem(placement: .principal) {
-                            Button {
-                                isShowingNavigationSheet = true
-                            } label: {
-                                Text("\(vm.currentFeed.rawValue.capitalized) Stories").bold()
-                                Image(systemName: "chevron.down")
-                                    .imageScale(.small)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        if !vm.isLastPage {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Button {
-                                    Task {
-                                        await vm.nextPage()
-                                    }
-                                } label: {
-                                    Text("Page \(vm.currentPage + 1)")
-                                    Image(systemName: "chevron.right")
-                                }
-                                .accessibilityHint(Text("Moves to the next page"))
-                            }
-                        }
-                    }
-                    .navigationBarTitle(Text(""), displayMode: .inline)
-                    .listStyle(.plain)
-                    .sheet(isPresented: $isShowingNavigationSheet, onDismiss: { isShowingNavigationSheet = false }) {
-                        FeedSelectionSheet(feedViewModel: vm, isShowing: $isShowingNavigationSheet)
-                            .presentationDetents([.medium])
-                    }
+                    loaded(feed: feed)
                 }
             }
             .task { await vm.loadPage() }
