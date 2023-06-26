@@ -27,6 +27,7 @@
 		11BF20622A3F5B1F008A54B9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20612A3F5B1F008A54B9 /* PersistenceController.swift */; };
 		11BF20642A3F67DD008A54B9 /* BookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20632A3F67DC008A54B9 /* BookmarksView.swift */; };
 		11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D412152A3F9C560046DE75 /* Int+Time.swift */; };
+		11E902642A484B58003784CE /* ItemDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E902632A484B58003784CE /* ItemDetailsSheet.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
 		11FE08F42A322B5E0034829A /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08F32A322B5E0034829A /* ItemTests.swift */; };
 		11FE08FC2A322B830034829A /* NewsItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08FB2A322B830034829A /* NewsItemData.swift */; };
@@ -68,6 +69,7 @@
 		11BF20612A3F5B1F008A54B9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		11BF20632A3F67DC008A54B9 /* BookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksView.swift; sourceTree = "<group>"; };
 		11D412152A3F9C560046DE75 /* Int+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Time.swift"; sourceTree = "<group>"; };
+		11E902632A484B58003784CE /* ItemDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsSheet.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		11FE08F12A322B5E0034829A /* CyclopsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CyclopsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11FE08F32A322B5E0034829A /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				11FE09052A332D680034829A /* FeedView.swift */,
 				11FE09072A3334C50034829A /* ItemView.swift */,
 				1143B5602A47296800931E34 /* FeedSelectionSheet.swift */,
+				11E902632A484B58003784CE /* ItemDetailsSheet.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11E902642A484B58003784CE /* ItemDetailsSheet.swift in Sources */,
 				11B40DD92A35E10A00CA8539 /* ErrorWrapper.swift in Sources */,
 				11BF20572A3A3656008A54B9 /* FeedViewModel.swift in Sources */,
 				11FE09002A322E810034829A /* HTTPHackerNewsClient.swift in Sources */,

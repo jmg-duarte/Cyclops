@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 struct FeedView: View {
     @State private var errorWrapper: ErrorWrapper?
     @State private var isShowingNavigationSheet: Bool = false
-    @State private var isShowingShareLink: Bool = false
+    @State private var itemDetail: Item? = nil
 
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -70,6 +70,11 @@ struct FeedView: View {
                         ShareLink(item: item.url) {
                             Label("Share", systemImage: "square.and.arrow.up")
                         }
+                        Button {
+                            self.itemDetail = item
+                        } label: {
+                            Label("Details", systemImage: "ellipsis.circle")
+                        }
                     }
             }
         }
@@ -119,6 +124,11 @@ struct FeedView: View {
         .sheet(isPresented: $isShowingNavigationSheet, onDismiss: { isShowingNavigationSheet = false }) {
             FeedSelectionSheet(feedViewModel: vm, isShowing: $isShowingNavigationSheet)
                 .presentationDetents([.medium])
+        }
+        .sheet(item: $itemDetail) { item in
+            // https://stackoverflow.com/a/63217450
+            ItemDetailsSheet(item: item)
+                .presentationDetents([.fraction(0.4)])
         }
     }
     
