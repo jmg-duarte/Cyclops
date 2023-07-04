@@ -11,35 +11,6 @@ struct ItemView: View {
     let title: String
     let time: UnixEpoch
     
-    /*
-     https://stackoverflow.com/questions/72150965/how-can-i-observe-an-array-of-coredata-objects-in-swiftui
-    @Environment(\.managedObjectContext) var viewContext
-    @FetchRequest(
-        sortDescriptors: [],
-        predicate: ) var bookmarks: FetchedResults<Bookmark>
-
-    @State private var hasBeenRead: Bool {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ReadLink")
-        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
-        ((try? viewContext.count(for: fetchRequest)) ?? 0) > 0
-    }
-    
-    init(id: Int, url: URL, title: String, time: UnixEpoch) {
-        self.id = id
-        self.url = url
-        self.title = title
-        self.time = time
-        
-    }
-    
-    func markAsRead() {
-        let readLink = ReadLink(context: viewContext)
-        readLink.id = Int64(id)
-        try? viewContext.save()
-        hasBeenRead = true
-    }
-     */
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -53,8 +24,7 @@ struct ItemView: View {
                 })
                  */
                 HStack {
-                    Text(time.formattedTimeAgo).font(.caption)
-                    Text("(\(url.host()!))").font(.caption)
+                    Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
                 }
             }
             /*

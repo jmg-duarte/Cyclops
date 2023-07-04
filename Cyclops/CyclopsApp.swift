@@ -8,7 +8,19 @@ import SwiftUI
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
 
-    @State var appFinishedLoading: Bool = false
+    // https://stackoverflow.com/a/65048085
+    @State private var selection = 0
+    private var selectionWrapper: Binding<Int> {
+        Binding(
+            get: { self.selection },
+            set: {
+                if $0 == self.selection {
+                    self.feedViewModel.resetPage()
+                }
+                self.selection = $0
+            }
+        )
+    }
 
     @StateObject private var dataController = PersistenceController()
     @StateObject private var networkMonitor = NetworkMonitor()
@@ -22,23 +34,34 @@ struct HckrNewsApp: App {
         }
     }
 
-    let hnClient = HTTPHNClient()
+    let hnClient: HackerNewsClient
+    let feedViewModel: FeedViewModel
+
+    init() {
+        self.hnClient = HTTPHNClient()
+        self.feedViewModel = FeedViewModel(loader: hnClient)
+    }
 
     var body: some Scene {
         WindowGroup {
-            TabView {
-                FeedView(vm: FeedViewModel(feed: .top, loader: hnClient)).tabItem {
-                    Label("Feed", systemImage: "newspaper")
-                }
-                .environmentObject(networkMonitor)
+            TabView(selection: selectionWrapper) {
+                FeedView(vm: feedViewModel)
+                    .tabItem {
+                        Label("Feed", systemImage: "newspaper")
+                    }
+                    .environmentObject(networkMonitor)
+                    .tag(0)
                 BookmarksView()
                     .tabItem {
                         Label("Bookmarks", systemImage: "bookmark")
                     }
                     .environment(\.managedObjectContext, dataController.container.viewContext)
-                SettingsView().tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
+                    .tag(1)
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gear")
+                    }
+                    .tag(2)
             }
             .preferredColorScheme(selectedAppTheme)
             .environment(\.managedObjectContext, dataController.container.viewContext)

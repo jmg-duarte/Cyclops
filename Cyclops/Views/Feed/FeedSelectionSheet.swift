@@ -11,19 +11,19 @@ struct FeedSelectionSheet: View {
         List {
             Section("Main") {
                 Button {
-                    Task { await feedViewModel.switchFeed(feed: .top) }
+                     feedViewModel.switchFeed(feed: .top)
                     isShowing = false
                 } label: {
                     Label("Top", systemImage: "chart.bar.fill")
                 }
                 Button {
-                    Task { await feedViewModel.switchFeed(feed: .new) }
+                    feedViewModel.switchFeed(feed: .new)
                     isShowing = false
                 } label: {
                     Label("New", systemImage: "newspaper.fill")
                 }
                 Button {
-                    Task { await feedViewModel.switchFeed(feed: .best) }
+                     feedViewModel.switchFeed(feed: .best)
                     isShowing = false
                 } label: {
                     Label("Best", systemImage: "trophy.fill")
@@ -31,17 +31,17 @@ struct FeedSelectionSheet: View {
             }
             Section("Others") {
                 Button {
-                    Task {await feedViewModel.switchFeed(feed:.ask)}
+                     feedViewModel.switchFeed(feed:.ask)
                 } label: {
                     Label("Ask", systemImage: "person.fill.questionmark")
                 }
                 Button {
-                    Task {await feedViewModel.switchFeed(feed:.job)}
+                     feedViewModel.switchFeed(feed:.job)
                 } label: {
                     Label("Job", systemImage: "briefcase.fill")
                 }
                 Button {
-                    Task {await feedViewModel.switchFeed(feed:.show)}
+                    feedViewModel.switchFeed(feed:.show)
                 } label: {
                     Label("Show", systemImage: "person.crop.rectangle.fill")
                 }

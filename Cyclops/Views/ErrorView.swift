@@ -9,26 +9,24 @@ struct ErrorView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                Text("An error has occurred!")
-                    .font(.title)
-                    .padding(.bottom)
-                Text(errorWrapper.error.localizedDescription)
-                    .font(.headline)
-                Spacer()
-                Text(errorWrapper.guidance)
-                    .font(.caption)
-                    .padding(.top)
-            }
-            .padding()
-            .background(.ultraThinMaterial)
-            .cornerRadius(16)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Dismiss") {
-                        dismiss()
-                    }
+        VStack {
+            Text("An error has occurred!")
+                .font(.title)
+                .padding(.bottom)
+            Text(errorWrapper.error.localizedDescription)
+                .font(.headline)
+            Spacer()
+            Text(errorWrapper.guidance)
+                .font(.caption)
+                .padding(.top)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .cornerRadius(16)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Dismiss") {
+                    dismiss()
                 }
             }
         }

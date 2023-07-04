@@ -9,7 +9,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 struct FeedView: View {
-    @State private var errorWrapper: ErrorWrapper?
+    @State private var isShowingErrorAlert: Bool = false
     @State private var isShowingNavigationSheet: Bool = false
     @State private var itemDetail: Item? = nil
 
@@ -79,15 +79,13 @@ struct FeedView: View {
             }
         }
         .refreshable {
-            await vm.loadPage(refresh: true)
+            await vm.refreshPage()
         }
         .toolbar {
             if !vm.isFirstPage {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        Task {
-                            await vm.previousPage()
-                        }
+                            vm.previousPage()
                     } label: {
                         Image(systemName: "chevron.left")
                         Text("Page \(vm.currentPage - 1)")
@@ -108,9 +106,7 @@ struct FeedView: View {
             if !vm.isLastPage {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        Task {
-                            await vm.nextPage()
-                        }
+                            vm.nextPage()
                     } label: {
                         Text("Page \(vm.currentPage + 1)")
                         Image(systemName: "chevron.right")
@@ -138,13 +134,26 @@ struct FeedView: View {
             NavigationStack {
                 switch vm.state {
                 case .loading: progress
-                case .failed:
-                    // TODO: handle this
-                    Text("ups")
+                case let .failed(error):
+                    ErrorView(errorWrapper: ErrorWrapper(error: error, guidance: "Please report this error to the developer.\nYou can refresh the page to retry..."))
+                        .refreshable {
+                            await vm.refreshPage()
+                        }
+                        .navigationBarTitle(Text(""), displayMode: .inline)
+                        .toolbar {
+                            ToolbarItem {
+                                Button {
+                                    Task { await vm.refreshPage() }
+                                } label: {
+                                    Label("Refresh", systemImage: "arrow.circlepath")
+                                }
+                             }
+                        }
                 case let .loaded(feed):
                     loaded(feed: feed)
                 }
             }
+            // This runs the first page load
             .task { await vm.loadPage() }
         } else {
             OfflineView()

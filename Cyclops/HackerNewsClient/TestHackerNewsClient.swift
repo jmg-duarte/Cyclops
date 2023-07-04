@@ -21,3 +21,5 @@ class TestHackerNewsClient: HackerNewsClient {
         Item.sampleData
     }
 }
+
+// TODO: create an error client
