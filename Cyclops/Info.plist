@@ -4,26 +4,18 @@
 <dict>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIColorName</key>
-		<string>AppLaunchScreenBackground</string>
-		<key>UIImageName</key>
-		<string>AppLaunchScreenLogo</string>
-	</dict>
-	<key>UILaunchScreens</key>
-	<dict>
-		<key>UIDefaultLaunchScreen</key>
-		<string></string>
-		<key>UILaunchScreenDefinitions</key>
-		<array>
-			<dict>
-				<key>UIImageName</key>
-				<string></string>
-				<key>UILaunchScreenIdentifier</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>UIURLToLaunchScreenAssociations</key>
-		<dict/>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+		<key>UITabBar</key>
+		<dict>
+			<key>UIImageName</key>
+			<string></string>
+		</dict>
+		<key>UIToolbar</key>
+		<dict>
+			<key>UIImageName</key>
+			<string></string>
+		</dict>
 	</dict>
 </dict>
 </plist>
