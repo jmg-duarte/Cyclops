@@ -70,6 +70,7 @@ class FeedViewModel: ObservableObject {
     func switchFeed(feed: StoryKind) {
         self.currentFeed = feed
         currentPage = feedPages[currentFeed]!
+        Task { await loadPage() }
     }
 
     func nextPage() {
