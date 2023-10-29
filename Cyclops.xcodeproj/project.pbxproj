@@ -23,8 +23,6 @@
 		11BF20522A387A1F008A54B9 /* CacheEntryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20512A387A1F008A54B9 /* CacheEntryObject.swift */; };
 		11BF20572A3A3656008A54B9 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20562A3A3656008A54B9 /* FeedViewModel.swift */; };
 		11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20592A3F1723008A54B9 /* AppTheme.swift */; };
-		11BF20602A3F50D9008A54B9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11BF205E2A3F50D9008A54B9 /* Model.xcdatamodeld */; };
-		11BF20622A3F5B1F008A54B9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20612A3F5B1F008A54B9 /* PersistenceController.swift */; };
 		11BF20642A3F67DD008A54B9 /* BookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20632A3F67DC008A54B9 /* BookmarksView.swift */; };
 		11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D412152A3F9C560046DE75 /* Int+Time.swift */; };
 		11E902642A484B58003784CE /* ItemDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E902632A484B58003784CE /* ItemDetailsSheet.swift */; };
@@ -65,8 +63,6 @@
 		11BF20562A3A3656008A54B9 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		11BF20582A3F0D85008A54B9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		11BF20592A3F1723008A54B9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		11BF205F2A3F50D9008A54B9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		11BF20612A3F5B1F008A54B9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		11BF20632A3F67DC008A54B9 /* BookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksView.swift; sourceTree = "<group>"; };
 		11D412152A3F9C560046DE75 /* Int+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Time.swift"; sourceTree = "<group>"; };
 		11E902632A484B58003784CE /* ItemDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsSheet.swift; sourceTree = "<group>"; };
@@ -100,7 +96,6 @@
 		11120AAB2A30E53A0084E612 = {
 			isa = PBXGroup;
 			children = (
-				11BF205E2A3F50D9008A54B9 /* Model.xcdatamodeld */,
 				11BF20582A3F0D85008A54B9 /* .gitignore */,
 				11120AB62A30E53A0084E612 /* Cyclops */,
 				11FE08F22A322B5E0034829A /* CyclopsTests */,
@@ -120,7 +115,6 @@
 		11120AB62A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXGroup;
 			children = (
-				11D412192A40DB040046DE75 /* Persistence */,
 				11BF205D2A3F29C0008A54B9 /* ViewModels */,
 				11BF20422A37698B008A54B9 /* Extensions */,
 				11BF20412A37696E008A54B9 /* HackerNewsClient */,
@@ -194,14 +188,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		11D412192A40DB040046DE75 /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				11BF20612A3F5B1F008A54B9 /* PersistenceController.swift */,
-			);
-			path = Persistence;
-			sourceTree = "<group>";
-		};
 		11FE08E82A31E21F0034829A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,7 +253,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					11120AB32A30E53A0084E612 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -327,13 +313,11 @@
 				11FE09002A322E810034829A /* HTTPHackerNewsClient.swift in Sources */,
 				11BF20462A3769D9008A54B9 /* HackerNewsClient.swift in Sources */,
 				11BF20442A3769A9008A54B9 /* URLSession+HTTPData.swift in Sources */,
-				11BF20602A3F50D9008A54B9 /* Model.xcdatamodeld in Sources */,
 				11BF20642A3F67DD008A54B9 /* BookmarksView.swift in Sources */,
 				11BF204E2A387050008A54B9 /* OfflineView.swift in Sources */,
 				11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */,
 				11FE09062A332D680034829A /* FeedView.swift in Sources */,
 				11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */,
-				11BF20622A3F5B1F008A54B9 /* PersistenceController.swift in Sources */,
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
 				11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */,
 				11BF20482A376A19008A54B9 /* TestHackerNewsClient.swift in Sources */,
@@ -403,6 +387,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -463,6 +448,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -501,7 +487,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,7 +524,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -626,19 +612,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		11BF205E2A3F50D9008A54B9 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				11BF205F2A3F50D9008A54B9 /* Model.xcdatamodel */,
-			);
-			currentVersion = 11BF205F2A3F50D9008A54B9 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 11120AAC2A30E53A0084E612 /* Project object */;
 }

@@ -3,14 +3,16 @@
 // Copyright (c) 2023
 
 import Foundation
+import SwiftData
 
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
-struct Item: Identifiable {
+@Model
+final class Item: Identifiable, Decodable {
     // NOTE: For now, item is good enough to retrieve everything, but in the future,
     // a decoder based on the ItemType could be a nice improvement
-
-    let id: Int
+    
+    @Attribute(.unique) let id: Int
     let type: ItemType
     // The API may not return an URL, in which case, we default to the actual HN webpage
     let url: URL
@@ -28,16 +30,24 @@ struct Item: Identifiable {
     var time: Int? = nil // This is (probably) only nil for pollopts
     var title: String? = nil // This is only nil for comments and friends
 
-    static func postURL(_ id: Int) -> URL {
-        URL(string: "https://news.ycombinator.com/item?id=\(id)")!
+    init(id: Int, type: ItemType, url: URL, by: String? = nil, dead: Bool? = nil, deleted: Bool? = nil, descendants: Int? = nil, kids: [Int]? = nil, parent: Int? = nil, parts: [Int]? = nil, poll: Int? = nil, score: Int? = nil, text: String? = nil, time: Int? = nil, title: String? = nil) {
+        self.id = id
+        self.type = type
+        self.url = url
+        self.by = by
+        self.dead = dead
+        self.deleted = deleted
+        self.descendants = descendants
+        self.kids = kids
+        self.parent = parent
+        self.parts = parts
+        self.poll = poll
+        self.score = score
+        self.text = text
+        self.time = time
+        self.title = title
     }
-
-    func postURL() -> URL {
-        Item.postURL(id)
-    }
-}
-
-extension Item: Decodable {
+    
     private enum CodingKeys: String, CodingKey {
         case id
         case type
@@ -56,26 +66,37 @@ extension Item: Decodable {
         case url
     }
 
-    init(from decoder: Decoder) throws {
+    convenience init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(Int.self, forKey: .id)
-        type = try values.decode(ItemType.self, forKey: .type)
+        let id = try values.decode(Int.self, forKey: .id)
+        self.init(
+            id: id,
+            type: try values.decode(ItemType.self, forKey: .type),
+            url: (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id),
+            by: try? values.decode(String.self, forKey: .by),
+            dead: try? values.decode(Bool.self, forKey: .dead),
+            deleted: try? values.decode(Bool.self, forKey: .deleted),
+            descendants: try? values.decode(Int.self, forKey: .descendants),
+            kids: try? values.decode([Int].self, forKey: .kids),
+            parent: try? values.decode(Int.self, forKey: .parent),
+            parts: try? values.decode([Int].self, forKey: .parts),
+            poll: try? values.decode(Int.self, forKey: .poll),
+            score: try? values.decode(Int.self, forKey: .score),
+            text: try? values.decode(String.self, forKey: .text),
+            time: try? values.decode(Int.self, forKey: .time),
+            title: try? values.decode(String.self, forKey: .title)
+        )
+    }
 
-        by = try? values.decode(String.self, forKey: .by)
-        dead = try? values.decode(Bool.self, forKey: .dead)
-        deleted = try? values.decode(Bool.self, forKey: .deleted)
-        descendants = try? values.decode(Int.self, forKey: .descendants)
-        kids = try? values.decode([Int].self, forKey: .kids)
-        parent = try? values.decode(Int.self, forKey: .parent)
-        parts = try? values.decode([Int].self, forKey: .parts)
-        poll = try? values.decode(Int.self, forKey: .poll)
-        score = try? values.decode(Int.self, forKey: .score)
-        text = try? values.decode(String.self, forKey: .text)
-        time = try? values.decode(Int.self, forKey: .time)
-        title = try? values.decode(String.self, forKey: .title)
-        url = (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id)
+    static func postURL(_ id: Int) -> URL {
+        URL(string: "https://news.ycombinator.com/item?id=\(id)")!
+    }
+
+    func postURL() -> URL {
+        Item.postURL(id)
     }
 }
+
 
 extension Item {
     static var sampleData = [

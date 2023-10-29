@@ -3,11 +3,13 @@
 // Copyright (c) 2023
 
 import SwiftUI
+import SwiftData
 
 @main
 struct HckrNewsApp: App {
     @Environment(\.colorScheme) private var colorScheme
 
+    // Tap for refresh
     // https://stackoverflow.com/a/65048085
     @State private var selection = 0
     private var selectionWrapper: Binding<Int> {
@@ -22,7 +24,6 @@ struct HckrNewsApp: App {
         )
     }
 
-    @StateObject private var dataController = PersistenceController()
     @StateObject private var networkMonitor = NetworkMonitor()
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme: AppTheme = UserDefaults.Defaults.AppTheme
 
@@ -55,7 +56,6 @@ struct HckrNewsApp: App {
                     .tabItem {
                         Label("Bookmarks", systemImage: "bookmark")
                     }
-                    .environment(\.managedObjectContext, dataController.container.viewContext)
                     .tag(1)
                 SettingsView()
                     .tabItem {
@@ -64,7 +64,7 @@ struct HckrNewsApp: App {
                     .tag(2)
             }
             .preferredColorScheme(selectedAppTheme)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
+            .modelContainer(for: [Item.self])
         }
     }
 }

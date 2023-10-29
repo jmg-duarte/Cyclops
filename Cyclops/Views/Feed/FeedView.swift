@@ -5,6 +5,7 @@
 import Foundation
 import os
 import SwiftUI
+import SwiftData
 import UIKit
 import UniformTypeIdentifiers
 
@@ -13,7 +14,7 @@ struct FeedView: View {
     @State private var isShowingNavigationSheet: Bool = false
     @State private var itemDetail: Item? = nil
 
-    @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
 
@@ -22,15 +23,6 @@ struct FeedView: View {
         category: String(describing: FeedView.self)
     )
 
-    private func saveBookmark(item: Item) {
-        let bookmark = Bookmark(context: viewContext)
-        bookmark.id = Int64(item.id)
-        bookmark.time = Int64(item.time!)
-        bookmark.title = item.title
-        bookmark.url = item.url
-        try? viewContext.save()
-    }
-    
     var progress: some View {
         ProgressView()
             .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
@@ -55,7 +47,7 @@ struct FeedView: View {
                 ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
                     .swipeActions(edge: .leading) {
                         Button {
-                            saveBookmark(item: item)
+                            modelContext.insert(item)
                         } label: {
                             Label("Bookmark", systemImage: "bookmark.fill")
                         }
@@ -63,7 +55,7 @@ struct FeedView: View {
                     }
                     .contextMenu {
                         Button {
-                            saveBookmark(item: item)
+                            modelContext.insert(item)
                         } label: {
                             Label("Bookmark", systemImage: "bookmark")
                         }
@@ -169,7 +161,6 @@ struct ContentView_Previews: PreviewProvider {
         Group {
             FeedView(vm: vm)
                 .environmentObject(networkMonitor)
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
     }
 }

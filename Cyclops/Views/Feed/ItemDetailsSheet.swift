@@ -49,13 +49,8 @@ struct ItemDetailsSheet: View {
             Label("\(item.score ?? 0) points", systemImage: "hand.thumbsup.fill")
                 .foregroundColor(.primary)
             
-            if #available(iOS 17.0, *) {
-                Label("\(item.descendants ?? 0) comments", systemImage: "text.bubble.left.and.bubble.right.fill")
-                    .foregroundColor(.primary)
-            } else {
-                Label("\(item.descendants ?? 0) comments", systemImage: "bubble.left.and.bubble.right.fill")
-                    .foregroundColor(.primary)
-            }
+            Label("\(item.descendants ?? 0) comments", systemImage: "bubble.left.and.text.bubble.right.fill")
+                .foregroundColor(.primary)
             
             Link(destination: comments) {
                 Label("Go to discussion", systemImage: "arrow.turn.up.right")
