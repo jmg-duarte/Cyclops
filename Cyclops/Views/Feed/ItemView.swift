@@ -3,36 +3,47 @@
 // Copyright (c) 2023
 
 import CoreData
+import SwiftData
 import SwiftUI
 
 struct ItemView: View {
+    @Environment(\.openURL) private var openURL
+    @Environment(\.modelContext) private var modelContext
+
     let id: Int
     let url: URL
     let title: String
     let time: UnixEpoch
-    
+
+static func viewedPredicate(_ id: Int) -> Predicate<Viewed> {
+    return #Predicate<Viewed> { $0.id == id }
+}
+
+var viewed: [Viewed] {
+    return (try? modelContext.fetch(
+        FetchDescriptor(
+            predicate: ItemView.viewedPredicate(id)
+        ))) ?? []
+}
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Link(destination: url) {
                     Text(title).font(.headline).multilineTextAlignment(.leading)
                 }
-                /*
                 .environment(\.openURL, OpenURLAction { _ in
-                    markAsRead()
+                    modelContext.insert(Viewed(id))
                     return .systemAction
                 })
-                 */
                 HStack {
                     Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
                 }
             }
-            /*
-            if hasBeenRead {
+            if !viewed.isEmpty {
                 Spacer()
                 Image(systemName: "eye")
             }
-             */
         }
         // Without this, the HStack will trigger all the "tappable" actions
         // See the following link for more information:

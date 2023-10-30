@@ -2,15 +2,22 @@
 // Created by José Duarte on 11/06/2023
 // Copyright (c) 2023
 
+import SwiftData
 import SwiftUI
 
 struct SettingsView: View {
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = AppTheme.system.rawValue
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = UserDefaults.Defaults.NumberOfStoriesPerPage
 
-    let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
-    let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-    let buildNumber = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+    @Environment(\.modelContext) private var modelContext
+
+    private let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
+    private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    private let buildNumber = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+
+    private var viewedCount: Int {
+        return (try? modelContext.fetchCount(FetchDescriptor<Viewed>())) ?? 0
+    }
 
     var body: some View {
         NavigationView {
@@ -34,8 +41,23 @@ struct SettingsView: View {
                             Text("Color Theme")
                         }
                     }
+
+                    Section("Stats") {
+                        HStack {
+                            Label("Viewed stories", systemImage: "eye").foregroundColor(.black)
+                            Spacer()
+                            Text("\(viewedCount)")
+                        }
+                        Button {
+                            try! modelContext.delete(model: Viewed.self)
+                        } label: {
+                            Label("Delete viewed stories data", systemImage: "trash")
+                        }
+                        .foregroundColor(.red)
+                    }
                 }
             }
+
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -64,7 +64,7 @@ struct HckrNewsApp: App {
                     .tag(2)
             }
             .preferredColorScheme(selectedAppTheme)
-            .modelContainer(for: [Item.self])
+            .modelContainer(for: [Item.self, Viewed.self])
         }
     }
 }
