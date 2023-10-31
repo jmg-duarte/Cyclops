@@ -3,7 +3,8 @@
 // Copyright (c) 2023
 
 import SwiftUI
-import SwiftData
+import GRDB
+import GRDBQuery
 
 @main
 struct HckrNewsApp: App {
@@ -64,7 +65,24 @@ struct HckrNewsApp: App {
                     .tag(2)
             }
             .preferredColorScheme(selectedAppTheme)
-            .modelContainer(for: [Item.self, Viewed.self])
+            .environment(\.appDatabase, .shared)
         }
+    }
+}
+
+private struct AppDatabaseKey: EnvironmentKey {
+    static var defaultValue: AppDatabase { .empty() }
+}
+
+extension EnvironmentValues {
+    var appDatabase: AppDatabase {
+        get { self[AppDatabaseKey.self] }
+        set { self[AppDatabaseKey.self] = newValue }
+    }
+}
+
+extension Query where Request.DatabaseContext == AppDatabase {
+    init (_ request: Request) {
+        self.init(request, in: \.appDatabase)
     }
 }

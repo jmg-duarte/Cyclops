@@ -14,7 +14,7 @@ struct FeedView: View {
     @State private var isShowingNavigationSheet: Bool = false
     @State private var itemDetail: Item? = nil
 
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.appDatabase) private var appDatabase
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
 
@@ -47,7 +47,7 @@ struct FeedView: View {
                 ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
                     .swipeActions(edge: .leading) {
                         Button {
-                            modelContext.insert(item)
+                            Task { try! await appDatabase.saveBookmark(item) }
                         } label: {
                             Label("Bookmark", systemImage: "bookmark.fill")
                         }
@@ -55,7 +55,7 @@ struct FeedView: View {
                     }
                     .contextMenu {
                         Button {
-                            modelContext.insert(item)
+                            Task { try! await appDatabase.saveBookmark(item) }
                         } label: {
                             Label("Bookmark", systemImage: "bookmark")
                         }

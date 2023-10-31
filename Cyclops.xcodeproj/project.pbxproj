@@ -25,6 +25,12 @@
 		11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20592A3F1723008A54B9 /* AppTheme.swift */; };
 		11BF20642A3F67DD008A54B9 /* BookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BF20632A3F67DC008A54B9 /* BookmarksView.swift */; };
 		11C00CD42AEFB0D700954E73 /* Viewed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CD32AEFB0D700954E73 /* Viewed.swift */; };
+		11C00CD72AEFEBC900954E73 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 11C00CD62AEFEBC900954E73 /* GRDB */; };
+		11C00CD92AEFEC5600954E73 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CD82AEFEC5500954E73 /* AppDatabase.swift */; };
+		11C00CDC2AF1347000954E73 /* GRDBQuery in Frameworks */ = {isa = PBXBuildFile; productRef = 11C00CDB2AF1347000954E73 /* GRDBQuery */; };
+		11C00CDE2AF134B200954E73 /* BookmarkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CDD2AF134B200954E73 /* BookmarkRequest.swift */; };
+		11C00CE02AF138A000954E73 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CDF2AF138A000954E73 /* Persistence.swift */; };
+		11C00CE52AF147D200954E73 /* ViewedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CE42AF147D200954E73 /* ViewedRequest.swift */; };
 		11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D412152A3F9C560046DE75 /* Int+Time.swift */; };
 		11E902642A484B58003784CE /* ItemDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E902632A484B58003784CE /* ItemDetailsSheet.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
@@ -66,6 +72,10 @@
 		11BF20592A3F1723008A54B9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		11BF20632A3F67DC008A54B9 /* BookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksView.swift; sourceTree = "<group>"; };
 		11C00CD32AEFB0D700954E73 /* Viewed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Viewed.swift; sourceTree = "<group>"; };
+		11C00CD82AEFEC5500954E73 /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		11C00CDD2AF134B200954E73 /* BookmarkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRequest.swift; sourceTree = "<group>"; };
+		11C00CDF2AF138A000954E73 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		11C00CE42AF147D200954E73 /* ViewedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedRequest.swift; sourceTree = "<group>"; };
 		11D412152A3F9C560046DE75 /* Int+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Time.swift"; sourceTree = "<group>"; };
 		11E902632A484B58003784CE /* ItemDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsSheet.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -82,6 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C00CDC2AF1347000954E73 /* GRDBQuery in Frameworks */,
+				11C00CD72AEFEBC900954E73 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +129,7 @@
 		11120AB62A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXGroup;
 			children = (
+				11C00CE32AF147B300954E73 /* Requests */,
 				11BF205D2A3F29C0008A54B9 /* ViewModels */,
 				11BF20422A37698B008A54B9 /* Extensions */,
 				11BF20412A37696E008A54B9 /* HackerNewsClient */,
@@ -125,6 +138,8 @@
 				11120AB72A30E53A0084E612 /* CyclopsApp.swift */,
 				11BF204B2A386EF7008A54B9 /* NetworkMonitor.swift */,
 				11BF20512A387A1F008A54B9 /* CacheEntryObject.swift */,
+				11C00CDF2AF138A000954E73 /* Persistence.swift */,
+				11C00CD82AEFEC5500954E73 /* AppDatabase.swift */,
 				11120ABB2A30E53B0084E612 /* Assets.xcassets */,
 				11120ABD2A30E53B0084E612 /* Preview Content */,
 			);
@@ -190,6 +205,15 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		11C00CE32AF147B300954E73 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				11C00CDD2AF134B200954E73 /* BookmarkRequest.swift */,
+				11C00CE42AF147D200954E73 /* ViewedRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		11FE08E82A31E21F0034829A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +250,10 @@
 			dependencies = (
 			);
 			name = Cyclops;
+			packageProductDependencies = (
+				11C00CD62AEFEBC900954E73 /* GRDB */,
+				11C00CDB2AF1347000954E73 /* GRDBQuery */,
+			);
 			productName = HckrNews;
 			productReference = 11120AB42A30E53A0084E612 /* Cyclops.app */;
 			productType = "com.apple.product-type.application";
@@ -276,6 +304,10 @@
 				Base,
 			);
 			mainGroup = 11120AAB2A30E53A0084E612;
+			packageReferences = (
+				11C00CD52AEFEBC900954E73 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				11C00CDA2AF1347000954E73 /* XCRemoteSwiftPackageReference "GRDBQuery" */,
+			);
 			productRefGroup = 11120AB52A30E53A0084E612 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -323,15 +355,19 @@
 				11FE09062A332D680034829A /* FeedView.swift in Sources */,
 				11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */,
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
+				11C00CDE2AF134B200954E73 /* BookmarkRequest.swift in Sources */,
 				11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */,
+				11C00CD92AEFEC5600954E73 /* AppDatabase.swift in Sources */,
 				11BF20482A376A19008A54B9 /* TestHackerNewsClient.swift in Sources */,
 				1143B5612A47296800931E34 /* FeedSelectionSheet.swift in Sources */,
 				11FE08EA2A31E22D0034829A /* Item.swift in Sources */,
+				11C00CE02AF138A000954E73 /* Persistence.swift in Sources */,
 				11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */,
 				11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */,
 				11BF20522A387A1F008A54B9 /* CacheEntryObject.swift in Sources */,
 				11B40DDF2A35F8DA00CA8539 /* UserDefaults+Constants.swift in Sources */,
 				11BF204C2A386EF7008A54B9 /* NetworkMonitor.swift in Sources */,
+				11C00CE52AF147D200954E73 /* ViewedRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +652,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11C00CD52AEFEBC900954E73 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		11C00CDA2AF1347000954E73 /* XCRemoteSwiftPackageReference "GRDBQuery" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDBQuery.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11C00CD62AEFEBC900954E73 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11C00CD52AEFEBC900954E73 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+		11C00CDB2AF1347000954E73 /* GRDBQuery */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11C00CDA2AF1347000954E73 /* XCRemoteSwiftPackageReference "GRDBQuery" */;
+			productName = GRDBQuery;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11120AAC2A30E53A0084E612 /* Project object */;
 }

@@ -5,11 +5,9 @@
 //  Created by José Duarte on 30/10/2023.
 //
 
-import Foundation
-import SwiftData
+import GRDB
 
-@Model
-final class Viewed: Identifiable {
+final class Viewed: Identifiable, Codable, FetchableRecord, PersistableRecord {
     var id: Int
     
     init(_ id: Int) {

@@ -2,29 +2,35 @@
 // Created by José Duarte on 09/06/2023
 // Copyright (c) 2023
 
-import CoreData
-import SwiftData
 import SwiftUI
+import Combine
+import GRDB
+import GRDBQuery
 
 struct ItemView: View {
     @Environment(\.openURL) private var openURL
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.appDatabase) private var appDatabase
 
     let id: Int
     let url: URL
     let title: String
     let time: UnixEpoch
-
-static func viewedPredicate(_ id: Int) -> Predicate<Viewed> {
-    return #Predicate<Viewed> { $0.id == id }
-}
-
-var viewed: [Viewed] {
-    return (try? modelContext.fetch(
-        FetchDescriptor(
-            predicate: ItemView.viewedPredicate(id)
-        ))) ?? []
-}
+    
+    // Not great but ¯\_(ツ)_/¯
+    // https://developer.apple.com/forums/thread/120497?answerId=384664022#384664022
+    private var viewedPublisher: AnyPublisher<Bool, Never> {
+        ValueObservation.tracking { db in
+            let viewed = (try? Viewed.filter(Column("id") == id).fetchOne(db)) ?? nil
+            return viewed != nil
+        }
+        .publisher(in: appDatabase.reader, scheduling: .immediate)
+        // SAFETY: default nil is set in case it fails
+        // it's just whether a link was viewed, it's not the end
+        // of the world if it is wrong/fails
+        .assertNoFailure()
+        .eraseToAnyPublisher()
+    }
+    @State private var viewed: Bool = false
 
     var body: some View {
         HStack {
@@ -32,18 +38,21 @@ var viewed: [Viewed] {
                 Link(destination: url) {
                     Text(title).font(.headline).multilineTextAlignment(.leading)
                 }
-                .environment(\.openURL, OpenURLAction { _ in
-                    modelContext.insert(Viewed(id))
-                    return .systemAction
-                })
+                 .environment(\.openURL, OpenURLAction { _ in
+                     Task {try! await appDatabase.saveViewed(Viewed(id))}
+                     return .systemAction
+                 })
                 HStack {
                     Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
                 }
             }
-            if !viewed.isEmpty {
-                Spacer()
-                Image(systemName: "eye")
-            }
+            if viewed {
+                 Spacer()
+                 Image(systemName: "eye")
+             }
+        }
+        .onReceive(viewedPublisher) {
+            viewed = $0
         }
         // Without this, the HStack will trigger all the "tappable" actions
         // See the following link for more information:

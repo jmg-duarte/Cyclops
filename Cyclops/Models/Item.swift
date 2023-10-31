@@ -3,16 +3,15 @@
 // Copyright (c) 2023
 
 import Foundation
-import SwiftData
+import GRDB
 
 /// An HackerNews item.
 /// For more information, see: https://github.com/HackerNews/API
-@Model
-final class Item: Identifiable, Decodable {
+struct Item: Identifiable {
     // NOTE: For now, item is good enough to retrieve everything, but in the future,
     // a decoder based on the ItemType could be a nice improvement
     
-    @Attribute(.unique) let id: Int
+    let id: Int
     let type: ItemType
     // The API may not return an URL, in which case, we default to the actual HN webpage
     let url: URL
@@ -30,25 +29,18 @@ final class Item: Identifiable, Decodable {
     var time: Int? = nil // This is (probably) only nil for pollopts
     var title: String? = nil // This is only nil for comments and friends
 
-    init(id: Int, type: ItemType, url: URL, by: String? = nil, dead: Bool? = nil, deleted: Bool? = nil, descendants: Int? = nil, kids: [Int]? = nil, parent: Int? = nil, parts: [Int]? = nil, poll: Int? = nil, score: Int? = nil, text: String? = nil, time: Int? = nil, title: String? = nil) {
-        self.id = id
-        self.type = type
-        self.url = url
-        self.by = by
-        self.dead = dead
-        self.deleted = deleted
-        self.descendants = descendants
-        self.kids = kids
-        self.parent = parent
-        self.parts = parts
-        self.poll = poll
-        self.score = score
-        self.text = text
-        self.time = time
-        self.title = title
-    }
     
-    private enum CodingKeys: String, CodingKey {
+    static func postURL(_ id: Int) -> URL {
+        URL(string: "https://news.ycombinator.com/item?id=\(id)")!
+    }
+
+    func postURL() -> URL {
+        Item.postURL(id)
+    }
+}
+
+extension Item: Codable {
+    enum CodingKeys: String, CodingKey {
         case id
         case type
         case by
@@ -65,38 +57,61 @@ final class Item: Identifiable, Decodable {
         case title
         case url
     }
-
-    convenience init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try values.decode(Int.self, forKey: .id)
-        self.init(
-            id: id,
-            type: try values.decode(ItemType.self, forKey: .type),
-            url: (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id),
-            by: try? values.decode(String.self, forKey: .by),
-            dead: try? values.decode(Bool.self, forKey: .dead),
-            deleted: try? values.decode(Bool.self, forKey: .deleted),
-            descendants: try? values.decode(Int.self, forKey: .descendants),
-            kids: try? values.decode([Int].self, forKey: .kids),
-            parent: try? values.decode(Int.self, forKey: .parent),
-            parts: try? values.decode([Int].self, forKey: .parts),
-            poll: try? values.decode(Int.self, forKey: .poll),
-            score: try? values.decode(Int.self, forKey: .score),
-            text: try? values.decode(String.self, forKey: .text),
-            time: try? values.decode(Int.self, forKey: .time),
-            title: try? values.decode(String.self, forKey: .title)
-        )
-    }
-
-    static func postURL(_ id: Int) -> URL {
-        URL(string: "https://news.ycombinator.com/item?id=\(id)")!
-    }
-
-    func postURL() -> URL {
-        Item.postURL(id)
+    
+    init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            id = try values.decode(Int.self, forKey: .id)
+            type = try values.decode(ItemType.self, forKey: .type)
+            by = try? values.decode(String.self, forKey: .by)
+            dead = try? values.decode(Bool.self, forKey: .dead)
+            deleted = try? values.decode(Bool.self, forKey: .deleted)
+            descendants = try? values.decode(Int.self, forKey: .descendants)
+            kids = try? values.decode([Int].self, forKey: .kids)
+            parent = try? values.decode(Int.self, forKey: .parent)
+            parts = try? values.decode([Int].self, forKey: .parts)
+            poll = try? values.decode(Int.self, forKey: .poll)
+            score = try? values.decode(Int.self, forKey: .score)
+            text = try? values.decode(String.self, forKey: .text)
+            time = try? values.decode(Int.self, forKey: .time)
+            title = try? values.decode(String.self, forKey: .title)
+            url = (try? values.decode(URL.self, forKey: .url)) ?? Item.postURL(id)
+        }
+    
+    func encode(to container: inout PersistenceContainer) throws {
+        let jsonEncoder = JSONEncoder()
+        container["id"] = id
+        container["type"] = type
+        container["by"] = by
+        container["dead"] = dead
+        container["deleted"] = deleted
+        container["descendants"] = descendants
+        container["kids"] = try! jsonEncoder.encode(kids)
+        container["parent"] = parent
+        container["parts"] = try! jsonEncoder.encode(kids)
+        container["poll"] = poll
+        container["score"] = score
+        container["text"] = text
+        container["time"] = time
+        container["title"] = title
+        container["url"] = url
     }
 }
 
+extension Item: FetchableRecord, PersistableRecord {
+    fileprivate enum Columns {
+        static let time = Column(CodingKeys.title)
+    }
+}
+
+// MARK: - Item Database Requests
+
+extension DerivableRequest<Item> {
+    func orderedByTime() -> Self {
+        order(Item.Columns.time.desc)
+    }
+}
+
+// MARK: - Sample Data
 
 extension Item {
     static var sampleData = [
@@ -138,7 +153,7 @@ extension Item {
 
 /// An item's type.
 // NOTE: "Type" cannot be the name of this enum
-enum ItemType: String, CaseIterable, Codable {
+enum ItemType: String, CaseIterable, Codable, DatabaseValueConvertible {
     case job
     case story
     case comment
