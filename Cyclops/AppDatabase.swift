@@ -13,7 +13,6 @@ import OSLog
 // See the following link for more information:
 // https://github.com/groue/GRDB.swift/blob/master/Documentation/DemoApps/GRDBAsyncDemo/GRDBAsyncDemo/AppDatabase.swift
 struct AppDatabase {
-    
     private let dbWriter: any DatabaseWriter
     
     init(_ dbWriter: any DatabaseWriter) throws {
@@ -116,6 +115,14 @@ extension AppDatabase {
     func deleteAllViewed() async throws {
         try await dbWriter.write { db in
             _ = try Viewed.deleteAll(db)
+        }
+    }
+    
+    func createSampleBookmarks() throws {
+        try dbWriter.write { db in
+            try Item.sampleData.forEach { item in
+                _ = try item.inserted(db)
+            }
         }
     }
 }

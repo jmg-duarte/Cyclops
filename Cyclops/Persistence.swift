@@ -45,5 +45,11 @@ extension AppDatabase {
         return try! AppDatabase(dbQueue)
     }
     
+    static func demo() -> AppDatabase {
+        let appDatabase = empty()
+        try! appDatabase.createSampleBookmarks()
+        return appDatabase
+    }
+    
     // TODO: make a pre-populated DB
 }

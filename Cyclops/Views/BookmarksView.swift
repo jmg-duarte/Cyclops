@@ -41,4 +41,5 @@ struct BookmarksView: View {
 
 #Preview {
     BookmarksView()
+        .environment(\.appDatabase, AppDatabase.demo())
 }
