@@ -61,6 +61,21 @@ class HTTPHNClient: HackerNewsClient {
     func refreshStoryIDs(kind: StoryKind) {
         storyIDsCache.removeObject(forKey: kind.feedURL.absoluteString as NSString)
     }
+    
+    // Super dirty, this whole caching strategy needs to be improved
+    // maybe SQLite works for this purpose (?)
+    func checkStoriesInCache(kind: StoryKind) -> Bool {
+        if let cached = storyIDsCache.object(forKey: kind.feedURL.absoluteString as NSString) {
+            Self.logger.debug("Found cache entry [key: \(kind.feedURL.absoluteString)]")
+            switch cached.entry {
+            case .inProgress(_):
+                return false
+            case .ready(_):
+                return true
+            }
+        }
+        return false
+    }
 
     func fetchStoryIDs(kind: StoryKind) async throws -> [Int] {
         Self.logger.debug("Loading story IDs [kind: \(kind.rawValue)]")

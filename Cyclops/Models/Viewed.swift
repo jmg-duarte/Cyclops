@@ -14,3 +14,17 @@ final class Viewed: Identifiable, Codable, FetchableRecord, PersistableRecord {
         self.id = id
     }
 }
+
+// MARK: - Hashable implementation requirements for usage in Set
+
+extension Viewed: Equatable {
+    static func == (lhs: Viewed, rhs: Viewed) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension Viewed: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

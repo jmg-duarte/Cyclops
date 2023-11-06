@@ -22,4 +22,8 @@ protocol HackerNewsClient {
 
     /// Fetch a set of stories based on the given story kind.
     func fetchFeed(kind: StoryKind, from: Int, limit: Int) async throws -> [Item]
+    
+    
+    // TODO: fix this crap later
+    func checkStoriesInCache(kind: StoryKind) -> Bool
 }

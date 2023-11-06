@@ -5,6 +5,10 @@
 import Foundation
 
 class TestHackerNewsClient: HackerNewsClient {
+    func checkStoriesInCache(kind: StoryKind) -> Bool {
+        false
+    }
+    
     func refreshStoryIDs(kind: StoryKind) {
         // No-op
     }

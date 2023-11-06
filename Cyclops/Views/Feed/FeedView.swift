@@ -9,6 +9,27 @@ import SwiftData
 import UIKit
 import UniformTypeIdentifiers
 
+/*
+ struct Feed {
+     @Environment(\.appDatabase) private var appDatabase
+     
+     // INVARIANT: `items` and `viewed` should always have the same size
+     var items: [Item]
+     
+     var viewedPublisher: AnyPublisher<Set<Viewed>, Never> {
+         ValueObservation.tracking { db in
+             (try? Viewed.fetchAll(db, ids: Set<Viewed>(from: items.map {item in item.id}))) ?? Set<Viewed>()
+         }
+         .publisher(in: appDatabase.reader, scheduling: .immediate)
+         // SAFETY: default nil is set in case it fails
+         // it's just whether a link was viewed, it's not the end
+         // of the world if it is wrong/fails
+         .assertNoFailure()
+         .eraseToAnyPublisher()
+     }
+ }
+ */
+
 struct FeedView: View {
     @State private var isShowingErrorAlert: Bool = false
     @State private var isShowingNavigationSheet: Bool = false
@@ -18,13 +39,14 @@ struct FeedView: View {
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @StateObject var vm: FeedViewModel
 
-    private static let logger = Logger(
+    private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: FeedView.self)
     )
 
     var progress: some View {
         ProgressView()
+            .onAppear { logger.debug("loading") }
             .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
