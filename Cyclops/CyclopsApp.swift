@@ -16,11 +16,13 @@ struct HckrNewsApp: App {
     private var selectionWrapper: Binding<Int> {
         Binding(
             get: { self.selection },
-            set: {
-                if $0 == self.selection {
-                    self.feedViewModel.resetPage()
+            set: { newValue in
+                if newValue == self.selection {
+                    Task { await self.feedViewModel.resetPage() }
                 }
-                self.selection = $0
+                withAnimation {
+                    self.selection = newValue
+                }
             }
         )
     }

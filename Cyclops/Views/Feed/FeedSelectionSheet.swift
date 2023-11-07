@@ -11,19 +11,25 @@ struct FeedSelectionSheet: View {
         List {
             Section("Main") {
                 Button {
-                     feedViewModel.switchFeed(feed: .top)
+                     Task {
+                         await feedViewModel.switchFeed(feed: .top)
+                     }
                     isShowing = false
                 } label: {
                     Label("Top", systemImage: "chart.bar.fill")
                 }
                 Button {
-                    feedViewModel.switchFeed(feed: .new)
+                    Task {
+                        await feedViewModel.switchFeed(feed: .new)
+                    }
                     isShowing = false
                 } label: {
                     Label("New", systemImage: "newspaper.fill")
                 }
                 Button {
-                     feedViewModel.switchFeed(feed: .best)
+                     Task {
+                         await feedViewModel.switchFeed(feed: .best)
+                     }
                     isShowing = false
                 } label: {
                     Label("Best", systemImage: "trophy.fill")
@@ -31,17 +37,23 @@ struct FeedSelectionSheet: View {
             }
             Section("Others") {
                 Button {
-                     feedViewModel.switchFeed(feed:.ask)
+                     Task {
+                         await feedViewModel.switchFeed(feed:.ask)
+                     }
                 } label: {
                     Label("Ask", systemImage: "person.fill.questionmark")
                 }
                 Button {
-                     feedViewModel.switchFeed(feed:.job)
+                     Task {
+                         await feedViewModel.switchFeed(feed:.job)
+                     }
                 } label: {
                     Label("Job", systemImage: "briefcase.fill")
                 }
                 Button {
-                    feedViewModel.switchFeed(feed:.show)
+                    Task {
+                        await feedViewModel.switchFeed(feed:.show)
+                    }
                 } label: {
                     Label("Show", systemImage: "person.crop.rectangle.fill")
                 }

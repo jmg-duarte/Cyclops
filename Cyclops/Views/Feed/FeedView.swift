@@ -4,18 +4,18 @@
 
 import Foundation
 import os
-import SwiftUI
 import SwiftData
+import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
 /*
  struct Feed {
      @Environment(\.appDatabase) private var appDatabase
-     
+
      // INVARIANT: `items` and `viewed` should always have the same size
      var items: [Item]
-     
+
      var viewedPublisher: AnyPublisher<Set<Viewed>, Never> {
          ValueObservation.tracking { db in
              (try? Viewed.fetchAll(db, ids: Set<Viewed>(from: items.map {item in item.id}))) ?? Set<Viewed>()
@@ -46,7 +46,6 @@ struct FeedView: View {
 
     var progress: some View {
         ProgressView()
-            .onAppear { logger.debug("loading") }
             .navigationBarTitle(Text("\(vm.currentFeed.rawValue.capitalized) Stories"), displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -61,7 +60,7 @@ struct FeedView: View {
                 }
             }
     }
-    
+
     func loaded(feed: [Item]) -> some View {
         return List {
             ForEach(feed) { item in
@@ -99,7 +98,7 @@ struct FeedView: View {
             if !vm.isFirstPage {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                            vm.previousPage()
+                        Task { await vm.previousPage() }
                     } label: {
                         Image(systemName: "chevron.left")
                         Text("Page \(vm.currentPage - 1)")
@@ -120,7 +119,7 @@ struct FeedView: View {
             if !vm.isLastPage {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                            vm.nextPage()
+                        Task { await vm.nextPage() }
                     } label: {
                         Text("Page \(vm.currentPage + 1)")
                         Image(systemName: "chevron.right")
@@ -141,7 +140,6 @@ struct FeedView: View {
                 .presentationDetents([.fraction(0.4)])
         }
     }
-    
 
     var body: some View {
         if networkMonitor.isConnected {
@@ -161,14 +159,14 @@ struct FeedView: View {
                                 } label: {
                                     Label("Refresh", systemImage: "arrow.circlepath")
                                 }
-                             }
+                            }
                         }
                 case let .loaded(feed):
                     loaded(feed: feed)
                 }
             }
             // This runs the first page load
-            .task { await vm.loadPage() }
+            .task { await vm.resetPage() }
         } else {
             OfflineView()
         }
