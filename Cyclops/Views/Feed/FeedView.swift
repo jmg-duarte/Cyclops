@@ -9,31 +9,11 @@ import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
-/*
- struct Feed {
-     @Environment(\.appDatabase) private var appDatabase
-
-     // INVARIANT: `items` and `viewed` should always have the same size
-     var items: [Item]
-
-     var viewedPublisher: AnyPublisher<Set<Viewed>, Never> {
-         ValueObservation.tracking { db in
-             (try? Viewed.fetchAll(db, ids: Set<Viewed>(from: items.map {item in item.id}))) ?? Set<Viewed>()
-         }
-         .publisher(in: appDatabase.reader, scheduling: .immediate)
-         // SAFETY: default nil is set in case it fails
-         // it's just whether a link was viewed, it's not the end
-         // of the world if it is wrong/fails
-         .assertNoFailure()
-         .eraseToAnyPublisher()
-     }
- }
- */
-
 struct FeedView: View {
     @State private var isShowingErrorAlert: Bool = false
     @State private var isShowingNavigationSheet: Bool = false
     @State private var itemDetail: Item? = nil
+    @State private var shouldScrollToTop = false
 
     @Environment(\.appDatabase) private var appDatabase
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -62,35 +42,44 @@ struct FeedView: View {
     }
 
     func loaded(feed: [Item]) -> some View {
-        return List {
-            ForEach(feed) { item in
-                // Force unwrap should be safe because news always have titles and time
-                ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            Task { try! await appDatabase.saveBookmark(item) }
-                        } label: {
-                            Label("Bookmark", systemImage: "bookmark.fill")
+        return ScrollViewReader { reader in
+            List {
+                ForEach(feed) { item in
+                    // Force unwrap should be safe because news always have titles and time
+                    ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                Task { try! await appDatabase.saveBookmark(item) }
+                            } label: {
+                                Label("Bookmark", systemImage: "bookmark.fill")
+                            }
+                            .tint(.blue)
                         }
-                        .tint(.blue)
-                    }
-                    .contextMenu {
-                        Button {
-                            Task { try! await appDatabase.saveBookmark(item) }
-                        } label: {
-                            Label("Bookmark", systemImage: "bookmark")
+                        .contextMenu {
+                            Button {
+                                Task { try! await appDatabase.saveBookmark(item) }
+                            } label: {
+                                Label("Bookmark", systemImage: "bookmark")
+                            }
+                            ShareLink(item: item.url) {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            }
+                            Button {
+                                self.itemDetail = item
+                            } label: {
+                                Label("Details", systemImage: "ellipsis.circle")
+                            }
                         }
-                        ShareLink(item: item.url) {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                        Button {
-                            self.itemDetail = item
-                        } label: {
-                            Label("Details", systemImage: "ellipsis.circle")
-                        }
-                    }
+                }
+            }
+            .onChange(of: shouldScrollToTop) { _, _ in
+                withAnimation
+                {
+                    reader.scrollTo(feed.first?.id)
+                }
             }
         }
+        
         .refreshable {
             await vm.refreshPage()
         }
@@ -99,6 +88,7 @@ struct FeedView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
                         Task { await vm.previousPage() }
+                        shouldScrollToTop.toggle()
                     } label: {
                         Image(systemName: "chevron.left")
                         Text("Page \(vm.currentPage - 1)")
@@ -120,6 +110,7 @@ struct FeedView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         Task { await vm.nextPage() }
+                        shouldScrollToTop.toggle()
                     } label: {
                         Text("Page \(vm.currentPage + 1)")
                         Image(systemName: "chevron.right")
