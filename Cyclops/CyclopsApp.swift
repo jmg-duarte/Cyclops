@@ -28,7 +28,8 @@ struct HckrNewsApp: App {
     }
 
     @StateObject private var networkMonitor = NetworkMonitor()
-    @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme: AppTheme = UserDefaults.Defaults.AppTheme
+    @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = UserDefaults.Defaults.AppTheme
+    @AppStorage(UserDefaults.Keys.WasOnboarded) private var wasOnboarded = UserDefaults.Defaults.WasOnboarded
 
     private var selectedAppTheme: ColorScheme? {
         switch appTheme {
@@ -48,26 +49,32 @@ struct HckrNewsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabView(selection: selectionWrapper) {
-                FeedView(vm: feedViewModel)
-                    .tabItem {
-                        Label("Feed", systemImage: "newspaper")
-                    }
-                    .environmentObject(networkMonitor)
-                    .tag(0)
-                BookmarksView()
-                    .tabItem {
-                        Label("Bookmarks", systemImage: "bookmark")
-                    }
-                    .tag(1)
-                SettingsView()
-                    .tabItem {
-                        Label("Settings", systemImage: "gear")
-                    }
-                    .tag(2)
+            if wasOnboarded {
+                TabView(selection: selectionWrapper) {
+                    FeedView(vm: feedViewModel)
+                        .tabItem {
+                            Label("Feed", systemImage: "newspaper")
+                        }
+                        .environmentObject(networkMonitor)
+                        .tag(0)
+                    BookmarksView()
+                        .tabItem {
+                            Label("Bookmarks", systemImage: "bookmark")
+                        }
+                        .tag(1)
+                    SettingsView()
+                        .tabItem {
+                            Label("Settings", systemImage: "gear")
+                        }
+                        .tag(2)
+                }
+                .preferredColorScheme(selectedAppTheme)
+                .environment(\.appDatabase, .shared)
+            } else {
+                OnboardingView()
+                    .preferredColorScheme(selectedAppTheme)
+                    .environment(\.appDatabase, .shared)
             }
-            .preferredColorScheme(selectedAppTheme)
-            .environment(\.appDatabase, .shared)
         }
     }
 }

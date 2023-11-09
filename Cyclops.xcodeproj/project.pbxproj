@@ -31,6 +31,7 @@
 		11C00CDE2AF134B200954E73 /* BookmarkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CDD2AF134B200954E73 /* BookmarkRequest.swift */; };
 		11C00CE02AF138A000954E73 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CDF2AF138A000954E73 /* Persistence.swift */; };
 		11C00CE52AF147D200954E73 /* ViewedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CE42AF147D200954E73 /* ViewedRequest.swift */; };
+		11C00CEB2AFD762900954E73 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C00CEA2AFD762900954E73 /* OnboardingView.swift */; };
 		11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D412152A3F9C560046DE75 /* Int+Time.swift */; };
 		11E902642A484B58003784CE /* ItemDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E902632A484B58003784CE /* ItemDetailsSheet.swift */; };
 		11FE08EA2A31E22D0034829A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FE08E92A31E22D0034829A /* Item.swift */; };
@@ -76,6 +77,7 @@
 		11C00CDD2AF134B200954E73 /* BookmarkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRequest.swift; sourceTree = "<group>"; };
 		11C00CDF2AF138A000954E73 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		11C00CE42AF147D200954E73 /* ViewedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewedRequest.swift; sourceTree = "<group>"; };
+		11C00CEA2AFD762900954E73 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		11D412152A3F9C560046DE75 /* Int+Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Time.swift"; sourceTree = "<group>"; };
 		11E902632A484B58003784CE /* ItemDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsSheet.swift; sourceTree = "<group>"; };
 		11FE08E92A31E22D0034829A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */,
 				11BF204D2A387050008A54B9 /* OfflineView.swift */,
 				11BF20632A3F67DC008A54B9 /* BookmarksView.swift */,
+				11C00CEA2AFD762900954E73 /* OnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				11BF205A2A3F1723008A54B9 /* AppTheme.swift in Sources */,
 				11FE09062A332D680034829A /* FeedView.swift in Sources */,
 				11B40DDD2A35EE7D00CA8539 /* SettingsView.swift in Sources */,
+				11C00CEB2AFD762900954E73 /* OnboardingView.swift in Sources */,
 				11FE09082A3334C50034829A /* ItemView.swift in Sources */,
 				11C00CDE2AF134B200954E73 /* BookmarkRequest.swift in Sources */,
 				11D412162A3F9C560046DE75 /* Int+Time.swift in Sources */,
@@ -534,7 +538,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.4;
+				MARKETING_VERSION = 0.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.Cyclops";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -571,7 +575,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.4;
+				MARKETING_VERSION = 0.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.github.jmg-duarte.Cyclops";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

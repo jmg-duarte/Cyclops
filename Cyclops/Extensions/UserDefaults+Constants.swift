@@ -17,13 +17,18 @@ import Foundation
 extension UserDefaults {
     enum Keys {
         static let AppTheme = "AppTheme"
+        /// The number of stories to show per feeed page
         static let NumberOfStoriesPerPage = "NumberOfStoriesPerPage"
+        /// Whether to show the number of comments per item
         static let ShowNumberOfComments = "ShowNumberOfComments"
+        /// Did the user go through the onboarding process
+        static let WasOnboarded = "WasOnboarded"
     }
 
     enum Defaults {
         static let AppTheme: AppTheme = .system
         static let NumberOfStoriesPerPage: Double = 25
-        static let ShowNumberOfComments: Bool = true
+        static let ShowNumberOfComments: Bool = false
+        static let WasOnboarded: Bool = false
     }
 }

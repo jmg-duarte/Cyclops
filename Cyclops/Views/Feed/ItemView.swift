@@ -36,7 +36,7 @@ struct ItemView: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Link(destination: url) {
                     Text(title).font(.headline).multilineTextAlignment(.leading)
                 }
@@ -44,6 +44,8 @@ struct ItemView: View {
                      Task {try! await appDatabase.saveViewed(Viewed(id))}
                      return .systemAction
                  })
+                 //.padding(.bottom, 0.8)
+                
                 HStack {
                     Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
                     if showNumberOfComments {
