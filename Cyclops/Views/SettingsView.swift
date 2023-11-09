@@ -2,17 +2,18 @@
 // Created by José Duarte on 11/06/2023
 // Copyright (c) 2023
 
-import SwiftUI
 import GRDBQuery
+import SwiftUI
 
 struct SettingsView: View {
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = AppTheme.system.rawValue
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = UserDefaults.Defaults.NumberOfStoriesPerPage
+    @AppStorage(UserDefaults.Keys.ShowNumberOfComments) private var showNumberOfComments = UserDefaults.Defaults.ShowNumberOfComments
 
     private let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
     private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     private let buildNumber = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-    
+
     @Environment(\.appDatabase) private var appDatabase
     @Query(ViewedNumberRequest()) private var viewedNumber: Int
 
@@ -20,7 +21,7 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 List {
-                    Section("Stories") {
+                    Section("Feed settings") {
                         HStack {
                             Text("Stories per page")
                             Slider(value: $numberOfStoriesPerPage, in: 10 ... 50, step: 1) {
@@ -28,6 +29,9 @@ struct SettingsView: View {
                             }
                             Text("\(Int(numberOfStoriesPerPage))")
                         }
+                        Toggle(isOn: $showNumberOfComments) {
+                            Text("Show number of comments")
+                        }.tint(.blue)
                     }
                     Section("Theme") {
                         Picker(selection: $appTheme) {
@@ -39,19 +43,19 @@ struct SettingsView: View {
                         }
                     }
 
-                     Section("Stats") {
-                         HStack {
-                             Label("Viewed stories", systemImage: "eye").foregroundColor(.primary)
-                             Spacer()
-                             Text("\(viewedNumber)")
-                         }
-                         Button {
-                             Task { try! await appDatabase.deleteAllViewed() }
-                         } label: {
-                             Label("Delete viewed stories data", systemImage: "trash")
-                         }
-                         .foregroundColor(.red)
-                     }
+                    Section("Stats") {
+                        HStack {
+                            Label("Viewed stories", systemImage: "eye").foregroundColor(.primary)
+                            Spacer()
+                            Text("\(viewedNumber)")
+                        }
+                        Button {
+                            Task { try! await appDatabase.deleteAllViewed() }
+                        } label: {
+                            Label("Delete viewed stories data", systemImage: "trash")
+                        }
+                        .foregroundColor(.red)
+                    }
                 }
             }
             .navigationTitle("Settings")

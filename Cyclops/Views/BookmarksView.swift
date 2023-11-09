@@ -23,7 +23,8 @@ struct BookmarksView: View {
                             id: Int(bookmark.id),
                             url: bookmark.url,
                             title: bookmark.title!,
-                            time: Int(bookmark.time!)
+                            time: Int(bookmark.time!),
+                            numberOfComments: bookmark.descendants ?? 0
                         )
                     }.onDelete { indexSet in
                         for index in indexSet {

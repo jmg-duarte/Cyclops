@@ -10,11 +10,13 @@ import GRDBQuery
 struct ItemView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.appDatabase) private var appDatabase
+    @AppStorage(UserDefaults.Keys.ShowNumberOfComments) private var showNumberOfComments = UserDefaults.Defaults.ShowNumberOfComments
 
     let id: Int
     let url: URL
     let title: String
     let time: UnixEpoch
+    let numberOfComments: Int
     
     // Not great but ¯\_(ツ)_/¯
     // https://developer.apple.com/forums/thread/120497?answerId=384664022#384664022
@@ -44,6 +46,9 @@ struct ItemView: View {
                  })
                 HStack {
                     Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
+                    if showNumberOfComments {
+                        Text("\(Image(systemName: "bubble.left.and.text.bubble.right.fill")) \(numberOfComments)").font(.caption2).foregroundStyle(.secondary)
+                    }
                 }
             }
             if viewed {
@@ -69,7 +74,8 @@ struct ItemView_Previews: PreviewProvider {
             id: Item.sampleData[0].id,
             url: Item.sampleData[0].url,
             title: Item.sampleData[0].title!,
-            time: Item.sampleData[0].time!
+            time: Item.sampleData[0].time!,
+            numberOfComments: Item.sampleData[0].descendants ?? 0
         )
     }
 }

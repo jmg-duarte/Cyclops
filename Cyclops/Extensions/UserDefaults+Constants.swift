@@ -18,10 +18,12 @@ extension UserDefaults {
     enum Keys {
         static let AppTheme = "AppTheme"
         static let NumberOfStoriesPerPage = "NumberOfStoriesPerPage"
+        static let ShowNumberOfComments = "ShowNumberOfComments"
     }
 
     enum Defaults {
         static let AppTheme: AppTheme = .system
         static let NumberOfStoriesPerPage: Double = 25
+        static let ShowNumberOfComments: Bool = true
     }
 }

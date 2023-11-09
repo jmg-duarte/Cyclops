@@ -2,9 +2,9 @@
 // Created by José Duarte on 20/06/2023
 // Copyright (c) 2023
 
-import SwiftUI
 import GRDB
 import GRDBQuery
+import SwiftUI
 
 @main
 struct HckrNewsApp: App {
@@ -84,7 +84,7 @@ extension EnvironmentValues {
 }
 
 extension Query where Request.DatabaseContext == AppDatabase {
-    init (_ request: Request) {
+    init(_ request: Request) {
         self.init(request, in: \.appDatabase)
     }
 }

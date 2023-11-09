@@ -40,46 +40,44 @@ struct FeedView: View {
                 }
             }
     }
+    
+    func feedItem(_ item: Item) -> some View {
+        // Force unwrap should be safe because news always have titles and time
+        return ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!, numberOfComments: item.descendants ?? 0)
+            .swipeActions(edge: .leading) {
+                Button {
+                    Task { try! await appDatabase.saveBookmark(item) }
+                } label: {
+                    Label("Bookmark", systemImage: "bookmark.fill")
+                }
+                .tint(.blue)
+            }
+            .contextMenu {
+                Button {
+                    Task { try! await appDatabase.saveBookmark(item) }
+                } label: {
+                    Label("Bookmark", systemImage: "bookmark")
+                }
+                ShareLink(item: item.url) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+                Button {
+                    self.itemDetail = item
+                } label: {
+                    Label("Details", systemImage: "ellipsis.circle")
+                }
+            }
+    }
 
     func loaded(feed: [Item]) -> some View {
         return ScrollViewReader { reader in
-            List {
-                ForEach(feed) { item in
-                    // Force unwrap should be safe because news always have titles and time
-                    ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!)
-                        .swipeActions(edge: .leading) {
-                            Button {
-                                Task { try! await appDatabase.saveBookmark(item) }
-                            } label: {
-                                Label("Bookmark", systemImage: "bookmark.fill")
-                            }
-                            .tint(.blue)
-                        }
-                        .contextMenu {
-                            Button {
-                                Task { try! await appDatabase.saveBookmark(item) }
-                            } label: {
-                                Label("Bookmark", systemImage: "bookmark")
-                            }
-                            ShareLink(item: item.url) {
-                                Label("Share", systemImage: "square.and.arrow.up")
-                            }
-                            Button {
-                                self.itemDetail = item
-                            } label: {
-                                Label("Details", systemImage: "ellipsis.circle")
-                            }
-                        }
-                }
-            }
+            List { ForEach(feed, content: feedItem) }
             .onChange(of: shouldScrollToTop) { _, _ in
-                withAnimation
-                {
+                withAnimation {
                     reader.scrollTo(feed.first?.id)
                 }
             }
         }
-        
         .refreshable {
             await vm.refreshPage()
         }
