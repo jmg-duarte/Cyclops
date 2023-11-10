@@ -36,16 +36,14 @@ struct OnboardingView: View {
                             
                     } keyframes: { _ in
                         KeyframeTrack(\.angle) {
-                            CubicKeyframe(135, duration: 1.0)
-                            CubicKeyframe(135, duration: 0.5)
-                            CubicKeyframe(90, duration: 1.3)
-                            CubicKeyframe(90, duration: 0.5)
-                            CubicKeyframe(180, duration: 1.3)
-                            CubicKeyframe(180, duration: 0.5)
-                            CubicKeyframe(-30, duration: 2.0)
-                            CubicKeyframe(-30, duration: 0.5)
-                            CubicKeyframe(0, duration: 1.0)
+                            CubicKeyframe(135, duration: 1.5)
+                            CubicKeyframe(135, duration: 1.2)
+                            CubicKeyframe(60, duration: 1.3)
+                            CubicKeyframe(60, duration: 1.0)
+                            CubicKeyframe(-20, duration: 1.0)
+                            CubicKeyframe(-20, duration: 1.0)
                             CubicKeyframe(0, duration: 0.5)
+                            CubicKeyframe(0, duration: 1.0)
                         }
                     }
                 Text("Welcome to").font(.title3)
@@ -155,11 +153,9 @@ struct OnboardingView: View {
                             .tint(.blue)
                         }
                     }
-                    
                 }.listStyle(.plain)
                     // So janky, but it works!
                     .frame(maxHeight: 250)
-                
                 Text("You can bookmark items by swiping right\n(and delete them in the Bookmarks tab by swiping left)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -180,18 +176,9 @@ struct OnboardingView: View {
             basicView.tag(1)
             longPressView.tag(2)
             swipeView.tag(3)
-           
-        }.tabViewStyle(.automatic)
-            .padding(.vertical, 20)
-            .transition(.slide)
-        
-        /*
-         Button {
-             wasOnboarded = true
-         } label: {
-             Text("Onboard")
-         }
-         */
+        }
+        .padding(.vertical, 20)
+        .transition(.slide)
     }
 }
 

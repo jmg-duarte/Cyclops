@@ -9,6 +9,7 @@ struct SettingsView: View {
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = AppTheme.system.rawValue
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private var numberOfStoriesPerPage: Double = UserDefaults.Defaults.NumberOfStoriesPerPage
     @AppStorage(UserDefaults.Keys.ShowNumberOfComments) private var showNumberOfComments = UserDefaults.Defaults.ShowNumberOfComments
+    @AppStorage(UserDefaults.Keys.WasOnboarded) private var wasOnboarded = UserDefaults.Defaults.WasOnboarded
 
     private let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
     private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -33,6 +34,7 @@ struct SettingsView: View {
                             Text("Show number of comments")
                         }.tint(.blue)
                     }
+                    
                     Section("Theme") {
                         Picker(selection: $appTheme) {
                             ForEach(AppTheme.allCases) { item in
@@ -45,7 +47,7 @@ struct SettingsView: View {
 
                     Section("Stats") {
                         HStack {
-                            Label("Viewed stories", systemImage: "eye").foregroundColor(.primary)
+                            Label("Viewed stories", systemImage: "eye").foregroundStyle(.primary)
                             Spacer()
                             Text("\(viewedNumber)")
                         }
@@ -54,7 +56,18 @@ struct SettingsView: View {
                         } label: {
                             Label("Delete viewed stories data", systemImage: "trash")
                         }
-                        .foregroundColor(.red)
+                        .foregroundStyle(.red)
+                    }
+                    
+                    Section("Tutorial") {
+                        HStack {
+                            Button {
+                                wasOnboarded = false
+                            } label: {
+                                Label("Redo the onboarding process", systemImage: "restart")
+                            }
+                            .foregroundStyle(.primary)
+                        }
                     }
                 }
             }
