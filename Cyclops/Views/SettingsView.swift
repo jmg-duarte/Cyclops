@@ -13,7 +13,7 @@ struct SettingsView: View {
     @AppStorage(UserDefaults.Keys.WasOnboarded) private var wasOnboarded = UserDefaults.Defaults.WasOnboarded
 
     @Environment(\.appDatabase) private var appDatabase
-    @Query(ViewedNumberRequest()) private var viewedNumber: Int
+    @Query(ViewedStoryCount()) private var viewedStoryCount: Int
 
     @FocusState private var keyboardFocus: Bool
 
@@ -89,9 +89,9 @@ struct SettingsView: View {
     var stats: some View {
         Section {
             HStack {
-                Label("Viewed stories", systemImage: "eye").foregroundStyle(.primary)
+                Label("Viewed story count", systemImage: "eye").foregroundStyle(.primary)
                 Spacer()
-                Text("\(viewedNumber)")
+                Text("\(viewedStoryCount)")
             }
             Button {
                 Task { try! await appDatabase.deleteAllViewed() }

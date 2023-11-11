@@ -31,31 +31,18 @@ struct HckrNewsApp: App {
     @AppStorage(UserDefaults.Keys.AppTheme) private var appTheme = UserDefaults.Defaults.AppTheme
     @AppStorage(UserDefaults.Keys.WasOnboarded) private var wasOnboarded = UserDefaults.Defaults.WasOnboarded
 
-    private var selectedAppTheme: ColorScheme? {
-        switch appTheme {
-        case .system: return .none
-        case .light: return .light
-        case .dark: return .dark
-        }
-    }
-
-    let hnClient: HackerNewsClient
-    let feedViewModel: FeedViewModel
-
-    init() {
-        self.hnClient = HTTPHNClient()
-        self.feedViewModel = FeedViewModel(loader: hnClient)
-    }
+    let feedViewModel = FeedViewModel(loader: HTTPHNClient())
 
     var body: some Scene {
         WindowGroup {
             if wasOnboarded {
                 TabView(selection: selectionWrapper) {
-                    FeedView(vm: feedViewModel)
+                    FeedView()
                         .tabItem {
                             Label("Feed", systemImage: "newspaper")
                         }
                         .environmentObject(networkMonitor)
+                        .environmentObject(feedViewModel)
                         .tag(0)
                     BookmarksView()
                         .tabItem {
@@ -68,11 +55,11 @@ struct HckrNewsApp: App {
                         }
                         .tag(2)
                 }
-                .preferredColorScheme(selectedAppTheme)
+                .preferredColorScheme(appTheme.colorScheme)
                 .environment(\.appDatabase, .shared)
             } else {
                 OnboardingView()
-                    .preferredColorScheme(selectedAppTheme)
+                    .preferredColorScheme(appTheme.colorScheme)
                     .environment(\.appDatabase, .shared)
             }
         }

@@ -17,7 +17,7 @@ struct FeedView: View {
 
     @Environment(\.appDatabase) private var appDatabase
     @EnvironmentObject var networkMonitor: NetworkMonitor
-    @StateObject var vm: FeedViewModel
+    @EnvironmentObject var vm: FeedViewModel
 
     private let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
@@ -168,8 +168,9 @@ struct ContentView_Previews: PreviewProvider {
     static let vm = FeedViewModel(feed: .top, loader: client)
     static var previews: some View {
         Group {
-            FeedView(vm: vm)
+            FeedView()
                 .environmentObject(networkMonitor)
+                .environmentObject(vm)
         }
     }
 }

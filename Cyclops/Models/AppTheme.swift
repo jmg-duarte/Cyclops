@@ -17,4 +17,12 @@ enum AppTheme: Int, Identifiable, CaseIterable {
         case .dark: return "Dark"
         }
     }
+    
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .system: return .none
+        case .light: return .light
+        case .dark: return .dark
+        }
+    }
 }

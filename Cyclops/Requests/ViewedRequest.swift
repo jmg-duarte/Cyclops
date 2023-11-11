@@ -9,7 +9,7 @@ import Combine
 import GRDB
 import GRDBQuery
 
-struct ViewedNumberRequest: Queryable {
+struct ViewedStoryCount: Queryable {
     static var defaultValue: Int { 0 }
     
     func publisher(in appDatabase: AppDatabase) -> AnyPublisher<Int, Error> {
