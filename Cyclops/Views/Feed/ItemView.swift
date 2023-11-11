@@ -2,27 +2,24 @@
 // Created by José Duarte on 09/06/2023
 // Copyright (c) 2023
 
-import SwiftUI
 import Combine
 import GRDB
 import GRDBQuery
+import SwiftUI
 
 struct ItemView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.appDatabase) private var appDatabase
+    @AppStorage(UserDefaults.Keys.ShowNumberOfUpvotes) private var showNumberOfUpvotes = UserDefaults.Defaults.ShowNumberOfUpvotes
     @AppStorage(UserDefaults.Keys.ShowNumberOfComments) private var showNumberOfComments = UserDefaults.Defaults.ShowNumberOfComments
 
-    let id: Int
-    let url: URL
-    let title: String
-    let time: UnixEpoch
-    let numberOfComments: Int
-    
+    let item: Item
+
     // Not great but ¯\_(ツ)_/¯
     // https://developer.apple.com/forums/thread/120497?answerId=384664022#384664022
     private var viewedPublisher: AnyPublisher<Bool, Never> {
         ValueObservation.tracking { db in
-            let viewed = (try? Viewed.filter(Column("id") == id).fetchOne(db)) ?? nil
+            let viewed = (try? Viewed.filter(Column("id") == item.id).fetchOne(db)) ?? nil
             return viewed != nil
         }
         .publisher(in: appDatabase.reader, scheduling: .immediate)
@@ -32,31 +29,36 @@ struct ItemView: View {
         .assertNoFailure()
         .eraseToAnyPublisher()
     }
+
     @State private var viewed: Bool = false
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Link(destination: url) {
-                    Text(title).font(.headline).multilineTextAlignment(.leading)
+                Link(destination: item.url) {
+                    Text(item.title ?? "Missing title").font(.headline).multilineTextAlignment(.leading)
                 }
-                 .environment(\.openURL, OpenURLAction { _ in
-                     Task {try! await appDatabase.saveViewed(Viewed(id))}
-                     return .systemAction
-                 })
-                 //.padding(.bottom, 0.8)
+                .environment(\.openURL, OpenURLAction { _ in
+                    Task { try! await appDatabase.saveViewed(Viewed(item.id)) }
+                    return .systemAction
+                })
                 
                 HStack {
-                    Text("\(time.formattedTimeAgo) (\(url.host()!))").font(.caption)
+                    Text("\((item.time ?? 0).formattedTimeAgo) (\(item.url.host()!))").font(.caption)
+                    
+                    if showNumberOfUpvotes {
+                        Text("\(Image(systemName: "hand.thumbsup.fill")) \(item.score ?? 0)").font(.caption2).foregroundStyle(.secondary)
+                    }
+                    
                     if showNumberOfComments {
-                        Text("\(Image(systemName: "bubble.left.and.text.bubble.right.fill")) \(numberOfComments)").font(.caption2).foregroundStyle(.secondary)
+                        Text("\(Image(systemName: "bubble.left.and.text.bubble.right.fill")) \(item.descendants ?? 0)").font(.caption2).foregroundStyle(.secondary)
                     }
                 }
             }
             if viewed {
-                 Spacer()
-                 Image(systemName: "eye")
-             }
+                Spacer()
+                Image(systemName: "eye")
+            }
         }
         .onReceive(viewedPublisher) {
             viewed = $0
@@ -72,12 +74,6 @@ struct ItemView: View {
 
 struct ItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemView(
-            id: Item.sampleData[0].id,
-            url: Item.sampleData[0].url,
-            title: Item.sampleData[0].title!,
-            time: Item.sampleData[0].time!,
-            numberOfComments: Item.sampleData[0].descendants ?? 0
-        )
+        ItemView(item: Item.sampleData[0])
     }
 }

@@ -19,13 +19,7 @@ struct BookmarksView: View {
             } else {
                 List {
                     ForEach(bookmarks) { bookmark in
-                        ItemView(
-                            id: Int(bookmark.id),
-                            url: bookmark.url,
-                            title: bookmark.title!,
-                            time: Int(bookmark.time!),
-                            numberOfComments: bookmark.descendants ?? 0
-                        )
+                        ItemView(item: bookmark)
                     }.onDelete { indexSet in
                         for index in indexSet {
                             // TODO: really bad style but this only happens to a single index at a time (that I know)

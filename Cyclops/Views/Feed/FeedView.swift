@@ -43,7 +43,7 @@ struct FeedView: View {
     
     func feedItem(_ item: Item) -> some View {
         // Force unwrap should be safe because news always have titles and time
-        return ItemView(id: item.id, url: item.url, title: item.title!, time: item.time!, numberOfComments: item.descendants ?? 0)
+        return ItemView(item: item)
             .swipeActions(edge: .leading) {
                 Button {
                     Task { try! await appDatabase.saveBookmark(item) }

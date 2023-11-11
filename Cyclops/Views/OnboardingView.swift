@@ -66,15 +66,9 @@ struct OnboardingView: View {
     var basicView: some View {
         VStack(alignment: .center) {
             VStack(spacing: 20) {
-                ItemView(
-                    id: Item.sampleData[0].id,
-                    url: Item.sampleData[0].url,
-                    title: Item.sampleData[0].title!,
-                    time: Item.sampleData[0].time!,
-                    numberOfComments: Item.sampleData[0].descendants ?? 0
-                )
-                .foregroundStyle(.primary)
-                .padding(.horizontal, 20)
+                ItemView(item: item)
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 20)
                 Text("Click the item to open it in the browser")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -91,35 +85,29 @@ struct OnboardingView: View {
     var longPressView: some View {
         VStack(alignment: .center) {
             VStack(spacing: 20) {
-                ItemView(
-                    id: Item.sampleData[0].id,
-                    url: Item.sampleData[0].url,
-                    title: Item.sampleData[0].title!,
-                    time: Item.sampleData[0].time!,
-                    numberOfComments: Item.sampleData[0].descendants ?? 0
-                )
-                .foregroundStyle(.primary)
-                .contextMenu {
-                    Button {
-                        Task { try! await appDatabase.saveBookmark(item) }
-                    } label: {
-                        Label("Bookmark", systemImage: "bookmark")
+                ItemView(item: Item.sampleData[0])
+                    .foregroundStyle(.primary)
+                    .contextMenu {
+                        Button {
+                            Task { try! await appDatabase.saveBookmark(item) }
+                        } label: {
+                            Label("Bookmark", systemImage: "bookmark")
+                        }
+                        ShareLink(item: item.url) {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                        Button {
+                            self.itemDetail = item
+                        } label: {
+                            Label("Details", systemImage: "ellipsis.circle")
+                        }
                     }
-                    ShareLink(item: item.url) {
-                        Label("Share", systemImage: "square.and.arrow.up")
+                    .sheet(item: $itemDetail) { item in
+                        // https://stackoverflow.com/a/63217450
+                        ItemDetailsSheet(item: item)
+                            .presentationDetents([.fraction(0.4)])
                     }
-                    Button {
-                        self.itemDetail = item
-                    } label: {
-                        Label("Details", systemImage: "ellipsis.circle")
-                    }
-                }
-                .sheet(item: $itemDetail) { item in
-                    // https://stackoverflow.com/a/63217450
-                    ItemDetailsSheet(item: item)
-                        .presentationDetents([.fraction(0.4)])
-                }
-                .padding(.horizontal, 20)
+                    .padding(.horizontal, 20)
                 Text("Long press for more actions")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -138,20 +126,15 @@ struct OnboardingView: View {
             VStack {
                 List {
                     ForEach(Item.sampleData) { item in
-                        ItemView(
-                            id: item.id,
-                            url: item.url,
-                            title: item.title!,
-                            time: item.time!,
-                            numberOfComments: item.descendants ?? 0
-                        ).swipeActions(edge: .leading) {
-                            Button {
-                                Task { try! await appDatabase.saveBookmark(item) }
-                            } label: {
-                                Label("Bookmark", systemImage: "bookmark.fill")
+                        ItemView(item: item)
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    Task { try! await appDatabase.saveBookmark(item) }
+                                } label: {
+                                    Label("Bookmark", systemImage: "bookmark.fill")
+                                }
+                                .tint(.blue)
                             }
-                            .tint(.blue)
-                        }
                     }
                 }.listStyle(.plain)
                     // So janky, but it works!
