@@ -15,8 +15,6 @@ struct SettingsView: View {
     @Environment(\.appDatabase) private var appDatabase
     @Query(ViewedStoryCount()) private var viewedStoryCount: Int
 
-    @FocusState private var keyboardFocus: Bool
-
     private let appName = Bundle.main.infoDictionary!["CFBundleName"] as! String
     private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     private let buildNumber = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
@@ -127,9 +125,6 @@ struct SettingsView: View {
                         .textSelection(.enabled)
                 }
             }
-        }
-        .onTapGesture {
-            keyboardFocus = false
         }
     }
 }
