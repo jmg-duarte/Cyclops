@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110E805F2B040BF1009ED886 /* BorderedLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110E805E2B040BF1009ED886 /* BorderedLabelStyle.swift */; };
+		110E80622B040C39009ED886 /* BookmarkDetailsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110E80612B040C39009ED886 /* BookmarkDetailsSheet.swift */; };
 		11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11120AB72A30E53A0084E612 /* CyclopsApp.swift */; };
 		11120ABC2A30E53B0084E612 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABB2A30E53B0084E612 /* Assets.xcassets */; };
 		11120ABF2A30E53B0084E612 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11120ABE2A30E53B0084E612 /* Preview Assets.xcassets */; };
@@ -53,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		110E805E2B040BF1009ED886 /* BorderedLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedLabelStyle.swift; sourceTree = "<group>"; };
+		110E80612B040C39009ED886 /* BookmarkDetailsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDetailsSheet.swift; sourceTree = "<group>"; };
 		11120AB42A30E53A0084E612 /* Cyclops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cyclops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11120AB72A30E53A0084E612 /* CyclopsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclopsApp.swift; sourceTree = "<group>"; };
 		11120ABB2A30E53B0084E612 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +113,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		110E805D2B040BD2009ED886 /* CustomStyles */ = {
+			isa = PBXGroup;
+			children = (
+				110E805E2B040BF1009ED886 /* BorderedLabelStyle.swift */,
+			);
+			path = CustomStyles;
+			sourceTree = "<group>";
+		};
+		110E80602B040C06009ED886 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				11BF20632A3F67DC008A54B9 /* BookmarksView.swift */,
+				110E80612B040C39009ED886 /* BookmarkDetailsSheet.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
 		11120AAB2A30E53A0084E612 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +152,7 @@
 		11120AB62A30E53A0084E612 /* Cyclops */ = {
 			isa = PBXGroup;
 			children = (
+				110E805D2B040BD2009ED886 /* CustomStyles */,
 				11C00CE32AF147B300954E73 /* Requests */,
 				11BF205D2A3F29C0008A54B9 /* ViewModels */,
 				11BF20422A37698B008A54B9 /* Extensions */,
@@ -159,11 +181,11 @@
 		11120AC52A30E76A0084E612 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				110E80602B040C06009ED886 /* Bookmarks */,
 				1143B5622A472A8100931E34 /* Feed */,
 				11B40DDA2A35E18000CA8539 /* ErrorView.swift */,
 				11B40DDC2A35EE7D00CA8539 /* SettingsView.swift */,
 				11BF204D2A387050008A54B9 /* OfflineView.swift */,
-				11BF20632A3F67DC008A54B9 /* BookmarksView.swift */,
 				11C00CEA2AFD762900954E73 /* OnboardingView.swift */,
 			);
 			path = Views;
@@ -364,9 +386,11 @@
 				11C00CD92AEFEC5600954E73 /* AppDatabase.swift in Sources */,
 				11BF20482A376A19008A54B9 /* TestHackerNewsClient.swift in Sources */,
 				1143B5612A47296800931E34 /* FeedSelectionSheet.swift in Sources */,
+				110E805F2B040BF1009ED886 /* BorderedLabelStyle.swift in Sources */,
 				11FE08EA2A31E22D0034829A /* Item.swift in Sources */,
 				11C00CE02AF138A000954E73 /* Persistence.swift in Sources */,
 				11B40DDB2A35E18000CA8539 /* ErrorView.swift in Sources */,
+				110E80622B040C39009ED886 /* BookmarkDetailsSheet.swift in Sources */,
 				11120AB82A30E53A0084E612 /* CyclopsApp.swift in Sources */,
 				11BF20522A387A1F008A54B9 /* CacheEntryObject.swift in Sources */,
 				11B40DDF2A35F8DA00CA8539 /* UserDefaults+Constants.swift in Sources */,

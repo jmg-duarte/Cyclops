@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-class BorderedLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Label(configuration)
-            .padding(8)
-            .background(Color(UIColor.tertiarySystemFill))
-            .cornerRadius(8)
-    }
-}
-
-extension LabelStyle where Self == BorderedLabelStyle {
-    static var send: BorderedLabelStyle { .init() }
-}
-
 struct ItemDetailsSheet: View {
     let item: Item
 

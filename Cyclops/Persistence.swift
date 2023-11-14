@@ -50,6 +50,4 @@ extension AppDatabase {
         try! appDatabase.createSampleBookmarks()
         return appDatabase
     }
-    
-    // TODO: make a pre-populated DB
 }

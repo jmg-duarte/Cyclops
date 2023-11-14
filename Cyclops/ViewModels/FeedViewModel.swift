@@ -11,7 +11,7 @@ import SwiftUI
 
 @MainActor
 class FeedViewModel: ObservableObject {
-    @Environment(\.appDatabase) private var appDatabase
+
     @AppStorage(UserDefaults.Keys.NumberOfStoriesPerPage) private(set) var pageSize = UserDefaults.Defaults.NumberOfStoriesPerPage
 
     @Published private(set) var state = State.loading
