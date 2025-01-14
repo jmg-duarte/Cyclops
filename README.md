@@ -1,8 +1,10 @@
-<img src="docs/static/logo.svg" style="width: 100px; height: 100px;" align="right">
+<p align="center">
+    <img src="docs/static/logo.svg" style="width: 100px; height: 100px;">
+</p>
 
 # Cyclops Reader
 
-> The *simplest* Hacker News reader.
+> The _simplest_ Hacker News reader.
 
 It provides a small set of features:
 
