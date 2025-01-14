@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclops Reader</title>
+    <link rel="icon" type="image/x-icon" href="static/logo_favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500;1,600&display=swap"
+        rel="stylesheet">
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Hanken Grotesk';
+            font-size: larger;
+        }
+
+        .description {
+            @apply font-extralight text-justify;
+        }
+        .description i {
+            @apply font-light;
+        }
+        .hidden-screenshot {
+            @apply absolute top-0 left-0 aria-hidden:opacity-0 transition-opacity duration-500 ease-in-out;
+        }
+        .hoverable-span {
+            @apply cursor-pointer underline decoration-black/0 transition ease-in-out hover:decoration-black/100 duration-500;
+        }
+        .hoverable-a {
+            @apply cursor-pointer text-sky-600 underline decoration-black/0 transition ease-in-out hover:decoration-sky-600/100 duration-500;
+        }
+    </style>
+</head>
+
+
+<!-- This margin keeps a 4px for all sides -->
+
+<body class="m-4">
+    <!-- This one keeps the content centered -->
+    <div class="w-80 mx-auto flex flex-col space-y-4">
+        <div class="flex">
+            <img class="w-16 h-16" src="static/logo.png" alt="Cyclops Reader">
+            <div class="flex items-center">
+                <div>
+                    <b>Cyclops Reader</b>
+                    <p>A Hacker News <i>anti-reader</i></p>
+                </div>
+            </div>
+        </div>
+        <div class="relative">
+            <img id="main-screenshot" src="static/mockups/feed.png" alt="Cyclops Reader Feed Screenshot">
+            <img id="bookmarks-screenshot" src="static/mockups/bookmarks.png" alt="Bookmarks Screenshot"
+                class="hidden-screenshot" aria-hidden="true">
+            <img id="settings-screenshot" src="static/mockups/settings.png" alt="Settings Screenshot"
+                class="hidden-screenshot" aria-hidden="true">
+            <img id="dark-mode-screenshot" src="static/mockups/dark_theme.png" alt="Settings Screenshot"
+                class="hidden-screenshot" aria-hidden="true">
+        </div>
+        <p class="description">
+            As <i>simple</i> as the original site.
+            <i>No addictives</i> like infinite scroll.
+            <i>Read-only</i> — no accounts, no comments, no upvotes.
+            <i>Minimal features</i> —
+            <!-- They're all in one line because its the clearest and simplest way to get the space to be placed where it should. It ain't pretty but it gets the job done -->
+            <span class="hoverable-span" data-target-screenshot="bookmarks">bookmarks</span>, <span
+                class="hoverable-span" data-target-screenshot="settings">stats</span>, <span class="hoverable-span"
+                data-target-screenshot="dark-mode">dark & light mode</span>.
+        </p>
+
+        <p class="description">Try out the <a class="hoverable-a"
+                href="https://testflight.apple.com/join/txWiodrQ">beta</a>.
+        </p>
+    </div>
+</body>
+<script defer>
+    function toggleScreenshotVisibility(ele) {
+        const image = document.getElementById(ele + '-screenshot');
+        const current = image.getAttribute('aria-hidden');
+        image.setAttribute('aria-hidden', current === 'true' ? 'false' : 'true');
+    }
+    const hoverableSpans = document.getElementsByClassName('hoverable-span');
+    const consideredEvents = ['mouseover', 'mouseout']
+    for (const span of hoverableSpans) {
+        const target = span.getAttribute('data-target-screenshot');
+        for (event of consideredEvents) {
+            span.addEventListener(event, () => {
+                toggleScreenshotVisibility(target);
+            });
+        }
+    }
+</script>
+
+</html>
